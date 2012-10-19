@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+   	<include android:id="@+id/wineSelectDetailsSubnav" layout="@layout/wine_fragment_subnav_bar"/>
+
+   	    
+   	    <RelativeLayout 
+	   	    android:layout_width="match_parent"
+	   	    android:layout_height="match_parent">
+	   	   	
+	   	    <include android:id="@+id/wineSelectPricesArrows" layout="@layout/wine_fragment_arrows"/>
+	   	    
+			<RelativeLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:paddingLeft="50dp"
+			    android:paddingRight="50dp"
+			    android:paddingTop="20dp"
+			    android:paddingBottom="20dp">
+			    <LinearLayout 
+		    	    android:layout_width="match_parent"
+		    	    android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:layout_centerVertical="true"
+		    	    android:orientation="vertical">
+			        <TextView 
+				        android:layout_height="wrap_content"
+				        android:layout_width="wrap_content"
+				        style="@style/ywSubtitleTextView"
+				        android:text="PRODUCER:"/>
+			        <TextView 
+			              android:id="@+id/wineSelectDetailsProducerTV"
+			              android:layout_height="wrap_content"
+			              android:layout_width="match_parent"
+			              style="@style/ywBodyTextView"
+			              android:text="My Producer"/>
+			       	<TextView 
+			              android:layout_height="wrap_content"
+			              android:layout_width="match_parent"
+			              android:layout_marginTop="20dp"
+			              style="@style/ywSubtitleTextView"
+			              android:text="VARIETAL:"/>
+			        <TextView 
+			            android:id="@+id/wineSelectDetailsVarietalTV"
+			            android:layout_height="wrap_content"
+			            android:layout_width="match_parent"
+			            style="@style/ywBodyTextView"
+			            android:text="My Varietal"/>
+			        <TextView 
+			            android:layout_height="wrap_content"
+			            android:layout_width="match_parent"
+			            android:layout_marginTop="20dp"
+			            style="@style/ywSubtitleTextView"
+			            android:text="REGION:"/>
+			        <TextView 
+			            android:id="@+id/wineSelectDetailsRegionTV"
+			            android:layout_height="wrap_content"
+			            android:layout_width="match_parent"
+			            style="@style/ywBodyTextView"
+			            android:text="My Region"/>
+			    </LinearLayout>
+			</RelativeLayout>
+	   	    
+	   	</RelativeLayout>
+   	
+    	
+   
+</LinearLayout>

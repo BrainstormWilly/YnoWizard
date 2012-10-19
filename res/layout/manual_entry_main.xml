@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout 
+	    android:id="@+id/manualSubmitBtnsLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:background="@color/yw_gray_dark">
+	    
+	    <include layout="@layout/borderless_button_divider"/>
+	
+        <Button
+            android:id="@+id/manualReviewBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ywBorderlessButton"
+            android:text="ADD WINE" />
+
+	</LinearLayout>
+
+	<ScrollView 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_above="@+id/manualSubmitBtnsLL">
+			    
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+		    	android:paddingTop="10dp"
+		    	android:paddingRight="10dp"
+		    	android:paddingBottom="5dp">
+	        
+		    	<RelativeLayout 
+		            android:id="@+id/wineHeaderLabelRL"
+		            android:layout_gravity="center_horizontal"
+		            android:layout_width="100dp"
+		            android:layout_height="100dp">
+				    <ImageButton
+				        android:id="@+id/manualImageIB"
+				        android:contentDescription="click to add label image"
+				        android:layout_width="match_parent"
+				        android:layout_height="match_parent"
+				        android:layout_marginBottom="20dp"
+				        android:background="@color/yw_white"
+				        android:scaleType="fitCenter"
+				        android:src="@drawable/default_label"
+				        />
+				    <ImageView 
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_alignParentTop="true"
+		                android:layout_alignParentRight="true"
+		                android:src="@drawable/image_add"/>
+				</RelativeLayout>
+			
+			    <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"		        
+			        style="@style/ywSubtitleTextView"
+			        android:layout_marginBottom="5dp"
+			        android:text="Vintage" />
+			
+			    <Spinner
+			        android:id="@+id/manualVintageSpn"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" 
+			        android:layout_marginBottom="20dp"
+			        android:focusable="true"
+			        android:focusableInTouchMode="true" />
+			
+			    <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        style="@style/ywSubtitleTextView"
+			        android:layout_marginBottom="5dp"
+			        android:text="Region, Vineyard, Appelation, or Name" />
+			
+			    <EditText
+			        android:id="@+id/manualNameACT"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginBottom="20dp"
+			        android:hint="i.e. Teldeschi Vineyard" >
+			    </EditText>
+			
+			    <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_marginBottom="5dp"
+			        style="@style/ywSubtitleTextView"
+			        android:text="Wine Type" />
+			
+			    <EditText
+			        android:id="@+id/manualTypeACT"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginBottom="20dp"
+			        android:hint="i.e. Zinfandel" />
+			
+			    <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        style="@style/ywSubtitleTextView"
+			        android:layout_marginBottom="5dp"
+			        android:text="Producer, Winery, or Vineyard" />
+			
+			    <EditText
+			        android:id="@+id/manualProducerACT"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginBottom="20dp"
+			        android:hint="i.e. Ravenswood Winery" />
+			    
+			    <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        style="@style/ywSubtitleTextView"
+			        android:layout_marginBottom="5dp"
+			        android:text="Description (optional)" />
+			
+			    <EditText
+			        android:id="@+id/manualDescrACT"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginBottom="20dp"
+			        android:minLines="2"
+			        android:hint="i.e. 100% Zinfandel from vineyard just outside Sonoma..." />
+	      
+		   </LinearLayout>
+		   
+	</ScrollView>
+	
+</RelativeLayout>
+

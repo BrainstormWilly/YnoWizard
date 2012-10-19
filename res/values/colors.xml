@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="yw_gray_dark">#ff231F20</color>
+    <color name="yw_gray_medium">#ff5E5B5B</color>
+    <color name="yw_gray_light">#ffC4C3C4</color>
+    <color name="yw_gray_light_bkg">#33C4C3C4</color>
+    <color name="yw_black">#ff000000</color>
+    <color name="yw_white">#ffffffff</color>
+    <color name="yw_white_bkg">#80ffffff</color>
+    <color name="yw_orange_light">#ffffb400</color>
+    <color name="yw_orange_light_bkg">#33ffb400</color>
+    <color name="yw_orange_dark">#ffbb7900</color>
+    <color name="yw_orange_dark_bkg">#33bb7900</color>
+    <color name="yw_green_extra_dark">#ff3f3900</color>
+    <color name="yw_green_dark">#ff4B4400</color>
+    <color name="yw_green_dark_bkg">#80297267</color>
+    <color name="yw_green_medium">#ff388379</color>
+    <color name="yw_green_light">#ffCBBB29</color>
+    <color name="yw_green_light_bkg">#33CBBB29</color>
+    <color name="yw_green_light_btn">#8072b1a7</color>
+    <color name="yw_red_extra_dark">#270712</color>
+    <color name="yw_red_dark">#ff4B021B</color>
+    <color name="yw_red_medium">#ff65142F</color>
+    <color name="yw_red_light">#ffdabac3</color>
+    <color name="yw_blue_dark">#ff002E4B</color>
+    <color name="yw_blue_medium">#ff9192a7</color>
+    <color name="yw_blue_light">#ffbdbeca</color>
+</resources>

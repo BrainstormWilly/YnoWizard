@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialogAlertRL"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="100dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|left"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:src="@android:drawable/ic_dialog_alert"
+                android:paddingRight="10dp"/>
+            <TextView
+                android:id="@+id/dialogAlertTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                style="@style/ywTitleTextView" />
+        </LinearLayout>
+        <View 
+		    android:layout_width="match_parent"
+		    android:layout_height="2dp"
+		    android:background="@color/yw_green_light" />
+        <TextView
+            	android:id="@+id/dialogAlertSubtitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Subtitle"
+                style="@style/ywSubtitleTextView" />
+        <View 
+		    android:layout_width="match_parent"
+		    android:layout_height="1dp"
+		    android:background="@color/yw_gray_medium" />
+        
+        <Button
+	            android:id="@+id/dialogAlertBtn"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            style="@style/ywBorderlessButton"
+	            android:text="OK" />
+
+    </LinearLayout>
+
+</RelativeLayout>

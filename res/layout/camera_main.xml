@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <FrameLayout
+        android:id="@+id/cameraMainPreview"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+<!--         <ProgressBar -->
+<!--             android:id="@+id/progressBar1" -->
+<!--             style="?android:attr/progressBarStyleLarge" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_gravity="center_vertical|center_horizontal" /> -->
+
+    </FrameLayout>
+
+    <LinearLayout 
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:orientation="vertical">
+        <Button
+	        android:id="@+id/cameraMainFlashBtn"
+	        android:layout_height="wrap_content"
+	        android:layout_width="wrap_content"
+	        android:text="FLASH" />
+        <Button 
+            android:id="@+id/cameraMainZoomBtn"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+	        android:text="ZOOM"/>
+    </LinearLayout>
+    
+    
+   
+
+</FrameLayout>

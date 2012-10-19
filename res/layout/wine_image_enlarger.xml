@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+        
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wineImageEnlargeRL"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+        <ImageView 
+	        android:id="@+id/wineImageEnlargeIV"
+		    android:layout_width="wrap_content"
+		    android:minWidth="100dp"
+		    android:minHeight="100dp"
+		    android:maxHeight="700dp"
+		    android:layout_height="wrap_content"/>
+        <include layout="@layout/borderless_button_divider"/>
+        <Button
+            android:id="@+id/wineImageEnlargeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ywBorderlessButton"
+            android:text="X" />
+    </LinearLayout>
+    
+</RelativeLayout>
+    

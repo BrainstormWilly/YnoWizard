@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wineSelectImageLL"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:orientation="vertical"
+    android:background="@color/yw_gray_light" >
+
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:padding="5dp">
+        <RelativeLayout 
+            android:id="@+id/wineHeaderLabelRL"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+            <ImageView
+		         android:id="@+id/wineHeaderLabelIV"
+		         android:layout_width="match_parent"
+		         android:layout_height="match_parent"
+		         android:background="@color/yw_white"
+		         android:scaleType="fitCenter"/>
+            <ImageView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/image_enlarge"/>
+        </RelativeLayout>
+        
+        <TextView
+         android:id="@+id/wineHeaderNameTV"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_margin="10dp"
+         android:maxHeight="100dp"
+         style="@style/ywWineSelectTitleTextView"
+         android:text="" />
+    </LinearLayout>
+    
+          
+    <ImageView 
+        android:id="@+id/wineHeaderSponsorIV"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitCenter"/>
+
+</LinearLayout>

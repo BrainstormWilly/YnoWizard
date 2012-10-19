@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <include android:id="@+id/wineSelectPricesSubnav" layout="@layout/wine_fragment_subnav_bar"/>
+
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <include android:id="@+id/wineSelectPricesArrows" layout="@layout/wine_fragment_arrows"/>
+        
+	    <TextView
+	        android:id="@+id/wineSelectPriceRangeTV"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="10dp"
+	        android:text=""
+	        style="@style/ywSubtitleTextView" />
+	    
+	    <ListView 
+	        android:id="@+id/wineSelectPriceLV"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/wineSelectPriceRangeTV"
+	        android:listSelector="@drawable/yw_list_item_bkg"
+	        android:drawSelectorOnTop="false"
+	        android:divider="@color/yw_gray_medium"
+	        android:dividerHeight="1dp"
+	        android:padding="20dp" />
+	</RelativeLayout>
+
+</LinearLayout>

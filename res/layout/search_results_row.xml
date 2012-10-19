@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableRow1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:padding="2dp">
+
+
+    <ImageView
+     android:id="@+id/searchResultsRowIV"
+     android:layout_width="40dp" 
+     android:layout_height="40dp"
+     android:layout_gravity="center_vertical"
+     android:background="@color/yw_white"
+     />
+    
+
+    <TextView
+        android:id="@+id/searchResultsRowTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        style="@style/ywSearchResultsListTextView" />
+    
+</TableRow>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wineReviewPostRL"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|left"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:src="@android:drawable/ic_dialog_alert"
+                android:paddingRight="10dp"/>
+            <TextView
+                android:id="@+id/dialogAlertCancelTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ready to Post?"
+                style="@style/ywTitleTextView" />
+        </LinearLayout>
+        <View 
+		    android:layout_width="match_parent"
+		    android:layout_height="2dp"
+		    android:background="@color/yw_green_light" />
+        <TextView 
+           android:id="@+id/wineReviewPostTV"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_margin="10dp"
+           style="@style/ywSubtitleTextView"
+           android:text="This review will be posted as an activity to your Facebook timeline." />
+        <View 
+		    android:layout_width="match_parent"
+		    android:layout_height="1dp"
+		    android:background="@color/yw_gray_medium" />
+        <CheckBox 
+		        android:id="@+id/wineReviewPostCB"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="10dp"
+		        android:text="Publish review to my feed as well."/>
+        <View 
+		    android:layout_width="match_parent"
+		    android:layout_height="1dp"
+		    android:background="@color/yw_gray_medium" />
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+	            android:id="@+id/wineReviewPostCancelBtn"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            style="@style/ywBorderlessButton"
+	            android:text="CANCEL" />
+            <View xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:layout_width="1dp"
+			    android:layout_height="match_parent"
+			    android:background="@color/yw_gray_medium" />
+            <Button
+	            android:id="@+id/wineReviewPostOkBtn"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            style="@style/ywBorderlessButton"
+	            android:text="OK" />
+        </LinearLayout>
+    </LinearLayout>
+    
+</RelativeLayout>

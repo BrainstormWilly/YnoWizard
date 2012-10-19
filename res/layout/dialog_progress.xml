@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialogProgressRL"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|left"
+            android:minWidth="100dp"
+	        android:layout_centerInParent="true">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateOnly="true"
+                android:layout_margin="10dp"
+                style="@android:style/Widget.ProgressBar" />
+            <View 
+			    android:layout_width="1dp"
+			    android:layout_height="match_parent"
+			    android:background="@color/yw_green_light" />
+            <TextView
+                android:id="@+id/dialogProgressTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Title"
+                style="@style/ywSubtitleTextView" />
+        </LinearLayout>
+        
+    
+</RelativeLayout>

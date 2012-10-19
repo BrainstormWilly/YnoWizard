@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <include 
+        android:id="@+id/wineReviewRateSubnav" 
+        layout="@layout/wine_fragment_subnav_bar"
+        android:layout_alignParentTop="true"/>
+        
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <include 
+	        android:id="@+id/wineReviewArrows"
+	        layout="@layout/wine_fragment_arrows"/>
+	           
+		<RadioGroup 
+			android:id="@+id/wineReviewRateRG"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal"
+			android:orientation="horizontal"
+			android:background="@color/yw_gray_dark">
+			<RadioButton 
+				android:id="@+id/wineReviewRate5RB"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:checked="true"
+				android:text="5 pt."/>
+			<RadioButton 
+				android:id="@+id/wineReviewRate20RB"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp"
+		       	android:text="20 pt."/>
+		   	<RadioButton 
+		       android:id="@+id/wineReviewRate100RB"
+		       android:layout_width="wrap_content"
+		       android:layout_height="wrap_content"
+		       android:text="100 pt."/>
+		</RadioGroup>
+		    
+	    <View 
+	        android:id="@+id/wineReviewRateHL"
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:layout_below="@+id/wineReviewRateRG"
+	        android:background="@color/yw_gray_medium"/>
+		        
+	    <LinearLayout
+		    android:id="@+id/wineReviewRateSliderLL"
+		    android:layout_width="wrap_content"
+		    android:layout_height="match_parent"
+		    android:layout_centerHorizontal="true"
+		    android:layout_below="@+id/wineReviewRateHL">
+		    <TextView 
+		         android:id="@+id/wineReviewRateTV"
+		         android:layout_width="150sp"
+		         android:layout_height="match_parent"
+		         android:gravity="right|center"
+		         android:textSize="90sp"
+		         android:textColor="@color/yw_gray_light"
+		         android:text="0.0"/>
+		    <com.ynotasting.finder.view.VerticalSeekBar
+		         android:id="@+id/wineReviewRateSB"
+		         android:layout_width="wrap_content"
+		         android:layout_height="match_parent"
+		         android:layout_margin="20dp"
+		         android:paddingLeft="15dp"
+		         android:paddingRight="15dp"
+		         android:thumbOffset="15dp"
+		         style="@style/ywSlider"
+		         android:max="100" />
+	 	</LinearLayout>
+        
+    </RelativeLayout>
+
+</LinearLayout>

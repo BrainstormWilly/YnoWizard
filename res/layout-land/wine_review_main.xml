@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <LinearLayout 
+	    android:id="@+id/wineReviewBtnsLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@color/yw_gray_dark">
+        
+        <include layout="@layout/borderless_button_divider"/>
+	
+        <Button
+            android:id="@+id/wineReviewPostBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ywBorderlessButton"
+            android:text="SEND" />
+
+	</LinearLayout>
+	
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/wineReviewBtnsLL">
+        
+        <include 
+            android:id="@+id/wineReviewHeader" 
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            layout="@layout/wine_header"/>
+        
+        <android.support.v4.view.ViewPager
+	       android:id="@+id/wineReviewVP"
+	       android:layout_width="0dp"
+	       android:layout_height="match_parent"
+	       android:layout_weight="3"
+	       />
+    </LinearLayout>
+
+</RelativeLayout>

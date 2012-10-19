@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="ywActionBar" parent="Widget.Sherlock.ActionBar">
+        <item name="android:background">@drawable/yw_actionbar_bkg</item>
+        <item name="background">@drawable/yw_actionbar_bkg</item>
+    </style>
+    <style name="ywEditText" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/yw_edittext</item>
+        <item name="android:textColor">@color/yw_edittext_textcolor</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:editable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="ywAutoCompleteText" parent="@android:style/Widget.AutoCompleteTextView">
+        <item name="android:background">@drawable/yw_edittext</item>
+        <item name="android:textColor">@color/yw_edittext_textcolor</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:editable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="ywSubtitleTextView" parent="@android:style/Widget">
+        <item name="android:textColor">@color/yw_white</item>
+    </style>
+    <style name="ywTitleTextView" parent="@android:style/Widget">
+        <item name="android:textColor">@color/yw_green_light</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ywWineSelectTitleTextView" parent="@android:style/Widget">
+        <item name="android:textColor">@color/yw_gray_dark</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:maxLines">5</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="ywWineSelectBodyTextView" parent="@android:style/Widget">
+        <item name="android:textColor">@color/yw_gray_dark</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="ywWineSelectListTextView" parent="@android:style/Widget">
+        <item name="android:textColor">@color/yw_list_item_text</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="ywSearchResultsListTextView" parent="@android:style/Widget">
+        <item name="android:textColor">@color/yw_list_item_text</item>
+    </style>
+    <style name="ywBodyTextView" parent="@android:style/Widget">
+        <item name="android:textColor">@color/yw_gray_light</item>
+    </style>
+    <style name="ywTextSearchPriceTextView" parent="@android:style/Widget">
+        <item name="android:textColor">@color/yw_white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+	<style name="ywButton" parent="@android:style/Widget.Holo.Button">
+         <item name="android:background">@drawable/yw_button</item>
+         <item name="android:textColor">@color/yw_button_textcolor</item>
+    </style> 
+    <style name="ywBorderlessButton" parent="@android:style/Widget.Holo.Button.Borderless">
+        <item name="android:background">@drawable/yw_button_borderless_bkg</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:textColor">@color/yw_button_borderless_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="ywAutoCompleteTextClearButton" parent="@android:style/Widget.Holo.Button.Borderless">
+        <item name="android:background">@drawable/yw_autocompletetext_clear_bkg</item>
+    </style>
+    <style name="ywSpinner" parent="@android:style/Widget">
+        <item name="android:background">@drawable/yw_spinner</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+    </style>
+    <style name="ywDropDownListViewStyle" parent="@style/Widget.Sherlock.ListView.DropDown">
+        <item name="android:divider">@color/yw_gray_dark</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+    <style name="ywSlider" parent="@android:style/Widget">
+        <item name="android:thumb">@drawable/yw_slider_thumb</item>
+        <item name="android:progressDrawable">@drawable/yw_slider_progress</item>
+        <item name="android:indeterminateOnly">false</item>
+    </style>
+	<style name="ywCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+	    <item name="android:button">@drawable/yw_checkbox</item>
+	    <item name="android:textColor">@color/yw_gray_light</item>
+	</style>
+	<style name="ywRadioButton" parent="@android:style/Widget.CompoundButton.RadioButton">
+	    <item name="android:button">@drawable/yw_radiobutton</item>
+	    <item name="android:textColor">@color/yw_gray_light</item>
+	    <item name="android:paddingLeft">15dp</item>
+	</style>
+	<style name="ywDialog" parent="@android:style/Theme.Dialog">
+	    <item name="android:divider">@color/yw_gray_dark</item>
+        <item name="android:dividerHeight">1dp</item>
+	</style>
+</resources>

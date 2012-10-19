@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Yno Wizard</string>
+    <string name="actionbar_title_barcode">scan barcode</string>
+    <string name="actionbar_title_search">browse wines</string>
+    <string name="actionbar_title_manual">add wine</string>
+    <string name="url_fb_redirect">http://ynowizard.com/fb_redirect.php</string>
+    <string name="url_default_label">http://ynowizard.com/default_label.jpg</string>
+    <string name="url_uploads">http://ynowizard.com/uploads/</string>
+</resources>

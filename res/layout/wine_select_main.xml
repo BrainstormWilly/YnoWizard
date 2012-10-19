@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+<!--     <ImageView  -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="40dp" -->
+<!--         android:layout_alignParentTop="true" -->
+<!--         android:background="@drawable/yw_actionbar_shadow"/> -->
+    
+    <LinearLayout 
+	    android:id="@+id/wineSelectBtnsLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@color/yw_gray_dark">
+        
+        <include layout="@layout/borderless_button_divider"/>
+	
+        <Button
+            android:id="@+id/wineSelectRateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ywBorderlessButton"
+            android:text="REVIEW WINE" />
+
+	</LinearLayout>
+    
+    <include 
+        android:id="@+id/wineSelectHeader" 
+        layout="@layout/wine_header"
+        android:layout_alignParentTop="true"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/wineSelectDetailsVP"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/wineSelectBtnsLL"
+        android:layout_below="@+id/wineSelectHeader" />
+
+
+</RelativeLayout>

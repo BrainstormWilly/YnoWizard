@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:orientation="vertical">
+        <TextView
+	        android:id="@+id/searchResultsTitle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal"
+	        style="@style/ywSubtitleTextView"
+	        android:text="Results"/>
+	    
+	    <ListView 
+	        android:id="@+id/searchResultsLV"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dp"
+	        android:cacheColorHint="@android:color/transparent"
+	        android:divider="@color/yw_gray_medium"
+	        android:dividerHeight="1dp"
+	        android:drawSelectorOnTop="false"
+	        android:listSelector="@drawable/yw_list_item_bkg" />
+    </LinearLayout>
+    
+
+</RelativeLayout>

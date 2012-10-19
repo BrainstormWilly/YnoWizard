@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="ywAppTheme" parent="Theme.Sherlock">
+        <item name="android:windowBackground">@drawable/yw_app_bkg</item>
+        <item name="android:actionBarStyle">@style/ywActionBar</item>
+        <item name="android:autoCompleteTextViewStyle">@style/ywAutoCompleteText</item>
+        <item name="android:checkboxStyle">@style/ywCheckBox</item>
+        <item name="android:radioButtonStyle">@style/ywRadioButton</item>
+        <item name="android:editTextStyle">@style/ywEditText</item>
+        <item name="android:buttonStyle">@style/ywButton</item>
+        <item name="android:spinnerStyle">@style/ywSpinner</item>
+        <item name="android:dropDownListViewStyle">@style/ywDropDownListViewStyle</item>
+<!--         <item name="actionBarItemBackground">@drawable/yw_actionbar_item_bkg</item> -->
+        <item name="android:selectableItemBackground">@drawable/yw_actionbar_item_bkg</item>
+        <item name="android:seekBarStyle">@style/ywSlider</item>
+    </style>
+</resources>
