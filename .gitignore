@@ -3,8 +3,8 @@
 *.dex
 *.class
 
-bin/
-gen/
+bin
+gen
 
 local.properties
 
