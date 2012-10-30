@@ -7,7 +7,6 @@ bin
 gen
 
 local.properties
-project.properties
 
 .classpath
 .project
