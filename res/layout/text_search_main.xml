@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content" >
     
     <LinearLayout 
 	    android:id="@+id/textSearchBtnsLL"
@@ -24,101 +23,107 @@
 
 	</LinearLayout>
 
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_marginTop="20dp">
-	    
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-           
-            <AutoCompleteTextView
-		        android:id="@+id/textSearchATV"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_centerVertical="true"
-		        android:paddingRight="20dp"
-		        android:hint="Vintage, Region, Name, etc.." />
-             <Button 
-	            android:id="@+id/textSearchClearBtn"
-	            android:layout_height="30dp"
-	            android:layout_width="30dp"
-	            android:layout_alignParentRight="true"
-	            android:layout_centerVertical="true"
-	            android:layout_marginRight="5dp"
-	            style="@style/ywAutoCompleteTextClearButton"/>
-            
-        </RelativeLayout>
-
-        <LinearLayout 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="5dp"
-            android:orientation="vertical"
-            android:background="@color/yw_gray_dark">
-            <CheckBox 
-		        android:id="@+id/textSearchTypeCB"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        
-		        android:text="Filter by Wine Type"/>
-		    <Spinner 
-		        android:id="@+id/textSearchTypeSpn"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:visibility="gone"/>
-        </LinearLayout>
-        
-        <LinearLayout 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:padding="5dp"
-            android:orientation="vertical"
-            android:background="@color/yw_gray_dark">
+    <ScrollView 
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:layout_above="@+id/textSearchBtnsLL">
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:padding="10dp"
+	        android:layout_marginTop="20dp">
 		    
-            <CheckBox 
-		        android:id="@+id/textSearchUnderCB"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:text="Filter by Max Price"/>
-		    <TableLayout 
-		        android:id="@+id/textSearchUnderTL"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:visibility="gone">
-		        <TableRow 
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:gravity="center_vertical" >
-		            <TextView 
-		                android:id="@+id/textSearchUnderTV"
-		                android:layout_width="0dp"
-		                android:layout_height="wrap_content"
-						android:layout_weight="2"
-		               	android:text="$10"
-		               	style="@style/ywTextSearchPriceTextView"/>
-		            <SeekBar 
-		                android:id="@+id/textSearchUnderSB"
-		                android:layout_width="0dp"
-		                android:layout_height="wrap_content"
-		                android:layout_marginLeft="5dp"
-		                android:paddingLeft="15dp"
-		                android:paddingRight="15dp"
-		                android:thumbOffset="15dp"
-		                android:layout_weight="5"
-		                android:max="90"/>
-		        </TableRow>
-	    </TableLayout>
-            
-        </LinearLayout>
-	    
-	    
-	    
-	</LinearLayout>
+	        <RelativeLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentBottom="true">
+	           
+	            <AutoCompleteTextView
+			        android:id="@+id/textSearchATV"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_centerVertical="true"
+			        android:paddingRight="20dp"
+			        android:hint="Vintage, Region, Name, etc.." 
+			        android:inputType="text"
+			        android:imeOptions="actionSearch"/>
+	             <Button 
+		            android:id="@+id/textSearchClearBtn"
+		            android:layout_height="30dp"
+		            android:layout_width="30dp"
+		            android:layout_alignParentRight="true"
+		            android:layout_centerVertical="true"
+		            android:layout_marginRight="5dp"
+		            style="@style/ywAutoCompleteTextClearButton"/>
+	            
+	        </RelativeLayout>
+	
+	        
+	        <LinearLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="20dp"
+	            android:padding="5dp"
+	            android:orientation="vertical"
+	            android:background="@color/yw_gray_dark">
+	            <CheckBox 
+			        android:id="@+id/textSearchTypeCB"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        
+			        android:text="Filter by Wine Type"/>
+			    <Spinner 
+			        android:id="@+id/textSearchTypeSpn"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:visibility="gone"/>
+	        </LinearLayout>
+	        
+	        <LinearLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="20dp"
+	            android:layout_marginBottom="20dp"
+	            android:padding="5dp"
+	            android:orientation="vertical"
+	            android:background="@color/yw_gray_dark">
+			    
+	            <CheckBox 
+			        android:id="@+id/textSearchUnderCB"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:text="Filter by Max Price"/>
+			    <TableLayout 
+			        android:id="@+id/textSearchUnderTL"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:visibility="gone">
+			        <TableRow 
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content"
+			            android:gravity="center_vertical" >
+			            <TextView 
+			                android:id="@+id/textSearchUnderTV"
+			                android:layout_width="0dp"
+			                android:layout_height="wrap_content"
+							android:layout_weight="2"
+			               	android:text="$10"
+			               	style="@style/ywTextSearchPriceTextView"/>
+			            <SeekBar 
+			                android:id="@+id/textSearchUnderSB"
+			                android:layout_width="0dp"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="5dp"
+			                android:paddingLeft="15dp"
+			                android:paddingRight="15dp"
+			                android:thumbOffset="15dp"
+			                android:layout_weight="5"
+			                android:max="90"/>
+			        </TableRow>
+		    	</TableLayout>
+	            
+	        </LinearLayout>
+		</LinearLayout>
+	</ScrollView>
 </RelativeLayout>

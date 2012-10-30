@@ -7,4 +7,25 @@
     <string name="url_fb_redirect">http://ynowizard.com/fb_redirect.php</string>
     <string name="url_default_label">http://ynowizard.com/default_label.jpg</string>
     <string name="url_uploads">http://ynowizard.com/uploads/</string>
+    <string name="insufficient_information">Insufficient Information</string>
+    <string name="requires_search_criteria">Requires a selected wine type or search phrase</string>
+    <string name="searching">Searching...</string>
+    <string name="search_wines_matching">Searching for wines matching \'</string>
+    <string name="looking_up_wine_barcode">Looking up wine barcode</string>
+    <string name="searching_for_wine">Searching for wine \'</string>
+    <string name="no_wine_found">No Wine Found</string>
+    <string name="try_rescanning">Try rescanning or adding the wine manually.</string>
+    <string name="log_into_facebook">Log into Facebook?</string>
+    <string name="wine_reviews_can_only_be_stored_to_facebook">Wine reviews can only be stored to your Facebook timeline.</string>
+    <string name="review_posted_to_your_feed">Review posted to your feed.</string>
+    <string name="logged_out_of_facebook">Logged out of Facebook</string>
+    <string name="review_posted_to_your_yno_wizard_activities">Review posted to your Yno Wizard activities</string>
+    <string name="unable_to_post_review">Unable to post review. You may need to re-log into your Facebook account.</string>
+    <string name="feed_post_cancelled">Feed post cancelled.</string>
+    <string name="requires_a_producer">Requires a Producer, Winery, or Vineyard</string>
+    <string name="requires_a_wine_type">Requires a Wine Type</string>
+    <string name="nv">NV</string>
+    <string name="uploading_picture">Uploading Picture...</string>
+    <string name="url_uploader">http://ynowizard.com/uploads/uploader.php</string>
+    <string name="image_upload_complete">Image upload complete</string>
 </resources>

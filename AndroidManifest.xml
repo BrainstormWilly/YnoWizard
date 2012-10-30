@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ynotasting.finder"
+    package="com.yno.wizard"
     android:versionCode="0"
-    android:versionName="0.001" >
+    android:versionName="0.003" >
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="15" />
     
@@ -32,14 +32,14 @@
             android:name=".view.ChooseSearchActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="com.ynotasting.finder.intent.OPEN_CHOOSE_SEARCH_METHOD"/>
+                <action android:name="com.yno.wizard.intent.OPEN_CHOOSE_SEARCH_METHOD"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity 
             android:name=".view.ManualEntryActivity">
             <intent-filter>
-                <action android:name="com.ynotasting.finder.intent.OPEN_MANUAL_ENTRY"/>
+                <action android:name="com.yno.wizard.intent.OPEN_MANUAL_ENTRY"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
@@ -60,9 +60,9 @@
 		</activity>
         <activity 
             android:name=".view.TextSearchActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="com.ynotasting.finder.intent.OPEN_PHRASE_SEARCH"/>
+                <action android:name="com.yno.wizard.intent.OPEN_PHRASE_SEARCH"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             
@@ -71,11 +71,11 @@
             android:name=".view.WineSelectActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="com.ynotasting.finder.intent.START_WINE_SELECT"/>
+                <action android:name="com.yno.wizard.intent.START_WINE_SELECT"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
              <intent-filter>
-                 <action android:name="com.ynotasting.finder.intent.START_BARCODE_SEARCH" />
+                 <action android:name="com.yno.wizard.intent.START_BARCODE_SEARCH" />
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
         </activity>
@@ -83,7 +83,7 @@
             android:name=".view.SearchResultsActivity"
             android:label="@string/app_name">
              <intent-filter>
-                <action android:name="com.ynotasting.finder.intent.OPEN_SEARCH_RESULTS"/>
+                <action android:name="com.yno.wizard.intent.OPEN_SEARCH_RESULTS"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -91,7 +91,7 @@
             android:name=".view.WebViewActivity"
             android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
-                <action android:name="com.ynotasting.finder.intent.SHOW_PRICE_VENDOR"/>
+                <action android:name="com.yno.wizard.intent.SHOW_PRICE_VENDOR"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -99,13 +99,13 @@
             android:name=".view.WineReviewActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="com.ynotasting.finder.intent.START_FB_RATING"/>
+                <action android:name="com.yno.wizard.intent.START_FB_RATING"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 <!--         <provider  -->
 <!--             android:name=".model.db.provider.VarietalProvider" -->
-<!--             android:authorities="com.ynotasting.finder.model.db.provider" />   -->
+<!--             android:authorities="com.yno.wizard.model.db.provider" />   -->
         <service 
             android:name=".model.service.WinesPhraseSearchService" />
         <service 

@@ -65,7 +65,7 @@
 		         android:textSize="90sp"
 		         android:textColor="@color/yw_gray_light"
 		         android:text="0.0"/>
-		    <com.ynotasting.finder.view.VerticalSeekBar
+		    <com.yno.wizard.view.VerticalSeekBar
 		         android:id="@+id/wineReviewRateSB"
 		         android:layout_width="wrap_content"
 		         android:layout_height="match_parent"

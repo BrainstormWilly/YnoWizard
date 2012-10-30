@@ -13,5 +13,6 @@
 <!--         <item name="actionBarItemBackground">@drawable/yw_actionbar_item_bkg</item> -->
         <item name="android:selectableItemBackground">@drawable/yw_actionbar_item_bkg</item>
         <item name="android:seekBarStyle">@style/ywSlider</item>
+        <item name="absForceOverflow">true</item>
     </style>
 </resources>
