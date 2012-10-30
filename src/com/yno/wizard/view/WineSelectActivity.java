@@ -112,10 +112,7 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 		//Log.d(TAG, "sponsor logo = " + _wine.sponsor.logo);
 		_sponsorIV.setImageDrawable( getResources().getDrawable(_wine.sponsor.logo) );
 		
-		if( _wine.manual )
-			_labelIV.setImageBitmap(ManualEntryActivity.BMP); 
-		else
-			new AsyncDownloadImage( _labelIV ).execute( _wine.imageLarge );
+		new AsyncDownloadImage( _labelIV ).execute( _wine.imageLarge );
 		
 		WineSelectAdaptor adaptor = new WineSelectAdaptor(getSupportFragmentManager(), _wine, subnav);
 		_pagerVP.setAdapter(adaptor);

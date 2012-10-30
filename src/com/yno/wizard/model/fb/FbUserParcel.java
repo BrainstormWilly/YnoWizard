@@ -1,5 +1,10 @@
 package com.yno.wizard.model.fb;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import com.yno.wizard.model.ProducerParcel;
 
 import android.os.Parcel;
@@ -37,6 +42,31 @@ public class FbUserParcel implements Parcelable {
 	
 	public FbUserParcel( Parcel $in ){
 		readFromParcel($in);
+	}
+	
+	public int getAge(){
+		SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
+		GregorianCalendar cal = new GregorianCalendar();
+		
+		int y, m, d, a;
+		y = cal.get(Calendar.YEAR);
+		m = cal.get(Calendar.MONTH) + 1;
+		d = cal.get(Calendar.DAY_OF_MONTH);
+		
+		try{
+			cal.setTime( fmt.parse(birthday) );
+			a = y - cal.get(Calendar.YEAR);
+			if( (m < cal.get(Calendar.MONTH)) || ( (m==cal.get(Calendar.MONTH)) && (d < cal.get(Calendar.DAY_OF_MONTH)) ) )
+				--a;
+			if( a<0 )
+				return 0;
+			return a;
+			
+		}catch( Exception $e ){
+			$e.printStackTrace();
+		}
+		
+		return 0;
 	}
 	
 	public String toUserString(){

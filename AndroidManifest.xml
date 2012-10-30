@@ -114,8 +114,7 @@
             android:name=".model.service.WineSelectSearchService" />
         <service 
             android:name=".model.service.WineTypesSearchService" />
-<!--         <service  -->
-<!--             android:name=".model.service.VinTankService" /> -->
+
     </application>
 
 </manifest>

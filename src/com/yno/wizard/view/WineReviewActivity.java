@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
+import android.location.Address;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -42,6 +43,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.facebook.android.DialogError;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
+import com.yno.wizard.model.LocationModel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.model.fb.FbUserParcel;
 import com.yno.wizard.model.fb.FbWineReviewParcel;
@@ -97,7 +99,7 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 	private FbUserParcel _user;
 	private ActionBarHelper _abHelper;
 	private AlertDialog _diag;
-	//private ProgressDialog _prog;
+	private LocationModel _location;
 	private boolean _sendToFeed = false;
 	
 	@Override
@@ -107,6 +109,7 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 		setContentView(R.layout.wine_review_main);
 		
 		_abHelper = new ActionBarHelper(this);
+		_location = new LocationModel(this);
 		
 		LayerDrawable bkg = (LayerDrawable) getResources().getDrawable(R.drawable.yw_actionbar_bkg);
 		ActionBar bar = getSupportActionBar();
@@ -125,7 +128,11 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 		_pagerVP.setAdapter(adaptor);
 		
 		_nameTV.setText(wine.name);	
-		new AsyncDownloadImage( _labelIV ).execute( wine.imageLarge );
+		
+		if( _review.wine.manual )
+			_labelIV.setImageBitmap( ManualEntryActivity.BMP );
+		else
+			new AsyncDownloadImage( _labelIV ).execute( wine.imageLarge );
 		
 		if( wine.sponsor!=null )
 			_sponsorIV.setImageDrawable( getResources().getDrawable(wine.sponsor.logo) );
@@ -266,8 +273,15 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 	}
 	
 	@Override
+	protected void onPause(){
+		super.onPause();
+		_location.disable();
+	}
+	
+	@Override
 	protected void onResume() {
 		super.onResume();
+		_location.enable();
 		_fbSvc.extendAccessTokenIfNeeded();
 	}
 	
@@ -302,9 +316,10 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 			_fbHdl.post(new Runnable() {
                  @Override
                  public void run() { 
-                	 //_loginBtn.setText("FACEBOOK LOGOUT");
-                	 //_statusTV.setText(user.toUserString());
+                	 Address  addr = _location.getPrimaryAddress();
                 	 _user = user;
+                	if( addr!=null )
+                		_user.location = addr.getPostalCode();
                  }
              });
 		}else if( $service.equals("unauthorize") ){
@@ -367,7 +382,6 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 	
 	@Override
 	public void onFacebookError(FacebookError $e, String $service) {
-		Log.d(TAG, $e.getMessage());
 		$e.printStackTrace();
 	}
 	

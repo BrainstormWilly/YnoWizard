@@ -42,7 +42,6 @@ public class LocationModel implements LocationListener {
 		_provider = _manager.getBestProvider(criteria, false);
 		//_provider = LocationManager.GPS_PROVIDER;
 		Log.d(TAG, "Location Provider -> " + _provider);
-		_location = _manager.getLastKnownLocation(_provider);
 		
 		_states.put("Alabama", "AL");
 		_states.put("Alaska", "AK");
@@ -100,7 +99,12 @@ public class LocationModel implements LocationListener {
 		_states.put("Washington", "WA");
 		_states.put("West Virginia", "WV");
 		_states.put("Wisconsin", "WI");
-		_states.put("Wyoming", "WY");	 
+		_states.put("Wyoming", "WY");	
+		
+		Location loc = _manager.getLastKnownLocation(_provider);
+		
+		if( loc!=null )
+			onLocationChanged( loc );
 		 
 	}
 	
@@ -142,13 +146,13 @@ public class LocationModel implements LocationListener {
 		return "";
 	}
 	
-//	public void enable(){
-//		_manager.requestLocationUpdates(_provider, 1000, 10f, this);
-//	}
-//	
-//	public void disable(){
-//		_manager.removeUpdates(this);
-//	}
+	public void enable(){
+		_manager.requestLocationUpdates(_provider, 1000, 10f, this);
+	}
+	
+	public void disable(){
+		_manager.removeUpdates(this);
+	}
 	
 	@Override
 	public void onLocationChanged(Location location) {

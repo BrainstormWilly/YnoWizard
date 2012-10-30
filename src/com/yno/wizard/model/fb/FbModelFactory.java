@@ -19,6 +19,7 @@ public class FbModelFactory {
 			
 			try{
 				user.birthday = obj.getString("birthday");
+				Log.d(TAG, user.birthday);
 			}catch(JSONException $ee){
 				$ee.printStackTrace();
 			}
@@ -31,6 +32,7 @@ public class FbModelFactory {
 			
 			try{
 				user.gender = obj.getString("gender");
+				Log.d(TAG, user.gender);
 			}catch(JSONException $ee){
 				$ee.printStackTrace();
 			}
@@ -55,6 +57,7 @@ public class FbModelFactory {
 			
 			try{
 				user.location = obj.getString("location");
+				Log.d(TAG, user.location);
 			}catch(JSONException $ee){
 				$ee.printStackTrace();
 			}

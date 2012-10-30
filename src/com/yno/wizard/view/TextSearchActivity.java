@@ -267,7 +267,17 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 		_prog.show();
 	}
 	
+	@Override
+	protected void onResume(){
+		super.onResume();
+		_location.enable();
+	}
 	
+	@Override
+	protected void onPause(){
+		super.onPause();
+		_location.disable();
+	}
 	
 	
 	@Override
@@ -304,12 +314,11 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 			parcel.value = _underSB.getProgress()+10;
 		if( parcel.hasQuery() ){
 			TextSearchActivity.this.showProgress( getString(R.string.search_wines_matching) + parcel.getFullQuery() + "'" );
-			LocationModel loc = new LocationModel( TextSearchActivity.this );
-			parcel.ip = loc.getLocalIpAddress();
-			Address primAddr = loc.getPrimaryAddress();
+			parcel.ip = _location.getLocalIpAddress();
+			Address primAddr = _location.getPrimaryAddress();
 			if( primAddr!=null ){
 				parcel.country = primAddr.getCountryCode();
-				parcel.state = loc.getStateCode( primAddr.getAdminArea() );
+				parcel.state = _location.getStateCode( primAddr.getAdminArea() );
 				parcel.zip = primAddr.getPostalCode();
 			}
 			DoPhraseSearchCommand cmd = new DoPhraseSearchCommand( TextSearchActivity.this );
