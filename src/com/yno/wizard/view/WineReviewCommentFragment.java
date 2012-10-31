@@ -41,7 +41,7 @@ public class WineReviewCommentFragment extends Fragment {
 		_helper.setNav(subnav, WineReviewActivity.NAV_COMMENTS);
 		
 		final FbWineReviewParcel review = getArguments().getParcelable( FbWineReviewParcel.NAME );
-		commentsET.setHint("i.e. I just tasted " + review.wine.name + "...");
+		commentsET.setHint(R.string.hint_review_comments);
 		
 		commentsET.addTextChangedListener(
 			new TextWatcher() {

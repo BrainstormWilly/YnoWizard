@@ -97,6 +97,7 @@ public class GoogleServiceClass implements IWineSearchService {
 			Log.e(TAG, "getWineByBarcode unable to parse JSON: " + $e.toString() );
 		}
 		
+		
 		return wine;
 	}
 	

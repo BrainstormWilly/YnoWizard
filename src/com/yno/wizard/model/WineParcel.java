@@ -14,15 +14,6 @@ public class WineParcel implements Parcelable {
 	public final static String TAG = WineParcel.class.getSimpleName();
 	public final static String NAME = WineParcel.class.getName();
 	
-//	private static String REGEX_WINERY = ".*[wW]inery.*";
-//	private static String REGEX_VINEYARD = ".*[vV]inyards?.*";
-//	private static String REGEX_ESTATE = ".*[eE]states?.*";
-//	private static String REGEX_W_AND_V = ".*[wW]inery//s((and)|&)//s[vV]inyards?.*";
-//	private static String REGEX_WINERYR = ".*[wW]inery.*";
-//	private static String REGEX_VINEYARDR = "//s?[vV]inyards?";
-//	private static String REGEX_ESTATER = "//s?[eE]states?";
-//	private static String REGEX_W_AND_VR = "//s[wW]inery//s((and)|&)//s[vV]inyards?";
-	
 	
 	public static final Parcelable.Creator<WineParcel> CREATOR =
 	    	new Parcelable.Creator<WineParcel>() {
@@ -126,19 +117,6 @@ public class WineParcel implements Parcelable {
 			varietal = parser.getVarietal();
 	}
 	
-//	public String getProducerBase(){
-//		if( producer.equals("") )
-//			return "";
-//		if( producer.matches(REGEX_W_AND_V) )
-//			return producer.replaceAll(REGEX_W_AND_VR, "");
-//		else if( producer.matches(REGEX_WINERY) )
-//			return producer.replaceAll(REGEX_WINERYR, "");
-//		else if( producer.matches(REGEX_VINEYARD) )
-//			return producer.replaceAll(REGEX_VINEYARDR, "");
-//		else if( producer.matches(REGEX_ESTATE) )
-//			return producer.replaceAll(REGEX_ESTATER, "");
-//		return producer;
-//	}
 	
 	private void readFromParcel(Parcel in) {
 		 

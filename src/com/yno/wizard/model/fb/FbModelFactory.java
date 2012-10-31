@@ -24,11 +24,11 @@ public class FbModelFactory {
 				$ee.printStackTrace();
 			}
 			
-			try{
-				user.first_name = obj.getString("first_name");
-			}catch(JSONException $ee){
-				$ee.printStackTrace();
-			}
+//			try{
+//				user.first_name = obj.getString("first_name");
+//			}catch(JSONException $ee){
+//				$ee.printStackTrace();
+//			}
 			
 			try{
 				user.gender = obj.getString("gender");
@@ -37,54 +37,54 @@ public class FbModelFactory {
 				$ee.printStackTrace();
 			}
 			
-			try{
-				user.id = obj.getString("id");
-			}catch(JSONException $ee){
-				$ee.printStackTrace();
-			}
+//			try{
+//				user.id = obj.getString("id");
+//			}catch(JSONException $ee){
+//				$ee.printStackTrace();
+//			}
 			
-			try{
-				user.last_name = obj.getString("last_name");
-			}catch(JSONException $ee){
-				$ee.printStackTrace();
-			}
+//			try{
+//				user.last_name = obj.getString("last_name");
+//			}catch(JSONException $ee){
+//				$ee.printStackTrace();
+//			}
 			
-			try{
-				user.link = obj.getString("link");
-			}catch(JSONException $ee){
-				$ee.printStackTrace();
-			}
+//			try{
+//				user.link = obj.getString("link");
+//			}catch(JSONException $ee){
+//				$ee.printStackTrace();
+//			}
 			
-			try{
-				user.location = obj.getString("location");
-				Log.d(TAG, user.location);
-			}catch(JSONException $ee){
-				$ee.printStackTrace();
-			}
+//			try{
+//				user.location = obj.getString("location");
+//				Log.d(TAG, user.location);
+//			}catch(JSONException $ee){
+//				$ee.printStackTrace();
+//			}
 			
-			try{
-				user.locale = obj.getString("locale");
-			}catch(JSONException $ee){
-				$ee.printStackTrace();
-			}
-			
-			try{
-				user.name = obj.getString("name");
-			}catch(JSONException $ee){
-				$ee.printStackTrace();
-			}
-			
-			try{
-				user.picture = obj.getString("picture");
-			}catch(JSONException $ee){
-				$ee.printStackTrace();
-			}
-			
-			try{
-				user.username = obj.getString("username");
-			}catch(JSONException $ee){
-				$ee.printStackTrace();
-			}
+//			try{
+//				user.locale = obj.getString("locale");
+//			}catch(JSONException $ee){
+//				$ee.printStackTrace();
+//			}
+//			
+//			try{
+//				user.name = obj.getString("name");
+//			}catch(JSONException $ee){
+//				$ee.printStackTrace();
+//			}
+//			
+//			try{
+//				user.picture = obj.getString("picture");
+//			}catch(JSONException $ee){
+//				$ee.printStackTrace();
+//			}
+//			
+//			try{
+//				user.username = obj.getString("username");
+//			}catch(JSONException $ee){
+//				$ee.printStackTrace();
+//			}
 			
 		}catch(JSONException $e){
 			$e.printStackTrace();

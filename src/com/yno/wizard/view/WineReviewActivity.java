@@ -43,6 +43,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.facebook.android.DialogError;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
+import com.yno.wizard.controller.TrackReviewCommand;
 import com.yno.wizard.model.LocationModel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.model.fb.FbUserParcel;
@@ -180,6 +181,11 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 								
 								@Override
 								public void onClick(View v) {
+									TrackReviewCommand cmd = new TrackReviewCommand();
+									cmd.payload.putParcelable(FbWineReviewParcel.NAME, _review);
+									cmd.payload.putParcelable(FbUserParcel.NAME, _user);
+									cmd.execute();
+									
 									_fbSvc.publishReviewToList(_review);
 									WineReviewActivity.this.dismissDiag();
 									//_prog = ProgressDialog.show(WineReviewActivity.this, "Posting review", "", true);

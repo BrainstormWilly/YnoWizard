@@ -9,6 +9,7 @@ import com.yno.wizard.model.ProducerParcel;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class FbUserParcel implements Parcelable {
 	
@@ -55,7 +56,9 @@ public class FbUserParcel implements Parcelable {
 		
 		try{
 			cal.setTime( fmt.parse(birthday) );
+			//Log.d(TAG, String.valueOf(cal.get(Calendar.MONTH)) + "/" + String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) +"/" + String.valueOf(cal.get(Calendar.YEAR)) );
 			a = y - cal.get(Calendar.YEAR);
+			//Log.d(TAG, String.valueOf(a));
 			if( (m < cal.get(Calendar.MONTH)) || ( (m==cal.get(Calendar.MONTH)) && (d < cal.get(Calendar.DAY_OF_MONTH)) ) )
 				--a;
 			if( a<0 )

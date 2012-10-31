@@ -16,9 +16,11 @@ import com.yno.wizard.controller.DoBarcodeSearchCommand;
 import com.yno.wizard.controller.DoWineSelectCommand;
 import com.yno.wizard.controller.OpenManualEntryCommand;
 import com.yno.wizard.controller.OpenPhraseSearchCommand;
+import com.yno.wizard.controller.TrackSelectCommand;
 import com.yno.wizard.model.SearchWineParcel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.model.service.SearchData;
+import com.yno.wizard.model.service.TrackingService;
 import com.yno.wizard.view.IActionBarActivity;
 
 public class ActionBarHelper {
@@ -45,6 +47,11 @@ public class ActionBarHelper {
 			thisActivity.dismissProgress( !parcel.name.equals("") );
 			
 			if( !parcel.name.equals("") ){
+				TrackSelectCommand tmd = new TrackSelectCommand();
+				tmd.payload.putParcelable(WineParcel.NAME, parcel);
+				tmd.payload.putString("phrase", TrackingService.BARCODE);
+				tmd.execute();
+				
 				DoWineSelectCommand cmd = new DoWineSelectCommand(thisActivity);
 				cmd.payload.putParcelable( WineParcel.NAME, parcel);
 				cmd.execute();
@@ -81,7 +88,7 @@ public class ActionBarHelper {
 	public boolean checkActivityResult(int $reqCode, int $resCode, Intent $intent){
 		if( $reqCode==BARCODE_RESULT ){
 			if( $resCode==Activity.RESULT_OK){
-				_context.showProgress("Looking up wine barcode");
+				_context.showProgress( _context.getString(R.string.looking_up_wine_barcode) );
 				SearchWineParcel parcel = new SearchWineParcel();
 				parcel.type = SearchData.SEARCH_TYPE_BARCODE;
 				parcel.query = $intent.getStringExtra(Scan.RESULT);

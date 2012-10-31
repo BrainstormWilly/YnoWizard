@@ -11,6 +11,7 @@ public interface IActionBarActivity {
 	void startActivityForResult(Intent intent, int requestCode);
 	void dismissProgress( boolean $hasResults );
 	void showProgress( String $msg );
+	String getString( int $int );
 	com.actionbarsherlock.app.ActionBar getSupportActionBar();
 	android.app.ActionBar getActionBar();
 }

@@ -39,8 +39,10 @@ public class LocationModel implements LocationListener {
 		_manager = (LocationManager) _context.getSystemService(Context.LOCATION_SERVICE);
 		//_manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,10000.0f,this);
 		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 		_provider = _manager.getBestProvider(criteria, false);
 		//_provider = LocationManager.GPS_PROVIDER;
+		//_provider = LocationManager.NETWORK_PROVIDER;
 		Log.d(TAG, "Location Provider -> " + _provider);
 		
 		_states.put("Alabama", "AL");
@@ -105,7 +107,8 @@ public class LocationModel implements LocationListener {
 		
 		if( loc!=null )
 			onLocationChanged( loc );
-		 
+		else
+			enable();
 	}
 	
 	public String getLocalIpAddress() {
@@ -147,7 +150,7 @@ public class LocationModel implements LocationListener {
 	}
 	
 	public void enable(){
-		_manager.requestLocationUpdates(_provider, 1000, 10f, this);
+		_manager.requestLocationUpdates(_provider, 0, 0, this);
 	}
 	
 	public void disable(){
@@ -157,6 +160,7 @@ public class LocationModel implements LocationListener {
 	@Override
 	public void onLocationChanged(Location location) {
 		Log.d(TAG, "onLocationChanged");
+		disable();
 		_location = location;
 	}
 	

@@ -44,27 +44,27 @@ public class ChooseSearchActivity extends SherlockActivity implements IActionBar
 	
 	private static final int _REQUEST_SCAN_BARCODE = 100;
 	
-	private static class WineSelectHandler extends Handler{
-		
-		private WeakReference<ChooseSearchActivity> _activity;
-		
-		WineSelectHandler( ChooseSearchActivity $activity ){
-			_activity = new WeakReference<ChooseSearchActivity>( $activity );
-		}
-		
-		@Override
-		public void handleMessage(Message $msg) {
-			ChooseSearchActivity thisActivity = _activity.get();
-			SearchWineParcel parcel = (SearchWineParcel) $msg.obj;
-			thisActivity.dismissProgress( !parcel.wine.name.equals("") );
-			
-			if( !parcel.wine.name.equals("") ){
-				DoWineSelectCommand cmd = new DoWineSelectCommand(thisActivity);
-				cmd.payload.putParcelable( SearchWineParcel.NAME, (SearchWineParcel) $msg.obj );
-				cmd.execute();
-			}
-		}
-	}
+//	private static class WineSelectHandler extends Handler{
+//		
+//		private WeakReference<ChooseSearchActivity> _activity;
+//		
+//		WineSelectHandler( ChooseSearchActivity $activity ){
+//			_activity = new WeakReference<ChooseSearchActivity>( $activity );
+//		}
+//		
+//		@Override
+//		public void handleMessage(Message $msg) {
+//			ChooseSearchActivity thisActivity = _activity.get();
+//			SearchWineParcel parcel = (SearchWineParcel) $msg.obj;
+//			thisActivity.dismissProgress( !parcel.wine.name.equals("") );
+//			
+//			if( !parcel.wine.name.equals("") ){
+//				DoWineSelectCommand cmd = new DoWineSelectCommand(thisActivity);
+//				cmd.payload.putParcelable( SearchWineParcel.NAME, (SearchWineParcel) $msg.obj );
+//				cmd.execute();
+//			}
+//		}
+//	}
 	
 	private ImageButton _barcodeBtn;
 	private ImageButton _searchBtn;

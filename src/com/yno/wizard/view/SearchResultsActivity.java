@@ -38,6 +38,7 @@ import com.yno.wizard.controller.DoPhraseSearchCommand;
 import com.yno.wizard.controller.DoWineSelectCommand;
 import com.yno.wizard.controller.ShowPriceVendorCommand;
 import com.yno.wizard.controller.StartWineSelectCommand;
+import com.yno.wizard.controller.TrackSelectCommand;
 import com.yno.wizard.model.LocationModel;
 import com.yno.wizard.model.PriceParcel;
 import com.yno.wizard.model.SearchWineParcel;
@@ -79,6 +80,7 @@ public class SearchResultsActivity extends SherlockActivity implements OnItemCli
 	private List<WineParcel> _results = new ArrayList<WineParcel>();
 	private AlertDialog _prog;
 	private ActionBarHelper _abHelper;
+	private String _query = "";
 	
 	
 
@@ -100,11 +102,11 @@ public class SearchResultsActivity extends SherlockActivity implements OnItemCli
 		resultsLV = (ListView) findViewById( R.id.searchResultsLV );
 		titleTV = (TextView) findViewById( R.id.searchResultsTitle );
 		
-		String query = parcel.getFullQuery();
+		_query = parcel.getFullQuery();
 		if( parcel.value>0 )
-			query += " under $" + (parcel.value+1);
+			_query += " under $" + (parcel.value+1);
 
-		titleTV.setText( "Results for '" + query + "'" );
+		titleTV.setText( "Results for '" + _query + "'" );
 		
 		_results = parcel.results;
 		SearchResultsListAdaptor adapter = new SearchResultsListAdaptor(getApplicationContext(), _results);
@@ -157,6 +159,12 @@ public class SearchResultsActivity extends SherlockActivity implements OnItemCli
 		parcel.wine = _results.get(arg2);
 		
 		showProgress(getString(R.string.searching_for_wine) + parcel.wine.nameQualified + "'");
+		
+		TrackSelectCommand tmd = new TrackSelectCommand();
+		tmd.payload.putParcelable(WineParcel.NAME, parcel.wine);
+		tmd.payload.putString("phrase", _query);
+		tmd.execute();
+		
 		StartWineSelectCommand cmd = new StartWineSelectCommand( SearchResultsActivity.this );
 		cmd.messenger = new Messenger( new WineSelectHandler(SearchResultsActivity.this) );
 		cmd.payload.putParcelable(SearchWineParcel.NAME, parcel);

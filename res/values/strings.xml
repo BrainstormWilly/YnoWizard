@@ -28,4 +28,5 @@
     <string name="uploading_picture">Uploading Picture...</string>
     <string name="url_uploader">http://ynowizard.com/uploads/uploader.php</string>
     <string name="image_upload_complete">Image upload complete</string>
+    <string name="hint_review_comments">i.e. Great balance. Lots of fruit. Very herbal...</string>
 </resources>
