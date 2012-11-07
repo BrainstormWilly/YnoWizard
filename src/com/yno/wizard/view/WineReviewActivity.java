@@ -6,8 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
@@ -16,22 +14,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +36,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.facebook.android.DialogError;
 import com.facebook.android.FacebookError;
-import com.facebook.android.Util;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.yno.wizard.R;
 import com.yno.wizard.controller.TrackReviewCommand;
 import com.yno.wizard.model.LocationModel;
 import com.yno.wizard.model.WineParcel;
@@ -51,7 +46,6 @@ import com.yno.wizard.model.fb.FbWineReviewParcel;
 import com.yno.wizard.model.service.fb.FacebookService;
 import com.yno.wizard.utils.ActionBarHelper;
 import com.yno.wizard.utils.AsyncDownloadImage;
-import com.yno.wizard.R;
 
 public class WineReviewActivity extends SherlockFragmentActivity implements IFacebookContext, IActionBarActivity {
 
@@ -217,7 +211,7 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 		//_fbSvc.clearSession();
 		//_fbSvc.unauthorize();
 		
-		Log.d(TAG, "Facebook session is valid? " + _fbSvc.isSessionValid());
+		//.d(TAG, "Facebook session is valid? " + _fbSvc.isSessionValid());
 		if( _fbSvc.isSessionValid() ){
 			
 			_fbSvc.getUserData();
@@ -266,6 +260,18 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 	}
 	
 	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
+	}
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.actionbar_menu, menu);
@@ -302,7 +308,7 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 	@Override
 	public void onDialogComplete(Bundle $data, String $service) {
 		if( $service.equals("authorize") ){
-			Log.d(TAG, "authorize complete");
+			//.d(TAG, "authorize complete");
 			_diag.hide();
 			_fbSvc.getUserData();
 		}else if( $service.equals("publishReviewToFeed") ){

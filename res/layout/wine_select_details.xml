@@ -31,7 +31,7 @@
 				        android:layout_height="wrap_content"
 				        android:layout_width="wrap_content"
 				        style="@style/ywSubtitleTextView"
-				        android:text="PRODUCER:"/>
+				        android:text="@string/producer"/>
 			        <TextView 
 			              android:id="@+id/wineSelectDetailsProducerTV"
 			              android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
 			              android:layout_width="match_parent"
 			              android:layout_marginTop="20dp"
 			              style="@style/ywSubtitleTextView"
-			              android:text="VARIETAL:"/>
+			              android:text="@string/varietal"/>
 			        <TextView 
 			            android:id="@+id/wineSelectDetailsVarietalTV"
 			            android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
 			            android:layout_width="match_parent"
 			            android:layout_marginTop="20dp"
 			            style="@style/ywSubtitleTextView"
-			            android:text="REGION:"/>
+			            android:text="@string/region"/>
 			        <TextView 
 			            android:id="@+id/wineSelectDetailsRegionTV"
 			            android:layout_height="wrap_content"

@@ -13,8 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.yno.wizard.model.SearchTypeParcel;
 import com.yno.wizard.model.SearchWinesParcel;
 import com.yno.wizard.model.WineFactory;
@@ -73,7 +71,7 @@ public class WineComServiceClass implements IWineSearchService {
 		if( !$parcel.name.equals("") )
 			url += "&search=" + URLEncoder.encode( $parcel.name );
 		
-		Log.d(TAG, url);
+		//Log.d(TAG, url);
 		String json = getSearchInstance( url );
 		
 		
@@ -92,11 +90,11 @@ public class WineComServiceClass implements IWineSearchService {
 						_lastUnqualified.add( wine );
 				}
 			}else{
-				Log.d(TAG, "getWinesByQuery Bad Return Code: " + statusObj.getInt(_FIELD_RETURNCODE) );
+				//Log.d(TAG, "getWinesByQuery Bad Return Code: " + statusObj.getInt(_FIELD_RETURNCODE) );
 			}
 			
 		}catch( JSONException $e ){
-			Log.d(TAG, "getWinesByQuery Unable to parse JSON result " + $parcel.getQuery() );
+			//Log.d(TAG, "getWinesByQuery Unable to parse JSON result " + $parcel.getQuery() );
 		}
 		
 		return wines;
@@ -149,10 +147,10 @@ public class WineComServiceClass implements IWineSearchService {
 				allCats.addAll(typeCats);
 				allCats.addAll(varCats);
 			}else{
-				Log.d(TAG, "getWineTypes Bad Return Code: " + statusObj.getInt(_FIELD_RETURNCODE) );
+				//Log.d(TAG, "getWineTypes Bad Return Code: " + statusObj.getInt(_FIELD_RETURNCODE) );
 			}
 		}catch( JSONException $e ){
-			Log.d(TAG, "getWineTypes Unable to parse JSON result" );
+			//Log.d(TAG, "getWineTypes Unable to parse JSON result" );
 		}
 		
 		

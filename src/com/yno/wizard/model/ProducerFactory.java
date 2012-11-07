@@ -3,8 +3,6 @@ package com.yno.wizard.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.yno.wizard.model.service.VinTankServiceClass;
 
 public class ProducerFactory {

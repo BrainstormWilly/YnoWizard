@@ -13,8 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.yno.wizard.model.SearchWinesParcel;
 import com.yno.wizard.model.WineFactory;
 import com.yno.wizard.model.WineParcel;
@@ -67,11 +65,11 @@ public class GoogleServiceClass implements IWineSearchService {
 						_lastUnqualified.add( wine );
 				}
 			}else{
-				Log.e(TAG, "getWinesByQuery No results found");
+				//.e(TAG, "getWinesByQuery No results found");
 			}
 			
 		}catch( JSONException $e ){
-			Log.e(TAG, "getWinesByQuery unable to parse JSON: " + $e.toString() );
+			//Log.e(TAG, "getWinesByQuery unable to parse JSON: " + $e.toString() );
 		}
 		return wines;
 	}
@@ -90,11 +88,11 @@ public class GoogleServiceClass implements IWineSearchService {
 				wine = WineFactory.createGoogleWine( itemsAry.getJSONObject(0) );
 				wine = getWineDetails( wine );
 			}else{
-				Log.e(TAG, "getWineByBarcode No results found");
+				//.e(TAG, "getWineByBarcode No results found");
 			}
 			
 		}catch( JSONException $e ){
-			Log.e(TAG, "getWineByBarcode unable to parse JSON: " + $e.toString() );
+			//Log.e(TAG, "getWineByBarcode unable to parse JSON: " + $e.toString() );
 		}
 		
 		
@@ -118,10 +116,10 @@ public class GoogleServiceClass implements IWineSearchService {
 						finalWine = WineFactory.combineWines( finalWine, compWine );
 				}
 			}else{
-				Log.e(TAG, "getWineDetails No results found");
+				//Log.e(TAG, "getWineDetails No results found");
 			}
 		}catch( JSONException $e ){
-			Log.e(TAG, "getWineDetails unable to parse JSON: " + $e.toString() );
+			//Log.e(TAG, "getWineDetails unable to parse JSON: " + $e.toString() );
 		}
 		
 		return finalWine;

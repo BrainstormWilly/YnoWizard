@@ -3,7 +3,6 @@ package com.yno.wizard.view;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,16 +13,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.yno.wizard.R;
 import com.yno.wizard.controller.DoWineTypesSearchCommand;
 import com.yno.wizard.controller.OpenChooseSearchCommand;
 import com.yno.wizard.model.SearchTypeParcel;
 import com.yno.wizard.model.db.YnoDbOpenHelper;
-import com.yno.wizard.R;
 
 public class SplashActivity extends SherlockActivity {
     /** Called when the activity is first created. */
-	private static String TAG = SplashActivity.class.getSimpleName();
-	private static int _DELAY = 5000;
+	public static String TAG = SplashActivity.class.getSimpleName();
+	private static int _DELAY = 3000;
 
 	private YnoDbOpenHelper _dbHelper;
 	private AlertDialog _dbProg;

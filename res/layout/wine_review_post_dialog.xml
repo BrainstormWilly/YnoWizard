@@ -24,7 +24,7 @@
                 android:id="@+id/dialogAlertCancelTitleTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ready to Post?"
+                android:text="@string/ready_to_post"
                 style="@style/ywTitleTextView" />
         </LinearLayout>
         <View 
@@ -37,7 +37,7 @@
            android:layout_height="wrap_content"
            android:layout_margin="10dp"
            style="@style/ywSubtitleTextView"
-           android:text="This review will be posted as an activity to your Facebook timeline." />
+           android:text="@string/this_review_will_be_posted_as_an_activity_to_your_facebook_timeline" />
         <View 
 		    android:layout_width="match_parent"
 		    android:layout_height="1dp"
@@ -47,7 +47,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_margin="10dp"
-		        android:text="Publish review to my feed as well."/>
+		        android:text="@string/publish_review_to_my_feed_as_well"/>
         <View 
 		    android:layout_width="match_parent"
 		    android:layout_height="1dp"
@@ -62,7 +62,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            style="@style/ywBorderlessButton"
-	            android:text="CANCEL" />
+	            android:text="@string/cancel" />
             <View xmlns:android="http://schemas.android.com/apk/res/android"
 			    android:layout_width="1dp"
 			    android:layout_height="match_parent"
@@ -73,7 +73,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            style="@style/ywBorderlessButton"
-	            android:text="OK" />
+	            android:text="@string/ok" />
         </LinearLayout>
     </LinearLayout>
     

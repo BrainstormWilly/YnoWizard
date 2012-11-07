@@ -3,10 +3,6 @@ package com.yno.wizard.model.fb;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
-import com.facebook.android.Util;
-
 public class FbModelFactory {
 	
 	public static final String TAG = FbModelFactory.class.getSimpleName();
@@ -19,7 +15,7 @@ public class FbModelFactory {
 			
 			try{
 				user.birthday = obj.getString("birthday");
-				Log.d(TAG, user.birthday);
+				//Log.d(TAG, user.birthday);
 			}catch(JSONException $ee){
 				$ee.printStackTrace();
 			}
@@ -32,7 +28,7 @@ public class FbModelFactory {
 			
 			try{
 				user.gender = obj.getString("gender");
-				Log.d(TAG, user.gender);
+				//Log.d(TAG, user.gender);
 			}catch(JSONException $ee){
 				$ee.printStackTrace();
 			}

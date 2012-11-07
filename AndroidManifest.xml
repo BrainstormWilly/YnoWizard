@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yno.wizard"
-    android:versionCode="0"
-    android:versionName="0.003" >
+    android:versionCode="1"
+    android:versionName="1.000" >
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="15" />
     
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
-    
-<!--     <uses-feature android:required="true" android:name="android.hardware.camera.autofocus"/> -->
-<!--     <uses-feature android:required="true" android:name="android.hardware.camera"/> -->
 
     <application
         android:icon="@drawable/yw_launcher"
@@ -103,9 +102,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-<!--         <provider  -->
-<!--             android:name=".model.db.provider.VarietalProvider" -->
-<!--             android:authorities="com.yno.wizard.model.db.provider" />   -->
+        
+        <activity 
+            android:name="com.google.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+        
         <service 
             android:name=".model.service.WinesPhraseSearchService" />
         <service 
@@ -114,6 +115,8 @@
             android:name=".model.service.WineSelectSearchService" />
         <service 
             android:name=".model.service.WineTypesSearchService" />
+        
+        <meta-data android:value="a1509182d814b08" android:name="ADMOB_PUBLISHER_ID"/>
 
     </application>
 

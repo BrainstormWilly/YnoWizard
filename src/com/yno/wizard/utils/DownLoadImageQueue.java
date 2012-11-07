@@ -5,18 +5,16 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import com.yno.wizard.R;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.yno.wizard.R;
 
 public class DownLoadImageQueue {
 	private static List<QueuedAsyncDownloadImage> _queue = new ArrayList<QueuedAsyncDownloadImage>();
@@ -47,7 +45,7 @@ public class DownLoadImageQueue {
 		        bitmap = BitmapFactory.decodeStream(is);
 		        is.close();
 		    } catch (Exception e) {
-		    	Log.i(TAG, "no image found for location '" + params[0] + "'");
+		    	//Log.i(TAG, "no image found for location '" + params[0] + "'");
 		    } finally {
 		        try {
 		            if (is != null) {

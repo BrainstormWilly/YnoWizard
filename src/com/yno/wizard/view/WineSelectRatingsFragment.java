@@ -3,26 +3,21 @@ package com.yno.wizard.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.yno.wizard.controller.StartWineSelectCommand;
+import com.yno.wizard.R;
 import com.yno.wizard.model.RatingParcel;
 import com.yno.wizard.model.RatingsModel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.utils.WineSelectRatingListAdapter;
 import com.yno.wizard.utils.WineSubnavHelper;
-import com.yno.wizard.R;
 
 public class WineSelectRatingsFragment extends Fragment {
 	
@@ -59,7 +54,7 @@ public class WineSelectRatingsFragment extends Fragment {
 		_helper = new WineSubnavHelper(view);
 		_helper.setNav( subnav, WineSelectActivity.NAV_RATINGS);
 		
-		rngTV.setText("Rating Range: " + model.getLowest().value + "-" + model.getHighest().value);
+		rngTV.setText(R.string.rating_range + String.valueOf( model.getLowest().value ) + "-" + String.valueOf( model.getHighest().value ) );
 		
 		retailersLV.setAdapter( adapter );
 		

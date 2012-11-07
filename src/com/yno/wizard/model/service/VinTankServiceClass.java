@@ -26,8 +26,6 @@ import com.yno.wizard.model.VarietalParcel;
 import com.yno.wizard.model.WineFactory;
 import com.yno.wizard.model.WineParcel;
 
-import android.util.Log;
-
 public class VinTankServiceClass implements IWineSearchService {
 	
 	public static final String TAG = VinTankServiceClass.class.getSimpleName();
@@ -41,13 +39,13 @@ public class VinTankServiceClass implements IWineSearchService {
 	private static final String _SERVICE_WINES = "/search/wines";
 	private static final String _SERVICE_VARIETALS = "/search/varieties";
 	
-	private static final String _QUERY_RESULTS_TOTAL = "total";
+	//private static final String _QUERY_RESULTS_TOTAL = "total";
 	private static final String _QUERY_RESULTS = "results";
-	private static final String _QUERY_PAGE = "page";
-	private static final String _QUERY_RESULTS_PAGE = "rpp";
-	private static final String _FIELD_VAR_NAME = "defaultName";
-	private static final String _FIELD_VAR_ID = "ynId";
-	private static final String _FIELD_VAR_TYPE = "wineType";
+	//private static final String _QUERY_PAGE = "page";
+	//private static final String _QUERY_RESULTS_PAGE = "rpp";
+	//private static final String _FIELD_VAR_NAME = "defaultName";
+	//private static final String _FIELD_VAR_ID = "ynId";
+	//private static final String _FIELD_VAR_TYPE = "wineType";
 	
 	private ArrayList<WineParcel> _lastUnqualified = new ArrayList<WineParcel>();
 	private ArrayList<WineParcel> _lastQualified = new ArrayList<WineParcel>();
@@ -73,7 +71,7 @@ public class VinTankServiceClass implements IWineSearchService {
 				vars.add( VarietalFactory.createVinTankVarietal( listAry.getJSONObject(a) ) );
 			}
 		}catch( JSONException $e ){
-			Log.d(TAG, "No varietals found for query " + $query );
+			//Log.d(TAG, "No varietals found for query " + $query );
 		}
 		
 		return vars;
@@ -91,7 +89,7 @@ public class VinTankServiceClass implements IWineSearchService {
 				vars.add( VarietalFactory.createVinTankVarietalName( listAry.getJSONObject(a) ) );
 			}
 		}catch( JSONException $e ){
-			Log.d(TAG, "No varietal names found for query " + $query );
+			//Log.d(TAG, "No varietal names found for query " + $query );
 		}
 		
 		return vars;
@@ -118,7 +116,7 @@ public class VinTankServiceClass implements IWineSearchService {
 					_lastUnqualified.add( wine );
 			}
 		}catch( JSONException $e ){
-			Log.d(TAG, "No wines found for query " + $parcel.getQuery() );
+			//Log.d(TAG, "No wines found for query " + $parcel.getQuery() );
 		}
 		
 		return winesAll;
@@ -139,7 +137,7 @@ public class VinTankServiceClass implements IWineSearchService {
 				winesAll.add( WineFactory.createVinTankWineName(listAry.getJSONObject(a)) );
 			
 		}catch( JSONException $e ){
-			Log.d(TAG, "No wine names found for query " + $query );
+			//Log.d(TAG, "No wine names found for query " + $query );
 		}
 		
 		return winesAll;
@@ -157,7 +155,7 @@ public class VinTankServiceClass implements IWineSearchService {
 				prods.add( ProducerFactory.createVinTankProducer( listAry.getJSONObject(a) ) );
 			}
 		}catch( JSONException $e ){
-			Log.d(TAG, "No producers found for query " + $query );
+			//Log.d(TAG, "No producers found for query " + $query );
 		}
 		
 		return prods;
@@ -175,7 +173,7 @@ public class VinTankServiceClass implements IWineSearchService {
 				prods.add( ProducerFactory.createVinTankProducerName( listAry.getJSONObject(a) ) );
 			}
 		}catch( JSONException $e ){
-			Log.d(TAG, "No producer names found for query " + $query );
+			//Log.d(TAG, "No producer names found for query " + $query );
 		}
 		
 		return prods;
@@ -193,7 +191,7 @@ public class VinTankServiceClass implements IWineSearchService {
 				regs.add( RegionFactory.createVinTankRegion( listAry.getJSONObject(a) ) );
 			}
 		}catch( JSONException $e ){
-			Log.d(TAG, "No regions found for query " + $query );
+			//Log.d(TAG, "No regions found for query " + $query );
 		}
 		
 		return regs;
@@ -211,7 +209,7 @@ public class VinTankServiceClass implements IWineSearchService {
 				regs.add( RegionFactory.createVinTankRegionName( listAry.getJSONObject(a) ) );
 			}
 		}catch( JSONException $e ){
-			Log.d(TAG, "No region names found for query " + $query );
+			//Log.d(TAG, "No region names found for query " + $query );
 		}
 		
 		return regs;
@@ -263,7 +261,7 @@ public class VinTankServiceClass implements IWineSearchService {
 			}
 			hash = sb.toString();
 		}catch( NoSuchAlgorithmException $e ){
-			Log.e(TAG, "doVinTankSearch unable to hash MD5: " + $e.toString() );
+			//Log.e(TAG, "doVinTankSearch unable to hash MD5: " + $e.toString() );
 		}
 		return hash;
 	}

@@ -2,10 +2,6 @@ package com.yno.wizard.utils;
 
 import java.util.List;
 
-import com.yno.wizard.model.PriceParcel;
-import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.yno.wizard.R;
+import com.yno.wizard.model.WineParcel;
 
 public class SearchResultsListAdaptor extends BaseAdapter implements ListAdapter {
 	

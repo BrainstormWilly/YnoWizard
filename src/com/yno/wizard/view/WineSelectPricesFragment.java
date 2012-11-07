@@ -3,25 +3,24 @@ package com.yno.wizard.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.yno.wizard.R;
 import com.yno.wizard.controller.ShowPriceVendorCommand;
+import com.yno.wizard.controller.TrackBuyLinkCommand;
 import com.yno.wizard.model.PriceModel;
 import com.yno.wizard.model.PriceParcel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.utils.WineSelectPriceListAdapter;
 import com.yno.wizard.utils.WineSubnavHelper;
-import com.yno.wizard.R;
-
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 public class WineSelectPricesFragment extends Fragment implements OnItemClickListener {
 	
@@ -30,6 +29,7 @@ public class WineSelectPricesFragment extends Fragment implements OnItemClickLis
 	private WineSubnavHelper _helper;
 	
 	private List<PriceParcel> _prices;
+	private WineParcel _wine;
 	
 	public static WineSelectPricesFragment newInstance( WineParcel $wine, ArrayList<String> $subnav ){
 		Bundle arg = new Bundle();
@@ -48,8 +48,8 @@ public class WineSelectPricesFragment extends Fragment implements OnItemClickLis
 		TextView rngTV = (TextView) view.findViewById(R.id.wineSelectPriceRangeTV);
 		ListView retailersLV = (ListView) view.findViewById( R.id.wineSelectPriceLV ); 
 		
-		WineParcel wine = getArguments().getParcelable( WineParcel.NAME );
-		PriceModel model = new PriceModel( wine.prices);
+		_wine = getArguments().getParcelable( WineParcel.NAME );
+		PriceModel model = new PriceModel( _wine.prices);
 		_prices = model.getSortedList();
 		WineSelectPriceListAdapter adapter = new WineSelectPriceListAdapter( getActivity().getApplicationContext(), model );
 		
@@ -67,6 +67,11 @@ public class WineSelectPricesFragment extends Fragment implements OnItemClickLis
 	
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		TrackBuyLinkCommand tmd = new TrackBuyLinkCommand();
+		tmd.payload.putParcelable(PriceParcel.NAME, _prices.get(arg2));
+		tmd.payload.putParcelable(WineParcel.NAME, _wine);
+		tmd.execute();
+		
 		ShowPriceVendorCommand cmd = new ShowPriceVendorCommand(getActivity());
 		cmd.payload.putParcelable(PriceParcel.NAME, _prices.get(arg2));
 		cmd.execute();

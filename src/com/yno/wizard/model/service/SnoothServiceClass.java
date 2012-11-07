@@ -13,12 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.location.LocationManager;
-import android.location.LocationProvider;
-import android.util.Log;
-
-import com.yno.wizard.YnoFinderApplication;
-import com.yno.wizard.model.LocationModel;
 import com.yno.wizard.model.SearchWinesParcel;
 import com.yno.wizard.model.WineFactory;
 import com.yno.wizard.model.WineParcel;
@@ -71,7 +65,7 @@ public class SnoothServiceClass implements IWineSearchService {
 			svcUrl += "&xp=" + $parcel.value;
 		if( !$parcel.getQuery().equals("") )
 			svcUrl += "&q=" + URLEncoder.encode( $parcel.getQuery() );
-		Log.d(TAG, svcUrl);
+		//Log.d(TAG, svcUrl);
 		String json = getSearchInstance( svcUrl );
 		
 		try{
@@ -88,11 +82,11 @@ public class SnoothServiceClass implements IWineSearchService {
 						_lastUnqualified.add( wine );
 				}
 			}else{
-				Log.d(TAG, "getWinesByQuery No Results found" );
+				//Log.d(TAG, "getWinesByQuery No Results found" );
 			}
 			
 		}catch( JSONException $e ){
-			Log.d(TAG, "getWinesByQuery Unable to parse JSON result " + $parcel.getQuery() );
+			//Log.d(TAG, "getWinesByQuery Unable to parse JSON result " + $parcel.getQuery() );
 		}
 		
 		return wines;

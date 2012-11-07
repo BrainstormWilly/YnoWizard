@@ -1,16 +1,14 @@
 package com.yno.wizard.utils;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
-import com.yno.wizard.model.service.SearchData;
-import com.yno.wizard.model.service.VinTankServiceClass;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+
+import com.yno.wizard.model.service.SearchData;
+import com.yno.wizard.model.service.VinTankServiceClass;
 
 public class WineTypesACAdapter extends ArrayAdapter<String> implements Filterable {
 	
@@ -87,7 +85,7 @@ public class WineTypesACAdapter extends ArrayAdapter<String> implements Filterab
 //							_newData = new ArrayList<String>( (ArrayList<String>) results.values );
 //						}
 					
-						Log.d(TAG, "data length = " + _allData.size());
+						//Log.d(TAG, "data length = " + _allData.size());
 							
 						notifyDataSetChanged();
 					}catch( Exception $e ){

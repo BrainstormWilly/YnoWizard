@@ -1,16 +1,15 @@
 package com.yno.wizard.utils;
 
-import com.yno.wizard.model.db.SearchTypesTable;
-import com.yno.wizard.R;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.yno.wizard.R;
+import com.yno.wizard.model.db.SearchTypesTable;
 
 public class CursorSpinnerAdapter extends SimpleCursorAdapter {
 	

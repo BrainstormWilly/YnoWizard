@@ -48,7 +48,7 @@
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            style="@style/ywBorderlessButton"
-	            android:text="OK" />
+	            android:text="@string/ok" />
 
     </LinearLayout>
 

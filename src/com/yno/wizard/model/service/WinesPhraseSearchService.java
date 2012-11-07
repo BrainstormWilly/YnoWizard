@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.util.Log;
 
 import com.yno.wizard.model.SearchWinesParcel;
 import com.yno.wizard.model.WineFactory;
@@ -41,19 +40,19 @@ public class WinesPhraseSearchService extends IntentService {
 		if( wines.size()<SearchData.API_CATEGORY_RESULTS ){
 			tempWines = wcSvc.getWinesByQuery( parcel );
 			wines.addAll( wcSvc.getLastQualifiedWines() );
-			Log.i(TAG, "Added " + wcSvc.getLastQualifiedWines().size() + " Wine.com qualified wines." );
+			//Log.i(TAG, "Added " + wcSvc.getLastQualifiedWines().size() + " Wine.com qualified wines." );
 		}
 		
 		if( wines.size()<SearchData.API_CATEGORY_RESULTS ){
 			tempWines = snSvc.getWinesByQuery( parcel );
 			wines.addAll( snSvc.getLastQualifiedWines() );
-			Log.i(TAG, "Added " + snSvc.getLastQualifiedWines().size() + " Snooth qualified wines." );
+			//Log.i(TAG, "Added " + snSvc.getLastQualifiedWines().size() + " Snooth qualified wines." );
 		}
 		
 		if( parcel.value==0 && wines.size()<SearchData.API_CATEGORY_RESULTS ){
 			tempWines = vtSvc.getWinesByQuery( parcel );
 			wines.addAll( vtSvc.getLastQualifiedWines() );
-			Log.i(TAG, "Added " + vtSvc.getLastQualifiedWines().size() + " Vintank qualified wines." );
+			//Log.i(TAG, "Added " + vtSvc.getLastQualifiedWines().size() + " Vintank qualified wines." );
 		}
 		
 		
@@ -65,17 +64,17 @@ public class WinesPhraseSearchService extends IntentService {
 			
 			if( wines.size()<SearchData.API_CATEGORY_RESULTS ){
 				wines.addAll( wcSvc.getLastUnqualifiedWines() );
-				Log.i(TAG, "Added " + wcSvc.getLastUnqualifiedWines().size() + " Wine.com unqualified wines." );
+				//Log.i(TAG, "Added " + wcSvc.getLastUnqualifiedWines().size() + " Wine.com unqualified wines." );
 			}
 			
 			if( wines.size()<SearchData.API_CATEGORY_RESULTS ){
 				wines.addAll( snSvc.getLastUnqualifiedWines() );
-				Log.i(TAG, "Added " + snSvc.getLastUnqualifiedWines().size() + " Snooth unqualified wines." );
+				//Log.i(TAG, "Added " + snSvc.getLastUnqualifiedWines().size() + " Snooth unqualified wines." );
 			}
 			
 			if( parcel.value==0 && wines.size()<SearchData.API_CATEGORY_RESULTS ){
 				wines.addAll( vtSvc.getLastUnqualifiedWines() );
-				Log.i(TAG, "Added " + vtSvc.getLastUnqualifiedWines().size() + " Vintank unqualified wines." );
+				//Log.i(TAG, "Added " + vtSvc.getLastUnqualifiedWines().size() + " Vintank unqualified wines." );
 			}
 		
 		}

@@ -3,7 +3,6 @@ package com.yno.wizard.utils;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.yno.wizard.R;
 import com.yno.wizard.model.PriceModel;
 import com.yno.wizard.model.PriceParcel;
-import com.yno.wizard.R;
 
 public class WineSelectPriceListAdapter extends BaseAdapter implements ListAdapter {
 	

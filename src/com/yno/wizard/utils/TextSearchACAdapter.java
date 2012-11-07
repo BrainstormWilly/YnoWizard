@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import com.yno.wizard.model.VintagesModel;
 import com.yno.wizard.model.service.SearchData;
 import com.yno.wizard.model.service.VinTankServiceClass;
-import com.yno.wizard.R;
 
 public class TextSearchACAdapter extends ArrayAdapter<String> implements Filterable {
 	
@@ -30,7 +28,7 @@ public class TextSearchACAdapter extends ArrayAdapter<String> implements Filtera
 	private String _full = "";
 	private boolean _partMode = false;
 	private ArrayList<String> _newData = new ArrayList<String>(SearchData.AUTOCOMPLETE_TOTAL);
-	private ArrayList<String> _allData = new ArrayList<String>(SearchData.AUTOCOMPLETE_TOTAL);
+	//private ArrayList<String> _allData = new ArrayList<String>(SearchData.AUTOCOMPLETE_TOTAL);
 	private ArrayList<String> _oldData = new ArrayList<String>(SearchData.AUTOCOMPLETE_TOTAL);
 	
 	public TextSearchACAdapter( Context $context, int $textViewId ){

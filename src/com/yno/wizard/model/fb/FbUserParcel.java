@@ -2,14 +2,10 @@ package com.yno.wizard.model.fb;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-
-import com.yno.wizard.model.ProducerParcel;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class FbUserParcel implements Parcelable {
 	

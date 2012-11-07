@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,11 +23,12 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.yno.wizard.R;
 import com.yno.wizard.controller.StartFacebookRatingCommand;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.utils.ActionBarHelper;
 import com.yno.wizard.utils.AsyncDownloadImage;
-import com.yno.wizard.R;
 
 public class WineSelectActivity extends SherlockFragmentActivity implements IActionBarActivity {
 
@@ -150,6 +150,18 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 		WineParcel parcel = intent.getParcelableExtra(WineParcel.NAME);
 		setWine( parcel );
 		
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
 	}
 	
 	@Override

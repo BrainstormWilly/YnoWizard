@@ -2,14 +2,12 @@ package com.yno.wizard.utils;
 
 import java.util.ArrayList;
 
-import com.yno.wizard.view.WineSelectActivity;
-import com.yno.wizard.R;
-
-import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+
+import com.yno.wizard.R;
 
 public class WineSubnavHelper {
 	

@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class WineParcel implements Parcelable {
 	

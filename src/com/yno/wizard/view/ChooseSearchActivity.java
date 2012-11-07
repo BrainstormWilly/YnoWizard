@@ -1,70 +1,33 @@
 package com.yno.wizard.view;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.lang.ref.WeakReference;
-
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Messenger;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.google.zxing.client.android.Intents.Scan;
-import com.yno.wizard.controller.DoBarcodeSearchCommand;
-import com.yno.wizard.controller.DoWineSelectCommand;
+import com.yno.wizard.R;
 import com.yno.wizard.controller.OpenManualEntryCommand;
 import com.yno.wizard.controller.OpenPhraseSearchCommand;
-import com.yno.wizard.controller.StartBarcodeSearchCommand;
-import com.yno.wizard.model.SearchWineParcel;
-import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.model.service.SearchData;
 import com.yno.wizard.utils.ActionBarHelper;
-import com.yno.wizard.R;
 
 public class ChooseSearchActivity extends SherlockActivity implements IActionBarActivity {
 	
 	public static final String TAG = ChooseSearchActivity.class.getSimpleName();
 	public static final String NAME = "com.yno.wizard.intent.OPEN_CHOOSE_SEARCH_METHOD";
 	
-	private static final int _REQUEST_SCAN_BARCODE = 100;
-	
-//	private static class WineSelectHandler extends Handler{
-//		
-//		private WeakReference<ChooseSearchActivity> _activity;
-//		
-//		WineSelectHandler( ChooseSearchActivity $activity ){
-//			_activity = new WeakReference<ChooseSearchActivity>( $activity );
-//		}
-//		
-//		@Override
-//		public void handleMessage(Message $msg) {
-//			ChooseSearchActivity thisActivity = _activity.get();
-//			SearchWineParcel parcel = (SearchWineParcel) $msg.obj;
-//			thisActivity.dismissProgress( !parcel.wine.name.equals("") );
-//			
-//			if( !parcel.wine.name.equals("") ){
-//				DoWineSelectCommand cmd = new DoWineSelectCommand(thisActivity);
-//				cmd.payload.putParcelable( SearchWineParcel.NAME, (SearchWineParcel) $msg.obj );
-//				cmd.execute();
-//			}
-//		}
-//	}
 	
 	private ImageButton _barcodeBtn;
 	private ImageButton _searchBtn;
@@ -73,6 +36,8 @@ public class ChooseSearchActivity extends SherlockActivity implements IActionBar
 	private AlertDialog _prog;
 	private AlertDialog _alert;
 	private ActionBarHelper _abHelper;
+	private AdView _ad;
+	//private Tracker _trkr;
 	
 
 	@Override
@@ -80,6 +45,9 @@ public class ChooseSearchActivity extends SherlockActivity implements IActionBar
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.begin_search_main);
+		
+		//_ad = (AdView) this.findViewById(R.id.beginSearchAdView);
+		//_ad.loadAd( new AdRequest() );
 		
 		_abHelper = new ActionBarHelper(this);
 		
@@ -124,7 +92,19 @@ public class ChooseSearchActivity extends SherlockActivity implements IActionBar
 				}
         );
         
-        
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+		
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
 	}
 	
 	public void onActivityResult( int $reqCode, int $resCode, Intent $intent ){

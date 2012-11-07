@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.util.Log;
 
 import com.yno.wizard.model.SearchWineParcel;
 import com.yno.wizard.model.WineParcel;

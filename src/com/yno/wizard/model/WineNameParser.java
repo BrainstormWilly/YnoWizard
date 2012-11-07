@@ -8,11 +8,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.util.Log;
-
-import com.yno.wizard.model.db.YnoDbOpenHelper;
-import com.yno.wizard.model.service.VinTankServiceClass;
-
 public class WineNameParser {
 	
 	public static final String TAG = WineNameParser.class.getSimpleName();

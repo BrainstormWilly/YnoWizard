@@ -1,20 +1,17 @@
 package com.yno.wizard.view;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.utils.WineSubnavHelper;
-import com.yno.wizard.R;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.yno.wizard.R;
+import com.yno.wizard.model.WineParcel;
+import com.yno.wizard.utils.WineSubnavHelper;
 
 public class WineSelectDescripFragment extends SherlockFragment {
 	

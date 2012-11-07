@@ -1,7 +1,6 @@
 package com.yno.wizard.model.db;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class VarietalTable {
 
@@ -26,7 +25,7 @@ public class VarietalTable {
 	}
 	
 	public static void onUpgrade( SQLiteDatabase $db, int $old, int $new ){
-		Log.w(TAG, "Upgrading database from " + $old + " to " + $new + ". All data will be lost." );
+		//Log.w(TAG, "Upgrading database from " + $old + " to " + $new + ". All data will be lost." );
 		$db.execSQL( "DROP TABLE IF EXISTS " + TABLE_VARIETALS );
 		onCreate( $db );
 	}

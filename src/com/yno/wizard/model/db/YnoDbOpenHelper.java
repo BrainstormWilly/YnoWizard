@@ -2,14 +2,13 @@ package com.yno.wizard.model.db;
 
 import java.util.ArrayList;
 
-import com.yno.wizard.model.SearchTypeParcel;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
+import com.yno.wizard.model.SearchTypeParcel;
 
 public class YnoDbOpenHelper extends SQLiteOpenHelper {
 	
@@ -32,7 +31,7 @@ public class YnoDbOpenHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase $db, int $old, int $new) {
-		Log.d(TAG, "onUpgrade version " + $old + " to " + $new);
+		//Log.d(TAG, "onUpgrade version " + $old + " to " + $new);
 		SearchTypesTable.onUpgrade($db, $old, $new);
 		//VarietalTable.onUpgrade($db, $old, $new);
 	}

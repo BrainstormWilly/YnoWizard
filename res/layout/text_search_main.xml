@@ -45,7 +45,7 @@
 			        android:layout_height="wrap_content"
 			        android:layout_centerVertical="true"
 			        android:paddingRight="20dp"
-			        android:hint="Vintage, Region, Name, etc.." 
+			        android:hint="@string/ie_vintage_region_name_etc" 
 			        android:inputType="text"
 			        android:imeOptions="actionSearch"/>
 	             <Button 
@@ -72,7 +72,7 @@
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
 			        
-			        android:text="Filter by Wine Type"/>
+			        android:text="@string/filter_by_wine_type"/>
 			    <Spinner 
 			        android:id="@+id/textSearchTypeSpn"
 			        android:layout_width="match_parent"
@@ -93,7 +93,7 @@
 			        android:id="@+id/textSearchUnderCB"
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
-			        android:text="Filter by Max Price"/>
+			        android:text="@string/filter_by_max_price"/>
 			    <TableLayout 
 			        android:id="@+id/textSearchUnderTL"
 			        android:layout_width="match_parent"

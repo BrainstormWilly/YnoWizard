@@ -2,7 +2,6 @@ package com.yno.wizard.model;
 
 
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,12 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
-import com.yno.wizard.model.service.GoogleServiceClass;
-import com.yno.wizard.model.service.SnoothServiceClass;
-import com.yno.wizard.model.service.VinTankServiceClass;
-import com.yno.wizard.model.service.WineComServiceClass;
 import com.yno.wizard.utils.WineNameComparator;
 
 public class WineFactory {
@@ -226,7 +219,7 @@ public class WineFactory {
 		try{
 			wine.id = $data.getString("Id");
 		}catch( JSONException $e ){
-			Log.e(TAG, "createWineComWine Unable to locate ID " + $e.toString() );
+			//.e(TAG, "createWineComWine Unable to locate ID " + $e.toString() );
 		}
 		
 		wine.sponsor = SponsorFactory.createWineComSponsor();
@@ -239,7 +232,7 @@ public class WineFactory {
 				wine.imageLarge = uri.replace("m.jpg", "l.jpg");
 			}
 		}catch( JSONException $e ){
-			Log.i(TAG, "createWineComWine Unable to locate image " + $e.toString() );
+			//Log.i(TAG, "createWineComWine Unable to locate image " + $e.toString() );
 		}
 		
 		try{
@@ -251,7 +244,7 @@ public class WineFactory {
 			price.url = $data.getString("Url");
 			wine.prices.add( price );
 		}catch( JSONException $e ){
-			Log.i(TAG, "createWineComWine Unable to locate retail price " + $e.toString() );
+			//Log.i(TAG, "createWineComWine Unable to locate retail price " + $e.toString() );
 		}
 		
 		
@@ -266,7 +259,7 @@ public class WineFactory {
 			if( rtg.value>0 ) 
 				wine.ratings.add(rtg);
 		}catch( JSONException $e ){
-			Log.i(TAG, "createWineComWine Unable to locate highest score " + $e.toString() );
+			//Log.i(TAG, "createWineComWine Unable to locate highest score " + $e.toString() );
 		}
 			
 		try{
@@ -274,44 +267,44 @@ public class WineFactory {
 			if( wine.description.equals("null") )
 				wine.description = null;
 		}catch( JSONException $e ){
-			Log.e(TAG, "createWineComWine Unable to locate description " + $e.toString() );
+			//.e(TAG, "createWineComWine Unable to locate description " + $e.toString() );
 		}
 		
 		try{
 			wine.producer = $data.getJSONObject("Vineyard").getString("Name");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createWineComWine unable to locate producer " + $e.toString() );
+			//Log.i(TAG, "createWineComWine unable to locate producer " + $e.toString() );
 		}
 		
 		String region = "";
 		try{
 			region += $data.getJSONObject("Appellation").getString("Name");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createWineComWine unable to locate appellation " + $e.toString() );
+			//Log.i(TAG, "createWineComWine unable to locate appellation " + $e.toString() );
 		}
 		try{
 			region += ", " + $data.getJSONObject("Region").getString("Name");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createWineComWine unable to locate region " + $e.toString() );
+			//Log.i(TAG, "createWineComWine unable to locate region " + $e.toString() );
 		}
 		wine.region = region;
 		
 		try{
 			wine.varietal = $data.getJSONObject("Varietal").getString("Name");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createWineComWine unable to locate varietal " + $e.toString() );
+			//Log.i(TAG, "createWineComWine unable to locate varietal " + $e.toString() );
 		}
 		
 		try{
 			wine.year = $data.getInt("Year");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createWineComWine Unable to locate Year " + $e.toString() );
+			//Log.i(TAG, "createWineComWine Unable to locate Year " + $e.toString() );
 		}
 
 		try{
 			wine.setName( $data.getString("Name") );
 		}catch( JSONException $e ){
-			Log.e(TAG, "createWineComWine Unable to locate Name " + $e.toString() );
+			//Log.e(TAG, "createWineComWine Unable to locate Name " + $e.toString() );
 		}
 		
 		
@@ -325,7 +318,7 @@ public class WineFactory {
 		try{
 			wine.id = $data.getString("code");
 		}catch( JSONException $e ){
-			Log.e(TAG, "createSnoothWine Unable to locate ID " + $e.toString() );
+			//.e(TAG, "createSnoothWine Unable to locate ID " + $e.toString() );
 		}
 		
 		wine.sponsor = SponsorFactory.createSnoothSponsor();
@@ -336,13 +329,13 @@ public class WineFactory {
 			wine.imageSmall = uri;
 			wine.imageLarge = uri.replace("search", "full");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createSnoothWine Unable to locate image " + $e.toString() );
+			//Log.i(TAG, "createSnoothWine Unable to locate image " + $e.toString() );
 		}
 		
 		try{
 			wine.notes = $data.getString("tags").replace("&amp;", "&");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createSnoothWine Unable to locate tags " + $e.toString() );
+			//Log.i(TAG, "createSnoothWine Unable to locate tags " + $e.toString() );
 		}
 		
 		try{
@@ -354,7 +347,7 @@ public class WineFactory {
 			price.url = $data.getString("link");
 			wine.prices.add( price );
 		}catch( JSONException $e ){
-			Log.i(TAG, "createSnoothWine Unable to locate retail price " + $e.toString() );
+			//Log.i(TAG, "createSnoothWine Unable to locate retail price " + $e.toString() );
 		}
 		
 		
@@ -369,37 +362,37 @@ public class WineFactory {
 			rtg.image = "sponsor_snooth";
 			wine.ratings.add(rtg);
 		}catch( JSONException $e ){
-			Log.i(TAG, "createSnoothWine Unable to locate rating " + $e.toString() );
+			//Log.i(TAG, "createSnoothWine Unable to locate rating " + $e.toString() );
 		}
 			
 		try{
 			wine.producer = $data.getString("winery");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createSnoothWine unable to locate producer " + $e.toString() );
+			//.i(TAG, "createSnoothWine unable to locate producer " + $e.toString() );
 		}
 		
 		try{
 			wine.region = $data.getString("region");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createSnoothWine unable to locate region " + $e.toString() );
+			//Log.i(TAG, "createSnoothWine unable to locate region " + $e.toString() );
 		}
 		
 		try{;
 			wine.varietal = $data.getString("varietal");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createSnoothWine unable to locate varietal " + $e.toString() );
+			//Log.i(TAG, "createSnoothWine unable to locate varietal " + $e.toString() );
 		}
 		
 		try{
 			wine.year = $data.getInt("vintage");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createSnoothWine unable to locate vintage " + $e.toString() );
+			//Log.i(TAG, "createSnoothWine unable to locate vintage " + $e.toString() );
 		}
 		
 		try{
 			wine.setName($data.getString("name"));
 		}catch( JSONException $e ){
-			Log.e(TAG, "createSnoothWine Unable to locate Name " + $e.toString() );
+			//Log.e(TAG, "createSnoothWine Unable to locate Name " + $e.toString() );
 		}
 		
 		
@@ -413,7 +406,7 @@ public class WineFactory {
 		try{
 			wine.id = $data.getString("ynId");
 		}catch( JSONException $e ){
-			Log.e(TAG, "createVinTankWine Unable to locate ID " + $e.toString() );
+			//Log.e(TAG, "createVinTankWine Unable to locate ID " + $e.toString() );
 		}
 		
 		wine.sponsor = SponsorFactory.createVintankSponsor();
@@ -432,7 +425,7 @@ public class WineFactory {
 					wine.imageLarge = bottle;
 				}
 			}catch( JSONException $ee ){
-				Log.i(TAG, "createVinTankWine Unable to locate image " + $ee.toString() );
+				//.i(TAG, "createVinTankWine Unable to locate image " + $ee.toString() );
 			}	
 		}
 		
@@ -444,15 +437,15 @@ public class WineFactory {
 				if( wine.description.equals("null") )
 					wine.description = null;
 			}catch( JSONException $ee ){
-				Log.i(TAG, "createVinTankWine Unable to locate description " + $ee.toString() );
+				//Log.i(TAG, "createVinTankWine Unable to locate description " + $ee.toString() );
 			}
 			try{
 				wine.notes = URLDecoder.decode(textObj.getString("tastingNotes"));
 			}catch( JSONException $eee ){
-				Log.i(TAG, "createVinTankWine Unable to locate tastingNotes " + $eee.toString() );
+				//Log.i(TAG, "createVinTankWine Unable to locate tastingNotes " + $eee.toString() );
 			}
 		}catch( JSONException $e ){
-			Log.i(TAG, "createVinTankWine Unable to locate text " + $e.toString() );	
+			//Log.i(TAG, "createVinTankWine Unable to locate text " + $e.toString() );	
 		}
 		
 		try{
@@ -471,14 +464,14 @@ public class WineFactory {
 			}
 			
 		}catch( JSONException $e ){
-			Log.i(TAG, "createVinTankWine Unable to locate retail price " + $e.toString() );
+			//Log.i(TAG, "createVinTankWine Unable to locate retail price " + $e.toString() );
 		}
 			
 		try{
 			JSONObject brandObj = $data.getJSONObject("brand");
 			wine.producer = brandObj.getString("name");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createVinTankWine Unable to locate producer " + $e.toString() );
+			//Log.i(TAG, "createVinTankWine Unable to locate producer " + $e.toString() );
 		}
 		
 		try{
@@ -490,11 +483,11 @@ public class WineFactory {
 					reg += ", " + regionAry.getJSONObject(a).getString("name");
 				}
 			}catch( JSONException $ee ){
-				Log.i(TAG, "createVinTankWine Unable to locate lineage " + $ee.toString() );
+				//Log.i(TAG, "createVinTankWine Unable to locate lineage " + $ee.toString() );
 			}
 			wine.region = reg;
 		}catch( JSONException $e ){
-			Log.i(TAG, "createVinTankWine Unable to locate region " + $e.toString() );
+			//Log.i(TAG, "createVinTankWine Unable to locate region " + $e.toString() );
 		}
 		
 		JSONObject varObj = null;
@@ -510,21 +503,21 @@ public class WineFactory {
 					if(a<l-1) wine.varietal += ", ";
 				}
 			}catch( JSONException $ee ){
-				Log.i(TAG, "createVinTankWine unable to locate varietal " + $e.toString() );
-				Log.i(TAG, "createVinTankWine unable to locate composition " + $ee.toString() );
+				//Log.i(TAG, "createVinTankWine unable to locate varietal " + $e.toString() );
+				//Log.i(TAG, "createVinTankWine unable to locate composition " + $ee.toString() );
 			}
 		}
 		
 		try{
 			wine.year = $data.getInt("vintage");
 		}catch( JSONException $e ){
-			Log.i(TAG, "createVinTankWine unable to locate vintage " + $e.toString() );
+			//Log.i(TAG, "createVinTankWine unable to locate vintage " + $e.toString() );
 		}
 
 		try{
 			wine.setName( $data.getString("name") );
 		}catch( JSONException $e ){
-			Log.e(TAG, "createVinTankWine Unable to locate Name " + $e.toString() );
+			//Log.e(TAG, "createVinTankWine Unable to locate Name " + $e.toString() );
 		}
 		
 		return wine;
@@ -536,7 +529,7 @@ public class WineFactory {
 			WineNameParser parser = new WineNameParser($data.getString("name"));
 			return parser.getParsedName();
 		}catch( JSONException $e ){
-			Log.e(TAG, "createVinTankWineName Unable to locate Name " + $e.toString() );
+			//Log.e(TAG, "createVinTankWineName Unable to locate Name " + $e.toString() );
 		}
 		
 		return "";
@@ -558,19 +551,19 @@ public class WineFactory {
 				if( wine.description.equals("null") )
 					wine.description = null;
 			}catch( JSONException $e){
-				Log.i(TAG, "createGoogleWine no description found for "  + wine.name );
+				//Log.i(TAG, "createGoogleWine no description found for "  + wine.name );
 			}
 			
 			try{
 				wine.id = product.getString("googleId");
 			}catch( JSONException $e){
-				Log.i(TAG, "createGoogleWine no id found for "  + wine.name );
+				//Log.i(TAG, "createGoogleWine no id found for "  + wine.name );
 			}
 			
 			try{
 				wine.producer = product.getString("brand");
 			}catch( JSONException $e){
-				Log.i(TAG, "createGoogleWine no id found for "  + wine.name );
+				//Log.i(TAG, "createGoogleWine no id found for "  + wine.name );
 			}
 			
 			try{
@@ -583,7 +576,7 @@ public class WineFactory {
 				}
 				
 			}catch( JSONException $e ){
-				Log.i(TAG, "createGoogleWine no images found for "  + wine.name );
+				//Log.i(TAG, "createGoogleWine no images found for "  + wine.name );
 			}
 			
 			try{
@@ -600,20 +593,20 @@ public class WineFactory {
 					wine.prices.add( price );
 				}
 			}catch( JSONException $e ){
-				Log.i(TAG,  "createGoogleWine no prices found for " + wine.name );
+				//Log.i(TAG,  "createGoogleWine no prices found for " + wine.name );
 			}
 			
 			try{
 				wine.setName( product.getString("title") );
 				
 			}catch( JSONException $e){
-				Log.e(TAG, "createGoogleWine no name found for "  + wine.name );
+				//Log.e(TAG, "createGoogleWine no name found for "  + wine.name );
 			}
 			
 			
 			
 		}catch( JSONException $ee ){
-			Log.e( TAG, "createGoogleWine unable to identify product" );
+			//Log.e( TAG, "createGoogleWine unable to identify product" );
 			$ee.printStackTrace();
 		}
 		

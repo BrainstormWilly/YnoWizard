@@ -2,11 +2,10 @@ package com.yno.wizard.model.fb;
 
 import java.text.NumberFormat;
 
-import com.yno.wizard.model.WineParcel;
-
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
+
+import com.yno.wizard.model.WineParcel;
 
 public class FbWineReviewParcel implements Parcelable {
 	

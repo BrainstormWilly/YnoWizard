@@ -3,10 +3,6 @@ package com.yno.wizard.utils;
 import java.text.NumberFormat;
 import java.util.List;
 
-import com.yno.wizard.model.PriceParcel;
-import com.yno.wizard.model.RatingParcel;
-import com.yno.wizard.R;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -16,6 +12,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.yno.wizard.R;
+import com.yno.wizard.model.RatingParcel;
 
 public class WineSelectRatingListAdapter extends BaseAdapter implements ListAdapter {
 	

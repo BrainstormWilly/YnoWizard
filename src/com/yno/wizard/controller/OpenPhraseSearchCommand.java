@@ -1,7 +1,5 @@
 package com.yno.wizard.controller;
 
-import com.yno.wizard.view.TextSearchActivity;
-
 import android.content.Context;
 import android.content.Intent;
 //import android.os.Bundle;

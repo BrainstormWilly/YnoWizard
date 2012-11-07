@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
+<!--     <com.google.ads.AdView -->
+<!--         android:id="@+id/beginSearchAdView" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignParentBottom="true" -->
+<!--         ads:adUnitId="a1509182d814b08" -->
+<!--         ads:adSize="SMART_BANNER" -->
+<!--         ads:testDevices="TEST_EMULATOR, 4E319B8194869663D358C8980351F753" -->
+<!--         ads:loadAdOnCreate="true"/> -->
     
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        
         android:layout_centerInParent="true">
+        
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:orientation="vertical">
             <LinearLayout 
                 android:layout_width="wrap_content"
@@ -65,5 +79,7 @@
 	    </LinearLayout>
 	    
     </RelativeLayout>
+    
+    
 
 </RelativeLayout>

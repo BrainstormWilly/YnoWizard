@@ -3,8 +3,6 @@ package com.yno.wizard.view;
 import java.lang.ref.WeakReference;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.LayerDrawable;
@@ -13,12 +11,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -34,6 +31,8 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.yno.wizard.R;
 import com.yno.wizard.controller.DoPhraseSearchCommand;
 import com.yno.wizard.controller.OpenSearchResultsCommand;
 import com.yno.wizard.model.LocationModel;
@@ -45,7 +44,6 @@ import com.yno.wizard.model.db.YnoDbOpenHelper;
 import com.yno.wizard.utils.ActionBarHelper;
 import com.yno.wizard.utils.CursorSpinnerAdapter;
 import com.yno.wizard.utils.TextSearchACAdapter;
-import com.yno.wizard.R;
 
 
 public class TextSearchActivity extends SherlockActivity implements IActionBarActivity {
@@ -208,6 +206,18 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 	}
 	
 	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
+	}
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.actionbar_search_menu, menu);
@@ -216,6 +226,7 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		//Log.d(TAG, String.valueOf(item.getItemId()) );
 		return _abHelper.onOptionsItemSelected(item);
 	}
 	

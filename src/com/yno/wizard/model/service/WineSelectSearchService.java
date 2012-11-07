@@ -1,17 +1,14 @@
 package com.yno.wizard.model.service;
 
-import java.util.ArrayList;
-
-import com.yno.wizard.model.SearchWineParcel;
-import com.yno.wizard.model.SearchWinesParcel;
-import com.yno.wizard.model.WineParcel;
-
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+
+import com.yno.wizard.model.SearchWineParcel;
+import com.yno.wizard.model.WineParcel;
 
 public class WineSelectSearchService extends IntentService {
 

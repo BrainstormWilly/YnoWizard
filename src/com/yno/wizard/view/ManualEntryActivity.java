@@ -2,28 +2,20 @@ package com.yno.wizard.view;
 
 import java.util.UUID;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -33,6 +25,8 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.yno.wizard.R;
 import com.yno.wizard.controller.StartFacebookRatingCommand;
 import com.yno.wizard.model.VintagesModel;
 import com.yno.wizard.model.WineParcel;
@@ -40,9 +34,6 @@ import com.yno.wizard.utils.ActionBarHelper;
 import com.yno.wizard.utils.AsyncUploadImage;
 import com.yno.wizard.utils.ManualWineValidator;
 import com.yno.wizard.utils.SpinnerAdapter;
-import com.yno.wizard.utils.TextSearchACAdapter;
-import com.yno.wizard.utils.WineTypesACAdapter;
-import com.yno.wizard.R;
 
 
 public class ManualEntryActivity extends SherlockActivity implements IActionBarActivity {
@@ -128,6 +119,18 @@ public class ManualEntryActivity extends SherlockActivity implements IActionBarA
 		);
 		
 		
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
 	}
 	
 	public void dismissProgress( boolean $foundWine ){

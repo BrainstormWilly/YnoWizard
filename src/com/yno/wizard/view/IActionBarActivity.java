@@ -1,7 +1,5 @@
 package com.yno.wizard.view;
 
-import com.actionbarsherlock.app.SherlockActivity;
-
 import android.content.Intent;
 
 public interface IActionBarActivity {

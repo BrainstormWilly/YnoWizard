@@ -1,6 +1,5 @@
 package com.yno.wizard.model;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -17,7 +16,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 
 public class LocationModel implements LocationListener {
 	
@@ -37,13 +35,15 @@ public class LocationModel implements LocationListener {
 	public LocationModel( Context $context ){
 		_context = $context;
 		_manager = (LocationManager) _context.getSystemService(Context.LOCATION_SERVICE);
-		//_manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,10000.0f,this);
+		
 		Criteria criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+		
 		_provider = _manager.getBestProvider(criteria, false);
-		//_provider = LocationManager.GPS_PROVIDER;
-		//_provider = LocationManager.NETWORK_PROVIDER;
-		Log.d(TAG, "Location Provider -> " + _provider);
+		if( _provider==null )
+			_provider = LocationManager.GPS_PROVIDER;
+		//Log.d(TAG, "Location Provider -> " + _provider);
+			
 		
 		_states.put("Alabama", "AL");
 		_states.put("Alaska", "AK");
@@ -118,13 +118,13 @@ public class LocationModel implements LocationListener {
 	            for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
 	                InetAddress inetAddress = enumIpAddr.nextElement();
 	                if( !inetAddress.isLoopbackAddress() && !inetAddress.isLinkLocalAddress() ) {
-	                	Log.d(TAG, "IP = " + inetAddress.getHostAddress().toString());
+	                	//Log.d(TAG, "IP = " + inetAddress.getHostAddress().toString());
 	                    return inetAddress.getHostAddress().toString();
 	                }
 	            }
 	        }
 	    } catch (SocketException ex) {
-	        Log.e(TAG, "no IP found: " + ex.toString());
+	        //Log.e(TAG, "no IP found: " + ex.toString());
 	    }
 	    return "";
 	}
@@ -133,11 +133,11 @@ public class LocationModel implements LocationListener {
 		try{
 			Geocoder gc = new Geocoder(_context, Locale.getDefault());
 			List<Address> addrs = gc.getFromLocation(_location.getLatitude(), _location.getLongitude(), 1);
-			Log.d(TAG, "addresses = " + addrs.size());
+			//Log.d(TAG, "addresses = " + addrs.size());
 			if( addrs!=null && addrs.size()>0 )
 				return addrs.get(0);
 		}catch(Exception $e){
-			Log.d(TAG, "no addresses found");
+			//Log.d(TAG, "no addresses found");
 			$e.printStackTrace();
 		}
 		return null;
@@ -159,24 +159,24 @@ public class LocationModel implements LocationListener {
 	
 	@Override
 	public void onLocationChanged(Location location) {
-		Log.d(TAG, "onLocationChanged");
+		//Log.d(TAG, "onLocationChanged");
 		disable();
 		_location = location;
 	}
 	
 	@Override
 	public void onProviderDisabled(String provider) {
-		Log.d(TAG, "onProviderDisabled");
+		//Log.d(TAG, "onProviderDisabled");
 	}
 	
 	@Override
 	public void onProviderEnabled(String provider) {
-		Log.d(TAG, "onProviderEnabled");
+		//Log.d(TAG, "onProviderEnabled");
 	}
 	
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		Log.d(TAG, "onStatusChanged");
+		//Log.d(TAG, "onStatusChanged");
 		
 	}
 

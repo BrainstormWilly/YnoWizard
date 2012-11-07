@@ -5,19 +5,18 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.yno.wizard.R;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.yno.wizard.R;
+
 public class AsyncDownloadImage extends AsyncTask<Object, Object, Object> {
 
-	private static final String TAG = "AsyncDownloadImage ";
+	public static final String TAG = "AsyncDownloadImage ";
 	ImageView iv;
 	private HttpURLConnection connection;
 	private InputStream is;

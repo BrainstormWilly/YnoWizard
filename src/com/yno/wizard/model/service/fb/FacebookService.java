@@ -11,18 +11,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
+import com.yno.wizard.R;
 import com.yno.wizard.YnoFinderApplication;
 import com.yno.wizard.model.fb.FbModelFactory;
 import com.yno.wizard.model.fb.FbUserParcel;
 import com.yno.wizard.model.fb.FbWineReviewParcel;
 import com.yno.wizard.view.IFacebookContext;
-import com.yno.wizard.R;
 
 public class FacebookService {
 
@@ -53,7 +52,7 @@ public class FacebookService {
 		_context = $context;
 		_app = YnoFinderApplication.getInstance();
 		
-		Log.d(TAG, "Facebook app is null? " + (_app.FB==null));
+		//Log.d(TAG, "Facebook app is null? " + (_app.FB==null));
 		
 		if( _app.FB==null ){
 			_app.FB = new Facebook(APP_ID);
@@ -63,7 +62,7 @@ public class FacebookService {
 		_prefs = getContext().getSharedPreferences(_KEY, Context.MODE_PRIVATE);
 		String token = _prefs.getString(_TOKEN, null);
 		long expires = _prefs.getLong(_EXPIRES, 0);
-		Log.d(TAG, "create token = " + token);
+		//Log.d(TAG, "create token = " + token);
 		if( token!=null )
 			_app.FB.setAccessToken(token);
 		if( expires!=0 )
@@ -71,18 +70,18 @@ public class FacebookService {
 	}
 	
 	public void authorize( int $ssoCode ){
-		Log.d(TAG, "authorize in process");
+		//Log.d(TAG, "authorize in process");
 		_app.FB.authorize( getActivity(), PERMISSIONS, $ssoCode, 
 				new FbListenerFactory.FbDialogListener(){
 					@Override
 					public void onCancel() {
-						Log.d(TAG, "authorize cancel");
+						//Log.d(TAG, "authorize cancel");
 						_context.onServiceCancel("authorize");
 					}
 					@Override
 					public void onComplete(Bundle values) {
 						Editor editor = _prefs.edit();
-						Log.d(TAG, "authorize token = " + _app.FB.getAccessToken());
+						//Log.d(TAG, "authorize token = " + _app.FB.getAccessToken());
 						editor.putString(_TOKEN, _app.FB.getAccessToken());
 						editor.putLong(_EXPIRES, _app.FB.getAccessExpires());
 						editor.commit();
@@ -90,12 +89,12 @@ public class FacebookService {
 					}
 					@Override
 					public void onError(DialogError e) {
-						Log.d(TAG, "authorize onError");
+						//Log.d(TAG, "authorize onError");
 						_context.onDialogError(e, "authorize");
 					}
 					@Override
 					public void onFacebookError(FacebookError e) {
-						Log.d(TAG, "authorize onFacebookError");
+						//Log.d(TAG, "authorize onFacebookError");
 						_context.onFacebookError(e, "authorize");
 					}
 				}

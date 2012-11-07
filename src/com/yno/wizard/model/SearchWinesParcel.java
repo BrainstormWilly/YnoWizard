@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.yno.wizard.model.service.SearchData;
-
-import android.location.Address;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class SearchWinesParcel implements Parcelable {
 

@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -16,9 +15,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.os.AsyncTask;
-import android.os.Handler.Callback;
-import android.util.Log;
 
+import com.yno.wizard.model.PriceParcel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.model.fb.FbUserParcel;
 import com.yno.wizard.model.fb.FbWineReviewParcel;
@@ -60,6 +58,16 @@ public class TrackingService extends AsyncTask<String, Void, String> {
 		execute( new String[]{URL} );
 	}
 	
+	public void sendBuyLink( PriceParcel $vendor, WineParcel $wine ){
+		_values = new ArrayList<NameValuePair>(11);
+		_values.add( new BasicNameValuePair("access", "ynowizard") );
+		_values.add( new BasicNameValuePair("data_type", "buylink") );
+		setWine( _values, $wine );
+		_values.add( new BasicNameValuePair("vendor_url", $vendor.url) );
+		_values.add( new BasicNameValuePair("vendor_name", $vendor.seller) );
+		execute( new String[]{URL});
+	}
+	
 	@Override
 	protected String doInBackground(String... $urls) {
 		String response = "";
@@ -86,7 +94,7 @@ public class TrackingService extends AsyncTask<String, Void, String> {
 	
 	@Override
 	protected void onPostExecute(String result) {
-		Log.d( TAG, result );
+		//Log.d( TAG, result );
 	}
 	
 	private void setWine( List<NameValuePair> $values, WineParcel $wine ){

@@ -2,16 +2,11 @@ package com.yno.wizard.view;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
-import android.location.Address;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,14 +14,9 @@ import android.os.Messenger;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -34,27 +24,25 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.yno.wizard.controller.DoPhraseSearchCommand;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.yno.wizard.R;
 import com.yno.wizard.controller.DoWineSelectCommand;
-import com.yno.wizard.controller.ShowPriceVendorCommand;
 import com.yno.wizard.controller.StartWineSelectCommand;
 import com.yno.wizard.controller.TrackSelectCommand;
-import com.yno.wizard.model.LocationModel;
-import com.yno.wizard.model.PriceParcel;
 import com.yno.wizard.model.SearchWineParcel;
 import com.yno.wizard.model.SearchWinesParcel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.utils.ActionBarHelper;
-import com.yno.wizard.utils.AsyncDownloadImage;
 import com.yno.wizard.utils.SearchResultsListAdaptor;
-import com.yno.wizard.R;
 
 public class SearchResultsActivity extends SherlockActivity implements OnItemClickListener, IActionBarActivity {
 	
 	public final static String TAG = SearchResultsActivity.class.getSimpleName();
 	public static final String NAME = "com.yno.wizard.intent.OPEN_SEARCH_RESULTS";
 	
-	private final static int _REQUEST_SEARCH_WINE = 10;
+	//private final static int _REQUEST_SEARCH_WINE = 10;
 	
 	private static class WineSelectHandler extends Handler{
 		
@@ -75,20 +63,22 @@ public class SearchResultsActivity extends SherlockActivity implements OnItemCli
 	}
 
 	private ListView resultsLV;
-	private TextView titleTV;
+	//private TextView titleTV;
 	
 	private List<WineParcel> _results = new ArrayList<WineParcel>();
 	private AlertDialog _prog;
 	private ActionBarHelper _abHelper;
 	private String _query = "";
-	
-	
+	private AdView _ad;
 
 	@Override
 	public void onCreate( Bundle savedInstanceState ){
 		
 		super.onCreate(savedInstanceState);
 		setContentView( R.layout.search_results_main );
+		
+		//_ad = (AdView) this.findViewById(R.id.searchResultsAdView);
+		//_ad.loadAd( new AdRequest() );
 		
 		_abHelper = new ActionBarHelper(this);
 		
@@ -100,19 +90,32 @@ public class SearchResultsActivity extends SherlockActivity implements OnItemCli
 		SearchWinesParcel parcel = extras.getParcelable(SearchWinesParcel.NAME);
 		
 		resultsLV = (ListView) findViewById( R.id.searchResultsLV );
-		titleTV = (TextView) findViewById( R.id.searchResultsTitle );
-		
-		_query = parcel.getFullQuery();
-		if( parcel.value>0 )
-			_query += " under $" + (parcel.value+1);
-
-		titleTV.setText( "Results for '" + _query + "'" );
+//		titleTV = (TextView) findViewById( R.id.searchResultsTitle );
+//		
+//		_query = parcel.getFullQuery();
+//		if( parcel.value>0 )
+//			_query += " under $" + (parcel.value+1);
+//
+//		titleTV.setText( "Results for '" + _query + "'" );
 		
 		_results = parcel.results;
 		SearchResultsListAdaptor adapter = new SearchResultsListAdaptor(getApplicationContext(), _results);
 		resultsLV.setAdapter(adapter);
 		resultsLV.setOnItemClickListener( SearchResultsActivity.this );
 		
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+		
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
 	}
 	
 	public void dismissProgress( boolean $hasResults ){
