@@ -243,8 +243,8 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 			TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
 			Button btn = (Button) layout.findViewById(R.id.dialogAlertBtn);
 			
-			title.setText("No Wines Found");
-			subtitle.setText("Try reducing your search criteria.");
+			title.setText(R.string.no_wines_found);
+			subtitle.setText(R.string.try_reducing_your_search_criteria);
 			
 			btn.setOnClickListener(
 					new OnClickListener() {
@@ -256,6 +256,7 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 					}
 			);
 			
+			bldr.setView(layout);
 			_alert = bldr.create();
 			_alert.show();
 		}

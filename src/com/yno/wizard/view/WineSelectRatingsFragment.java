@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +54,7 @@ public class WineSelectRatingsFragment extends Fragment {
 		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
 		_helper = new WineSubnavHelper(view);
 		_helper.setNav( subnav, WineSelectActivity.NAV_RATINGS);
-		
-		rngTV.setText(R.string.rating_range + String.valueOf( model.getLowest().value ) + "-" + String.valueOf( model.getHighest().value ) );
+		rngTV.setText( getString(R.string.rating_range) + String.valueOf( model.getLowest().value ) + "-" + String.valueOf( model.getHighest().value ) );
 		
 		retailersLV.setAdapter( adapter );
 		

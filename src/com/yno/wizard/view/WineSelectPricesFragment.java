@@ -57,7 +57,7 @@ public class WineSelectPricesFragment extends Fragment implements OnItemClickLis
 		_helper = new WineSubnavHelper(view);
 		_helper.setNav( subnav, WineSelectActivity.NAV_PRICES);
 		
-		rngTV.setText("Price Range: $" + model.getLowest().value + "-$" + model.getHighest().value);
+		rngTV.setText( getString(R.string.price_range) + String.valueOf(model.getLowest().value) + getString(R.string.price_range_to) + String.valueOf(model.getHighest().value));
 		
 		retailersLV.setAdapter( adapter );
 		retailersLV.setOnItemClickListener( this );
