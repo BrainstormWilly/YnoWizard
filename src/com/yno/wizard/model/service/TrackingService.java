@@ -13,8 +13,10 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.yno.wizard.model.PriceParcel;
 import com.yno.wizard.model.WineParcel;
@@ -77,24 +79,18 @@ public class TrackingService extends AsyncTask<String, Void, String> {
 			try{
 				post.setEntity( new UrlEncodedFormEntity( _values ) );
 				HttpResponse execute = client.execute( post );
-				InputStream content = execute.getEntity().getContent();
-				BufferedReader buffer = new BufferedReader( new InputStreamReader(content) );
-				String str = "";
-				while( (str=buffer.readLine()) != null ){
-					response += str;
-				}
+				response = EntityUtils.toString( execute.getEntity() );
 			}catch( Exception $e ){
 				response = "failed";
 				$e.printStackTrace();
 			}
 		}
-		
 		return response;
 	}
 	
 	@Override
 	protected void onPostExecute(String result) {
-		//Log.d( TAG, result );
+		//Log.d( TAG, "onPostExecute" );
 	}
 	
 	private void setWine( List<NameValuePair> $values, WineParcel $wine ){

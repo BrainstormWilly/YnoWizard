@@ -35,6 +35,7 @@ public class WineComServiceClass implements IWineSearchService {
 	private ArrayList<WineParcel> _lastUnqualified = new ArrayList<WineParcel>();
 	private ArrayList<WineParcel> _lastQualified = new ArrayList<WineParcel>();
 	
+	
 	public ArrayList<WineParcel> getLastUnqualifiedWines(){
 		return _lastUnqualified;
 	}
