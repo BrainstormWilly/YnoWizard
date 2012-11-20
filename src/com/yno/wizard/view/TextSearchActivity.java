@@ -10,7 +10,6 @@ import android.location.Address;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Messenger;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +32,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.yno.wizard.R;
-import com.yno.wizard.controller.DoPhraseSearchCommand;
 import com.yno.wizard.controller.OpenSearchResultsCommand;
 import com.yno.wizard.model.LocationModel;
 import com.yno.wizard.model.ProducerFactory;
@@ -51,27 +49,27 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 	private static String TAG = TextSearchActivity.class.getSimpleName();
 	public static final String NAME = "com.yno.wizard.intent.OPEN_PHRASE_SEARCH";
 	
-	private static class PhraseSearchHandler extends Handler{
-		
-		private WeakReference<TextSearchActivity> _activity;
-		
-		PhraseSearchHandler( TextSearchActivity $activity ){
-			_activity = new WeakReference<TextSearchActivity>( $activity );
-		}
-		
-		@Override
-		public void handleMessage(Message $msg) {
-			TextSearchActivity thisActivity = _activity.get();
-			SearchWinesParcel parcel = (SearchWinesParcel) $msg.obj;
-			thisActivity.dismissProgress( parcel.results.size()>0 );
-			
-			if( parcel.results.size()>0 ){
-				OpenSearchResultsCommand cmd = new OpenSearchResultsCommand(thisActivity);
-				cmd.payload.putParcelable(SearchWinesParcel.NAME, parcel);
-				cmd.execute();
-			}
-		}
-	}
+//	private static class PhraseSearchHandler extends Handler{
+//		
+//		private WeakReference<TextSearchActivity> _activity;
+//		
+//		PhraseSearchHandler( TextSearchActivity $activity ){
+//			_activity = new WeakReference<TextSearchActivity>( $activity );
+//		}
+//		
+//		@Override
+//		public void handleMessage(Message $msg) {
+//			TextSearchActivity thisActivity = _activity.get();
+//			SearchWinesParcel parcel = (SearchWinesParcel) $msg.obj;
+//			thisActivity.dismissProgress( parcel.results.size()>0 );
+//			
+//			if( parcel.results.size()>0 ){
+//				OpenSearchResultsCommand cmd = new OpenSearchResultsCommand(thisActivity);
+//				cmd.payload.putParcelable(SearchWinesParcel.NAME, parcel);
+//				cmd.execute();
+//			}
+//		}
+//	}
 
 	private AutoCompleteTextView _searchFld;
 	private Button _findBtn;
@@ -89,6 +87,7 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 	private ActionBarHelper _abHelper;
 	private AlertDialog _prog;
 	private AlertDialog _alert;
+	private TextSearchServiceHelper _serviceHelper;
 	
 //	private Handler _wineTypesSearchHandler = new Handler(){
 //		public void handleMessage(android.os.Message msg) {
@@ -205,17 +204,6 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 		
 	}
 	
-	@Override
-	protected void onStart() {
-		super.onStart();
-		EasyTracker.getInstance().activityStart(this);
-	}
-	
-	@Override
-	protected void onStop() {
-		super.onStop();
-		EasyTracker.getInstance().activityStop(this);
-	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -280,6 +268,18 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 	}
 	
 	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
+	}
+	
+	@Override
 	protected void onResume(){
 		super.onResume();
 		_location.enable();
@@ -308,6 +308,7 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 
 	private void initSearch(){
 		SearchWinesParcel parcel = new SearchWinesParcel();
+		_serviceHelper = new TextSearchServiceHelper( this );
 		
 		parcel.name = ProducerFactory.getProducerBase( _searchFld.getText().toString() );
 		//Log.d(TAG, parcel.name);
@@ -333,10 +334,8 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 				parcel.state = _location.getStateCode( primAddr.getAdminArea() );
 				parcel.zip = primAddr.getPostalCode();
 			}
-			DoPhraseSearchCommand cmd = new DoPhraseSearchCommand( TextSearchActivity.this );
-			cmd.messenger = new Messenger( new PhraseSearchHandler(TextSearchActivity.this) );
-			cmd.payload.putParcelable( SearchWinesParcel.NAME, parcel );
-			cmd.execute();
+			
+			_serviceHelper.begin(parcel);
 		}else{
 			AlertDialog.Builder bldr = new AlertDialog.Builder(TextSearchActivity.this);
 			

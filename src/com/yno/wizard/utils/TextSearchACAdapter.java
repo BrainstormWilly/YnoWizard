@@ -1,9 +1,11 @@
-package com.yno.wizard.utils;
+ package com.yno.wizard.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,32 +15,39 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.yno.wizard.model.VintagesModel;
+import com.yno.wizard.model.service.AsyncServiceParcel;
+import com.yno.wizard.model.service.IServiceContext;
 import com.yno.wizard.model.service.SearchData;
+import com.yno.wizard.model.service.VinTankAsyncService;
 import com.yno.wizard.model.service.VinTankServiceClass;
+import com.yno.wizard.view.TextSearchFieldServiceHelper;
 
-public class TextSearchACAdapter extends ArrayAdapter<String> implements Filterable {
+public class TextSearchACAdapter extends ArrayAdapter<String> implements Filterable, IServiceContext {
 	
 	public static String TAG = TextSearchACAdapter.class.getSimpleName();
 	
 	private Filter _filter;
 	private Context _context;
 	private VintagesModel _vintages = new VintagesModel();
-	private VinTankServiceClass _vtSvc = new VinTankServiceClass();
+	//private VinTankServiceClass _vtSvc = new VinTankServiceClass();
+	private VinTankAsyncService _vtSvc;
 	private String _base = "";
 	private String _full = "";
 	private boolean _partMode = false;
 	private ArrayList<String> _newData = new ArrayList<String>(SearchData.AUTOCOMPLETE_TOTAL);
 	//private ArrayList<String> _allData = new ArrayList<String>(SearchData.AUTOCOMPLETE_TOTAL);
 	private ArrayList<String> _oldData = new ArrayList<String>(SearchData.AUTOCOMPLETE_TOTAL);
+	private TextSearchFieldServiceHelper _svcHelper;
 	
 	public TextSearchACAdapter( Context $context, int $textViewId ){
 		super( $context, $textViewId );
 		setNotifyOnChange(false);
 		
 		_context = $context;
+		_svcHelper = new TextSearchFieldServiceHelper( this );
 		
 		_filter = new Filter(){
-			private ArrayList<String> _allData = new ArrayList<String>();
+			//private ArrayList<String> _allData = new ArrayList<String>();
 			//private String _query = "";
 			
 			@Override
@@ -46,72 +55,75 @@ public class TextSearchACAdapter extends ArrayAdapter<String> implements Filtera
 				FilterResults filtResults = new FilterResults();
 				
 				if( constraint!=null && constraint.length()>0 ){
-					
-					int a, l;
-					String result;
-					String[] parts = constraint.toString().split(" ");
-					String query = parts[ parts.length-1 ].toLowerCase();
-					_base = "";
-					_full = constraint.toString();
-					for( a=0, l=parts.length-1; a<l; a++ ){
-						_base += parts[a] + " ";
-					}
-					
-					_allData.clear();
-					_partMode = false;
-					
-					_allData.addAll( _vintages.getVintageByQuery(query) );
-					
-					if( _allData.size()==0 ){
-						ArrayList<String> vars = _vtSvc.getVarietalNamesByQuery(query, 1, SearchData.AUTOCOMPLETE_TOTAL);
-						for( String var : vars ) {
-							//Log.d(TAG, var.var_name + ", " + _full + ": " + _full.compareToIgnoreCase(var.var_name));
-							if( var.toLowerCase().startsWith(_full.toLowerCase()) ) 
-								_allData.add( var );
-						}
-					}
-					
-					if( _allData.size()==0 ){
-						ArrayList<String> prods = _vtSvc.getProducerNamesByQuery(query, 1, SearchData.AUTOCOMPLETE_TOTAL);
-						for( String prod : prods ) {
-							if( prod.toLowerCase().startsWith(_full.toLowerCase()) ) 
-								_allData.add( prod );
-						}
-					}
-					
-					if( _allData.size()==0){
-						ArrayList<String> regs = _vtSvc.getRegionNamesByQuery(query, 1, SearchData.AUTOCOMPLETE_TOTAL);
-						for( String reg : regs ) {
-							if( reg.toLowerCase().startsWith(_full.toLowerCase()) ) 
-								_allData.add( reg );
-						}
-					}
-						
-					
-					if( _allData.size()==0 ){
-						_partMode = true;
-						ArrayList<String> wines = _vtSvc.getWineNamesByQuery(query, 1, SearchData.AUTOCOMPLETE_TOTAL);
-						for( String wine : wines ) {
-							result = evalResult(wine, query);
-							if( !result.equals("") && !repeat(_allData, result) ) 
-								_allData.add( result );
-						}
-					}
-					
-					Collections.sort(_allData);						
-					
-					if( _allData.size()>0 ){
-						_allData.trimToSize();
-						_oldData = new ArrayList<String>(_allData);
-						filtResults.values = _allData;
-						filtResults.count = _allData.size();
-					}else if(_partMode){
-						filtResults.values = _oldData;
-						filtResults.count = _oldData.size();
-					}else{
-						filtResults.values = _allData;
-						filtResults.count = _allData.size();
-					}
+//					if( _vtSvc!=null && _vtSvc.getStatus()==AsyncTask.Status.RUNNING )
+//						_vtSvc.cancel(true);
+					Log.d(TAG, constraint.toString());
+					_svcHelper.begin(constraint);
+//					int a, l;
+//					String result;
+//					String[] parts = constraint.toString().split(" ");
+//					String query = parts[ parts.length-1 ].toLowerCase();
+//					_base = "";
+//					_full = constraint.toString();
+//					for( a=0, l=parts.length-1; a<l; a++ ){
+//						_base += parts[a] + " ";
+//					}
+//					
+//					_allData.clear();
+//					_partMode = false;
+//					
+//					_allData.addAll( _vintages.getVintageByQuery(query) );
+//					
+//					if( _allData.size()==0 ){
+//						ArrayList<String> vars = _vtSvc.getVarietalNamesByQuery(query, 1, SearchData.AUTOCOMPLETE_TOTAL);
+//						for( String var : vars ) {
+//							//Log.d(TAG, var.var_name + ", " + _full + ": " + _full.compareToIgnoreCase(var.var_name));
+//							if( var.toLowerCase().startsWith(_full.toLowerCase()) ) 
+//								_allData.add( var );
+//						}
+//					}
+//					
+//					if( _allData.size()==0 ){
+//						ArrayList<String> prods = _vtSvc.getProducerNamesByQuery(query, 1, SearchData.AUTOCOMPLETE_TOTAL);
+//						for( String prod : prods ) {
+//							if( prod.toLowerCase().startsWith(_full.toLowerCase()) ) 
+//								_allData.add( prod );
+//						}
+//					}
+//					
+//					if( _allData.size()==0){
+//						ArrayList<String> regs = _vtSvc.getRegionNamesByQuery(query, 1, SearchData.AUTOCOMPLETE_TOTAL);
+//						for( String reg : regs ) {
+//							if( reg.toLowerCase().startsWith(_full.toLowerCase()) ) 
+//								_allData.add( reg );
+//						}
+//					}
+//						
+//					
+//					if( _allData.size()==0 ){
+//						_partMode = true;
+//						ArrayList<String> wines = _vtSvc.getWineNamesByQuery(query, 1, SearchData.AUTOCOMPLETE_TOTAL);
+//						for( String wine : wines ) {
+//							result = evalResult(wine, query);
+//							if( !result.equals("") && !repeat(_allData, result) ) 
+//								_allData.add( result );
+//						}
+//					}
+//					
+//					Collections.sort(_allData);						
+//					
+//					if( _allData.size()>0 ){
+//						_allData.trimToSize();
+//						_oldData = new ArrayList<String>(_allData);
+//						filtResults.values = _allData;
+//						filtResults.count = _allData.size();
+//					}else if(_partMode){
+//						filtResults.values = _oldData;
+//						filtResults.count = _oldData.size();
+//					}else{
+//						filtResults.values = _allData;
+//						filtResults.count = _allData.size();
+//					}
 					
 				}
 				return filtResults;
@@ -120,29 +132,31 @@ public class TextSearchACAdapter extends ArrayAdapter<String> implements Filtera
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void publishResults(CharSequence constraint, FilterResults results) {
-				
-				if( results!=null && results.count>0 ){
-					
-					try{
-						_newData = new ArrayList<String>( results.count );
-						if( _partMode ){
-							for( int a=0, l=_allData.size(); a<l; a++ ){
-								_newData.add( _base + ((ArrayList<String>) results.values).get(a) );
-							}
-						}else{
-							_newData = new ArrayList<String>( (ArrayList<String>) results.values );
-						}
-					
-						
-							
-						notifyDataSetChanged();
-					}catch( Exception $e ){
-						$e.printStackTrace();
-					}
-				}else{
-					notifyDataSetInvalidated();
-				}
+				// stub this, defer to resume()
+//				if( results!=null && results.count>0 ){
+//					notifyDataSetChanged();
+//					try{
+//						_newData = new ArrayList<String>( results.count );
+//						if( _partMode ){
+//							for( int a=0, l=_allData.size(); a<l; a++ ){
+//								_newData.add( _base + ((ArrayList<String>) results.values).get(a) );
+//							}
+//						}else{
+//							_newData = new ArrayList<String>( (ArrayList<String>) results.values );
+//						}
+//					
+//						
+//							
+//						notifyDataSetChanged();
+//					}catch( Exception $e ){
+//						$e.printStackTrace();
+//					}
+//				}else{
+//					notifyDataSetInvalidated();
+//				}
+				notifyDataSetInvalidated();
 			}
+			
 
 		};
 	}
@@ -171,12 +185,20 @@ public class TextSearchACAdapter extends ArrayAdapter<String> implements Filtera
 	
 	@Override
 	public String getItem(int position) {
-		return _newData.get(position);
+		//return _newData.get(position);
+		return _vtSvc.phraseData.get(position);
 	}
 	
 	@Override
 	public Filter getFilter() {
 		return _filter;
+	}
+	
+	public void resume( AsyncServiceParcel $parcel ){
+		if( _vtSvc.phraseData.size()>0 )
+			notifyDataSetChanged();
+		else
+			notifyDataSetInvalidated();		
 	}
 	
 	public View getCustomView(int $position, View $convertView, ViewGroup $parent){

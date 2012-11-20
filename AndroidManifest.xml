@@ -108,8 +108,6 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
         
         <service 
-            android:name=".model.service.WinesPhraseSearchService" />
-        <service 
             android:name=".model.service.WineBarcodeSearchService" />
         <service 
             android:name=".model.service.WineSelectSearchService" />

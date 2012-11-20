@@ -58,4 +58,5 @@
     <string name="price_range_to">-$</string>
     <string name="no_wines_found">No Wines Found</string>
     <string name="try_reducing_your_search_criteria">Try reducing your search criteria.</string>
+    <string name="please_wait_while_the_wizard_gets_its_magic_on">Please wait while the Wizard gets its magic on!</string>
 </resources>

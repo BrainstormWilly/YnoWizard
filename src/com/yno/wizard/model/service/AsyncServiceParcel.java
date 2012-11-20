@@ -19,10 +19,13 @@ public class AsyncServiceParcel implements Parcelable {
 	            }
 	        };
 	        
+	public int svc_id = 0;
 	public String svc = "";
 	public String url = "";
 	public String query = "";
 	public String result = "";
+	public int page = 1;
+	public String app_id = "";
 	
 	        
     public AsyncServiceParcel(){;}
@@ -43,13 +46,19 @@ public class AsyncServiceParcel implements Parcelable {
 		arg0.writeString(url);
 		arg0.writeString(query);
 		arg0.writeString(result);
+		arg0.writeInt(svc_id);
+		arg0.writeInt(page);
+		arg0.writeString(app_id);
 	}
 	
-	private void readFromParcel(Parcel $in) {
+	protected void readFromParcel(Parcel $in) {
 		svc = $in.readString();
 		url = $in.readString();
 		query = $in.readString();
 		result = $in.readString();
+		svc_id = $in.readInt();
+		page = $in.readInt();
+		app_id = $in.readString();
 	}
 
 }

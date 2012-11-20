@@ -19,8 +19,12 @@ import com.yno.wizard.controller.DoWineTypesSearchCommand;
 import com.yno.wizard.controller.OpenChooseSearchCommand;
 import com.yno.wizard.model.SearchTypeParcel;
 import com.yno.wizard.model.db.YnoDbOpenHelper;
+import com.yno.wizard.model.service.AsyncServiceParcel;
+import com.yno.wizard.model.service.IServiceContext;
+import com.yno.wizard.model.service.WineComAsyncService;
+import com.yno.wizard.model.service.WineTypesServiceParcel;
 
-public class SplashActivity extends SherlockActivity {
+public class SplashActivity extends SherlockActivity implements IServiceContext {
     /** Called when the activity is first created. */
 	public static String TAG = SplashActivity.class.getSimpleName();
 	private static int _DELAY = 3000;
@@ -43,11 +47,10 @@ public class SplashActivity extends SherlockActivity {
 		@Override
 		public void run() {
 			Cursor cursor = _dbHelper.getAllFromSearchTypes();
-			if( cursor.moveToFirst() ){
+			if( cursor.moveToFirst() )
 				SplashActivity.this.endSplash();
-			}else{
+			else
 				SplashActivity.this.loadData();
-			}
 		}
 	};
 	
@@ -64,6 +67,13 @@ public class SplashActivity extends SherlockActivity {
        
     }
     
+    public void resume( AsyncServiceParcel $parcel ){
+    	WineTypesServiceParcel parcel = (WineTypesServiceParcel) $parcel;
+    	_dbHelper.insertSearchTypes( parcel.types );
+		_dbProg.dismiss();
+		endSplash();
+    }
+    
     public void loadData(){
     	//_dbProg = ProgressDialog.show(this, "Hang on...", "The Wizard is getting its magic on!", true);
     	AlertDialog.Builder bldr = new AlertDialog.Builder(this);
@@ -73,16 +83,18 @@ public class SplashActivity extends SherlockActivity {
 		
 		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
 		
-		title.setText("Please wait while the Wizard gets its magic on!");
+		title.setText(R.string.please_wait_while_the_wizard_gets_its_magic_on);
 		
 		
 		bldr.setView( layout );
 		_dbProg = bldr.create();
 		_dbProg.show();
 		
-    	DoWineTypesSearchCommand cmd = new DoWineTypesSearchCommand( this );
-		cmd.messenger = new Messenger(_wineTypesSearchHandler);
-		cmd.execute();
+		new WineComAsyncService( this ).getWineTypes();
+		
+//    	DoWineTypesSearchCommand cmd = new DoWineTypesSearchCommand( this );
+//		cmd.messenger = new Messenger(_wineTypesSearchHandler);
+//		cmd.execute();
     }
     
     public void endSplash(){
@@ -90,11 +102,6 @@ public class SplashActivity extends SherlockActivity {
 	    cmd.execute();
     }
     
-    @Override
-    protected void onResume() {
-    	super.onResume();
-    	//_delayHdl.postDelayed( _delayRnb, _DELAY);
-    } 
     
     
     

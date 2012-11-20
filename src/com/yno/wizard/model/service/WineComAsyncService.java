@@ -14,10 +14,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.yno.wizard.model.SearchTypeParcel;
 import com.yno.wizard.model.SearchWinesParcel;
 import com.yno.wizard.model.WineFactory;
 import com.yno.wizard.model.WineParcel;
+import com.yno.wizard.view.TextSearchActivity;
+import com.yno.wizard.view.TextSearchServiceHelper;
 
 public class WineComAsyncService extends AsyncTask<AsyncServiceParcel, Void, AsyncServiceParcel> {
 	
@@ -34,11 +38,12 @@ public class WineComAsyncService extends AsyncTask<AsyncServiceParcel, Void, Asy
 	private static final String _FIELD_RESULTS = "List";
 	
 	private IServiceContext _context;
+	public ArrayList<SearchTypeParcel> types = new ArrayList<SearchTypeParcel>();
 	public ArrayList<WineParcel> lastUnqualified = new ArrayList<WineParcel>();
 	public ArrayList<WineParcel> lastQualified = new ArrayList<WineParcel>();
 	
-	public WineComAsyncService( IServiceContext $context ){
-		_context = $context;
+	public WineComAsyncService( IServiceContext $ctx ){
+		_context = $ctx;
 	}
 
 
@@ -71,9 +76,21 @@ public class WineComAsyncService extends AsyncTask<AsyncServiceParcel, Void, Asy
 		if( !$parcel.name.equals("") )
 			url += "&search=" + URLEncoder.encode( $parcel.name );
 		
-		execute( getSearchInstance( _SERVICE_CATALOG, $parcel.getQuery(), url ) );
+		execute( new AsyncServiceParcel[]{ getSearchInstance( _SERVICE_CATALOG, $parcel.getQuery(), url ) } );
 		
 	}
+	
+	public void getWineTypes(){
+		types.clear();
+		
+		String url = _API_URL 
+				+ _SERVICE_CATS + "?apikey=" + _API_KEY 
+				+ "&filter=categories(490)";
+		
+		execute( new AsyncServiceParcel[]{ getSearchInstance( _SERVICE_CATS, "", url ) } );
+	}
+	
+	
 	
 	@Override
 	protected AsyncServiceParcel doInBackground(AsyncServiceParcel... $parcels) {
@@ -84,16 +101,21 @@ public class WineComAsyncService extends AsyncTask<AsyncServiceParcel, Void, Asy
 			resultPrcl.query = parcel.query;
 			resultPrcl.svc = parcel.svc;
 			resultPrcl.url = parcel.url;
-			HttpClient httpClient = SearchData.getHttpClient();
-			HttpRequestBase httpReq = new HttpGet( parcel.url );
-			HttpResponse resp;
-			try{
-				resp = httpClient.execute( httpReq );
-				resultPrcl.result  = EntityUtils.toString( resp.getEntity() );
+			
+			if( parcel.svc.equals(_SERVICE_CATALOG) ){
+				try{
+					HttpClient httpClient = SearchData.getHttpClient();
+					HttpRequestBase httpReq = new HttpGet( parcel.url );
+					HttpResponse resp;
+					resp = httpClient.execute( httpReq );
+					resultPrcl.result = EntityUtils.toString( resp.getEntity() );
+					
+				}catch( IOException $e ){
+					$e.printStackTrace();
+					resultPrcl.result = "failed";
+				}
+			}else{
 				
-			}catch( IOException $e ){
-				$e.printStackTrace();
-				resultPrcl.result = "failed";
 			}
 		}
 
@@ -102,34 +124,86 @@ public class WineComAsyncService extends AsyncTask<AsyncServiceParcel, Void, Asy
 	
 	@Override
 	protected void onPostExecute(AsyncServiceParcel $parcel) {
-		WineParcel wine;
-		try{
-			JSONObject resultObj = new JSONObject( $parcel.result );
-			JSONObject statusObj = resultObj.getJSONObject(_FIELD_STATUS);
-			if( statusObj.getInt(_FIELD_RETURNCODE)==0 ){
-				JSONObject productObj = resultObj.getJSONObject(_FIELD_PRODUCTS);
-				JSONArray listAry = productObj.getJSONArray(_FIELD_RESULTS);
-				for( int a=0, l= listAry.length(); a<l; a++ ){
-					wine = WineFactory.createWineComWine( listAry.getJSONObject(a) );
-					if( WineFactory.isQualified( wine, $parcel.query ) )
-						lastQualified.add( wine );
-					else
-						lastUnqualified.add( wine );
-				}
-			}else{
-				//Log.d(TAG, "getWinesByQuery Bad Return Code: " + statusObj.getInt(_FIELD_RETURNCODE) );
-			}
-			
-		}catch( JSONException $e ){
-			//Log.d(TAG, "getWinesByQuery Unable to parse JSON result " + $parcel.getQuery() );
-		}
 		
-		_context.resume(API_ID);
+		//Log.d(TAG, "onPostExecute");
+		if( $parcel.svc.equals(_SERVICE_CATALOG) ){
+			try{
+				WineParcel wine;
+				JSONObject resultObj = new JSONObject( $parcel.result );
+				JSONObject statusObj = resultObj.getJSONObject(_FIELD_STATUS);
+				if( statusObj.getInt(_FIELD_RETURNCODE)==0 ){
+					JSONObject productObj = resultObj.getJSONObject(_FIELD_PRODUCTS);
+					JSONArray listAry = productObj.getJSONArray(_FIELD_RESULTS);
+					for( int a=0, l= listAry.length(); a<l; a++ ){
+						wine = WineFactory.createWineComWine( listAry.getJSONObject(a) );
+						if( WineFactory.isQualified( wine, $parcel.query ) )
+							lastQualified.add( wine );
+						else
+							lastUnqualified.add( wine );
+					}
+				}else{
+					//Log.d(TAG, "getWinesByQuery Bad Return Code: " + statusObj.getInt(_FIELD_RETURNCODE) );
+				}
+				
+			}catch( JSONException $e ){
+				//Log.d(TAG, "getWinesByQuery Unable to parse JSON result " + $parcel.getQuery() );
+			}
+		}else{
+			try{
+				int a,b,al,bl;
+				SearchTypeParcel parcel;
+				ArrayList<SearchTypeParcel> typeCats = new ArrayList<SearchTypeParcel>();
+				ArrayList<SearchTypeParcel> varCats = new ArrayList<SearchTypeParcel>();
+				//ArrayList<SearchTypeParcel> allCats = new ArrayList<SearchTypeParcel>();
+				
+				JSONObject itemObj;
+				JSONObject resultObj = new JSONObject( $parcel.result );
+				JSONObject statusObj = resultObj.getJSONObject(_FIELD_STATUS);
+				JSONArray catsAry;
+				JSONArray subCatsAry;
+				
+				if( statusObj.getInt(_FIELD_RETURNCODE)==0 ){
+					catsAry = resultObj.getJSONArray("Categories");
+					for( a=0, al=catsAry.length(); a<al; a++ ){
+						itemObj = catsAry.getJSONObject(a);
+						if(itemObj.getString("Name").equals("Wine Type")){
+							subCatsAry = itemObj.getJSONArray("Refinements");
+							for( b=0, bl=subCatsAry.length(); b<bl; b++ ){
+								parcel = new SearchTypeParcel();
+								parcel.setName( subCatsAry.getJSONObject(b).getString("Name") );
+								parcel.id = subCatsAry.getJSONObject(b).getInt("Id");
+								typeCats.add(parcel);
+							}
+							//Collections.sort(typeCats);
+						}
+						if(itemObj.getString("Name").equals("Varietal")){
+							subCatsAry = itemObj.getJSONArray("Refinements");
+							for( b=0, bl=subCatsAry.length(); b<bl; b++ ){
+								parcel = new SearchTypeParcel();
+								parcel.setName( subCatsAry.getJSONObject(b).getString("Name") );
+								parcel.id = subCatsAry.getJSONObject(b).getInt("Id");
+								varCats.add(parcel);
+							}
+							//Collections.sort(varCats);
+						}
+					}
+					types.addAll(typeCats);
+					types.addAll(varCats);
+				}else{
+					//Log.d(TAG, "getWineTypes Bad Return Code: " + statusObj.getInt(_FIELD_RETURNCODE) );
+				}
+			}catch( JSONException $e ){
+				//Log.d(TAG, "getWineTypes Unable to parse JSON result" );
+			}
+		}	
+		
+		_context.resume($parcel);
 		
 	}
 	
 	private AsyncServiceParcel getSearchInstance( String $svc, String $query, String $url ){
 		AsyncServiceParcel parcel = new AsyncServiceParcel();
+		parcel.app_id = API_ID;
 		parcel.svc = $svc;
 		parcel.query = $query;
 		parcel.url = $url;

@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import com.yno.wizard.model.SearchWinesParcel;
 import com.yno.wizard.model.WineFactory;
 import com.yno.wizard.model.WineParcel;
+import com.yno.wizard.view.TextSearchServiceHelper;
 
 import android.os.AsyncTask;
 
@@ -31,13 +32,13 @@ public class SnoothAsyncService extends AsyncTask<AsyncServiceParcel, Void, Asyn
 	private static final String _FIELD_RETURNED = "returned";
 	private static final String _FIELD_WINES = "wines";
 	
-	private IServiceContext _context;
+	private TextSearchServiceHelper _context;
 	private SearchWinesParcel _parcel;
 	public ArrayList<WineParcel> lastUnqualified = new ArrayList<WineParcel>();
 	public ArrayList<WineParcel> lastQualified = new ArrayList<WineParcel>();
 	
 	
-	public SnoothAsyncService( IServiceContext $context	 ){
+	public SnoothAsyncService( TextSearchServiceHelper $context	 ){
 		_context = $context;
 	}
 
@@ -114,7 +115,7 @@ public class SnoothAsyncService extends AsyncTask<AsyncServiceParcel, Void, Asyn
 			//Log.d(TAG, "getWinesByQuery Unable to parse JSON result " + $parcel.getQuery() );
 		}
 		
-		_context.resume(API_ID);
+		_context.resume( $parcel );
 	}
 	
 	private AsyncServiceParcel getSearchInstance( String $url, String $query, String $svc ){
@@ -122,6 +123,7 @@ public class SnoothAsyncService extends AsyncTask<AsyncServiceParcel, Void, Asyn
 		parcel.query = $query;
 		parcel.url = $url;
 		parcel.svc = $svc;
+		parcel.app_id = API_ID;
 		return parcel;
 	}
 
