@@ -24,11 +24,11 @@ public class WineBarcodeSearchService extends IntentService {
 		Bundle extras = $intent.getExtras();
 		Messenger msgr = (Messenger) extras.get("android.os.Messenger");
 		SearchWineParcel parcel = $intent.getParcelableExtra(SearchWineParcel.NAME);
-		GoogleServiceClass svc = new GoogleServiceClass();
-		WineParcel wine = svc.getWineByBarcode(parcel.query);
+		GoogleServices svc = new GoogleServices();
+		WineDetailsServiceParcel wdPrcl = svc.getWineByBarcode(parcel.query);
 		
 		Message msg = new Message();
-		msg.obj = wine;
+		msg.obj = wdPrcl.wine;
 		
 		try{
 			msgr.send( msg );

@@ -24,11 +24,11 @@ public class WineTypesSearchService extends IntentService {
 		Bundle extras = $intent.getExtras();
 		Messenger msgr = (Messenger) extras.get("android.os.Messenger");
 		
-		WineComServiceClass svc = new WineComServiceClass();
-		ArrayList<SearchTypeParcel> types = svc.getWineTypes();
+		WineComServices svc = new WineComServices();
+		WineTypesServiceParcel parcel = svc.getWineTypes();
 		
 		Message msg = new Message();
-		msg.obj = types;
+		msg.obj = parcel;
 		
 		try{
 			msgr.send( msg );

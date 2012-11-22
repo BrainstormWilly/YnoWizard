@@ -26,13 +26,13 @@ public class WineSelectSearchService extends IntentService {
 		SearchWineParcel parcel = $intent.getParcelableExtra(SearchWineParcel.NAME);
 		WineParcel wine = parcel.wine;
 		
-		GoogleServiceClass svc = new GoogleServiceClass();
-		WineParcel finalWine = svc.getWineDetails(wine);
+		GoogleServices svc = new GoogleServices();
+		WineDetailsServiceParcel wdPrcl = svc.getWineDetails(wine);
 		
 		// do more apis
 		
 		Message msg = new Message();
-		msg.obj = finalWine;
+		msg.obj = wdPrcl.wine;
 		try{
 			msgr.send( msg );
 		}catch( RemoteException $e ){

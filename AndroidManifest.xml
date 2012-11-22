@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yno.wizard"
-    android:versionCode="2"
-    android:versionName="1.001" >
+    android:versionCode="3"
+    android:versionName="1.002" >
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="15" />
     
@@ -113,6 +113,8 @@
             android:name=".model.service.WineSelectSearchService" />
         <service 
             android:name=".model.service.WineTypesSearchService" />
+        <service
+            android:name=".model.service.WinesPhraseSearchService" />
         
         <meta-data android:value="a1509182d814b08" android:name="ADMOB_PUBLISHER_ID"/>
 

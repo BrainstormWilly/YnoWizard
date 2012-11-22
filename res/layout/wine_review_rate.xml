@@ -51,31 +51,45 @@
 	        android:layout_below="@+id/wineReviewRateRG"
 	        android:background="@color/yw_gray_medium"/>
 		        
-	    <LinearLayout
-		    android:id="@+id/wineReviewRateSliderLL"
-		    android:layout_width="wrap_content"
-		    android:layout_height="match_parent"
-		    android:layout_centerHorizontal="true"
-		    android:layout_below="@+id/wineReviewRateHL">
-		    <TextView 
-		         android:id="@+id/wineReviewRateTV"
-		         android:layout_width="150sp"
-		         android:layout_height="match_parent"
-		         android:gravity="right|center"
-		         android:textSize="90sp"
-		         android:textColor="@color/yw_gray_light"
-		         android:text="0.0"/>
-		    <com.yno.wizard.view.VerticalSeekBar
-		         android:id="@+id/wineReviewRateSB"
-		         android:layout_width="wrap_content"
-		         android:layout_height="match_parent"
-		         android:layout_margin="20dp"
-		         android:paddingLeft="15dp"
-		         android:paddingRight="15dp"
-		         android:thumbOffset="15dp"
-		         style="@style/ywSlider"
-		         android:max="100" />
-	 	</LinearLayout>
+	    <RelativeLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_below="@+id/wineReviewRateHL">
+	        <LinearLayout
+			    android:id="@+id/wineReviewRateSliderLL"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_centerInParent="true"
+			    android:orientation="vertical">
+			    <TextView 
+			         android:id="@+id/wineReviewRateTV"
+			         android:layout_width="match_parent"
+			         android:layout_height="wrap_content"
+			         android:gravity="center"
+			         android:textSize="80sp"
+			         android:textColor="@color/yw_gray_light"
+			         android:text="0.0"/>
+			    <SeekBar 
+			        android:id="@+id/wineReviewRateSB"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:paddingLeft="40dp"
+			        android:paddingRight="40dp"
+			        style="@style/ywSlider"
+			        android:max="100"/>
+	<!-- 		    <com.yno.wizard.view.VerticalSeekBar -->
+	<!-- 		         android:id="@+id/wineReviewRateSB" -->
+	<!-- 		         android:layout_width="wrap_content" -->
+	<!-- 		         android:layout_height="match_parent" -->
+	<!-- 		         android:layout_margin="20dp" -->
+	<!-- 		         android:paddingLeft="15dp" -->
+	<!-- 		         android:paddingRight="15dp" -->
+	<!-- 		         android:thumbOffset="15dp" -->
+	<!-- 		         style="@style/ywSlider" -->
+	<!-- 		         android:max="100" /> -->
+		 	</LinearLayout>
+	    </RelativeLayout>
+	    
         
     </RelativeLayout>
 

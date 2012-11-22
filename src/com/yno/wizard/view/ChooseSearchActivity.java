@@ -1,6 +1,7 @@
 package com.yno.wizard.view;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -21,7 +22,6 @@ import com.google.zxing.client.android.Intents.Scan;
 import com.yno.wizard.R;
 import com.yno.wizard.controller.OpenManualEntryCommand;
 import com.yno.wizard.controller.OpenPhraseSearchCommand;
-import com.yno.wizard.utils.ActionBarHelper;
 
 public class ChooseSearchActivity extends SherlockActivity implements IActionBarActivity {
 	
@@ -111,6 +111,35 @@ public class ChooseSearchActivity extends SherlockActivity implements IActionBar
 		_abHelper.checkActivityResult($reqCode, $resCode, $intent);
 	}
 	
+	public void showAlert( int $title, int $body ){
+		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
+		
+		
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
+		
+		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
+		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
+		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
+		
+		title.setText($title);
+		subtitle.setText($body);
+		
+		okBtn.setOnClickListener(
+				new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						_alert.dismiss();
+					}
+				}
+		);
+		
+		bldr.setView(layout);
+		_alert = bldr.create();
+		_alert.show();
+	}
+	
 	public void showProgress( String $msg ){
 		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
 		
@@ -127,36 +156,8 @@ public class ChooseSearchActivity extends SherlockActivity implements IActionBar
 		_prog.show();
 	}
 	
-	public void dismissProgress( boolean $foundWine ){
+	public void dismissProgress(){
 		_prog.dismiss();
-		if( !$foundWine ){
-			AlertDialog.Builder bldr = new AlertDialog.Builder(this);
-			
-			LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-			View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
-			
-			TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
-			TextView body = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
-			Button btn = (Button) layout.findViewById(R.id.dialogAlertBtn);
-			
-			title.setText(R.string.no_wine_found);
-			body.setText(R.string.try_rescanning);
-			btn.setOnClickListener(
-					new OnClickListener() {
-						
-						@Override
-						public void onClick(View v) {
-							_alert.dismiss();
-						}
-					}
-			);
-			
-			
-			bldr.setView( layout );
-			_alert = bldr.create();
-			_alert.show();
-			
-		}
 	}
 	
 }

@@ -1,13 +1,22 @@
-package com.yno.wizard.utils;
+package com.yno.wizard.view;
 
 import java.lang.ref.WeakReference;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 import com.google.zxing.client.android.Intents.Scan;
@@ -21,7 +30,6 @@ import com.yno.wizard.model.SearchWineParcel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.model.service.SearchData;
 import com.yno.wizard.model.service.TrackingService;
-import com.yno.wizard.view.IActionBarActivity;
 
 public class ActionBarHelper {
 
@@ -44,7 +52,7 @@ public class ActionBarHelper {
 		public void handleMessage(Message $msg) {
 			IActionBarActivity thisActivity = _activity.get();
 			WineParcel parcel = (WineParcel) $msg.obj;
-			thisActivity.dismissProgress( !parcel.name.equals("") );
+			thisActivity.dismissProgress();
 			
 			if( !parcel.name.equals("") ){
 				TrackSelectCommand tmd = new TrackSelectCommand();
@@ -55,6 +63,8 @@ public class ActionBarHelper {
 				DoWineSelectCommand cmd = new DoWineSelectCommand(thisActivity);
 				cmd.payload.putParcelable( WineParcel.NAME, parcel);
 				cmd.execute();
+			}else{
+				thisActivity.showAlert(R.string.no_wine_found, R.string.try_searching_by_name_or_manually_entering_wine_info);
 			}
 		}
 	}
@@ -80,18 +90,21 @@ public class ActionBarHelper {
 			case R.id.actionbarSearch :
 				OpenPhraseSearchCommand searchCmd = new OpenPhraseSearchCommand( (Context) _context );
 				searchCmd.execute();
+				return true;
 		}
 		
 		return false;
 	}
 	
 	public boolean checkActivityResult(int $reqCode, int $resCode, Intent $intent){
+		//Log.d(TAG, String.valueOf($reqCode) + ", " + String.valueOf($resCode) + ", " + $intent);
 		if( $reqCode==BARCODE_RESULT ){
 			if( $resCode==Activity.RESULT_OK){
 				_context.showProgress( _context.getString(R.string.looking_up_wine_barcode) );
 				SearchWineParcel parcel = new SearchWineParcel();
 				parcel.type = SearchData.SEARCH_TYPE_BARCODE;
 				parcel.query = $intent.getStringExtra(Scan.RESULT);
+				
 				DoBarcodeSearchCommand cmd = new DoBarcodeSearchCommand( (Context) _context );
 				cmd.messenger = new Messenger( new WineSelectHandler( _context ) );
 				cmd.payload.putParcelable(SearchWineParcel.NAME, parcel);
@@ -102,5 +115,6 @@ public class ActionBarHelper {
 		
 		return false;
 	}
+	
 	
 }

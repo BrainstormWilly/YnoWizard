@@ -3,14 +3,14 @@ package com.yno.wizard.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.yno.wizard.model.service.VinTankServiceClass;
+import com.yno.wizard.model.service.VinTankServices;
 
 public class RegionFactory {
 	
 	public static RegionParcel createVinTankRegion( JSONObject $obj ){
 		RegionParcel reg = new RegionParcel();
 		
-		reg.api = VinTankServiceClass.API_ID;
+		reg.api = VinTankServices.API_ID;
 		
 		try{
 			reg.id = $obj.getString("ynId");

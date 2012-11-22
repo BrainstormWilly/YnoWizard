@@ -35,7 +35,7 @@ public class WineReviewRatingFragment extends Fragment {
 	@Override
 	public View onCreateView( LayoutInflater $inflator, ViewGroup $container, Bundle $savedInstanceState){
 		View view = $inflator.inflate(R.layout.wine_review_rate, $container, false);
-		final VerticalSeekBar ratingSB = (VerticalSeekBar) view.findViewById(R.id.wineReviewRateSB);
+		final SeekBar ratingSB = (SeekBar) view.findViewById(R.id.wineReviewRateSB);
 		final TextView ratingTV = (TextView) view.findViewById(R.id.wineReviewRateTV);
 		RadioGroup ratingRG = (RadioGroup) view.findViewById(R.id.wineReviewRateRG);
 		

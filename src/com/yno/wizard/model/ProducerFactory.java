@@ -3,7 +3,7 @@ package com.yno.wizard.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.yno.wizard.model.service.VinTankServiceClass;
+import com.yno.wizard.model.service.VinTankServices;
 
 public class ProducerFactory {
 	
@@ -40,7 +40,7 @@ public class ProducerFactory {
 	public static ProducerParcel createVinTankProducer( JSONObject $obj ){
 		ProducerParcel prod = new ProducerParcel();
 		
-		prod.api = VinTankServiceClass.API_ID;
+		prod.api = VinTankServices.API_ID;
 		
 		try{
 			prod.id = $obj.getString("ynId");

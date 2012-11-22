@@ -3,6 +3,7 @@ package com.yno.wizard.view;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -27,7 +28,6 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.yno.wizard.R;
 import com.yno.wizard.controller.StartFacebookRatingCommand;
 import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.utils.ActionBarHelper;
 import com.yno.wizard.utils.AsyncDownloadImage;
 
 public class WineSelectActivity extends SherlockFragmentActivity implements IActionBarActivity {
@@ -82,6 +82,7 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 	private ActionBarHelper _abHelper;
 	private WineParcel _wine;
 	private AlertDialog _diag;
+	private AlertDialog _prog;
 	
 	public void setWine( WineParcel $wine ){
 		_wine = $wine;
@@ -191,7 +192,7 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 					
 					@Override
 					public void onClick(View v) {
-						WineSelectActivity.this.dismissDiag();
+						_diag.dismiss();
 					}
 				}
 		);
@@ -202,17 +203,52 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 		_diag.show();
 	}
 	
-	
-	public void dismissDiag(){
-		_diag.dismiss();
+	public void showAlert( int $title, int $body ){
+		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
+		
+		
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
+		
+		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
+		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
+		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
+		
+		title.setText($title);
+		subtitle.setText($body);
+		
+		okBtn.setOnClickListener(
+				new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						_diag.dismiss();
+					}
+				}
+		);
+		
+		bldr.setView(layout);
+		_diag = bldr.create();
+		_diag.show();
 	}
 	
-	public void dismissProgress( boolean $hasResults ){
-		// not used
+	public void dismissProgress(){
+		_prog.dismiss();
 	}
 	
 	public void showProgress( String $msg ){
-		// not used
+		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
+		
+		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
+		
+		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
+		
+		title.setText($msg);
+		
+		bldr.setView( layout );
+		_prog = bldr.create();
+		_prog.show();
 	}
 	
 	@Override

@@ -1,10 +1,10 @@
 package com.yno.wizard.model;
 
-import com.yno.wizard.model.service.GoogleServiceClass;
-import com.yno.wizard.model.service.SnoothServiceClass;
-import com.yno.wizard.model.service.VinTankServiceClass;
-import com.yno.wizard.model.service.WineComServiceClass;
 import com.yno.wizard.R;
+import com.yno.wizard.model.service.GoogleServices;
+import com.yno.wizard.model.service.SnoothServices;
+import com.yno.wizard.model.service.VinTankServices;
+import com.yno.wizard.model.service.WineComServices;
 
 public class SponsorFactory {
 
@@ -13,7 +13,7 @@ public class SponsorFactory {
 		parcel.name = "Google";
 		parcel.url = "http://www.google.com/shopping";
 		parcel.logo = R.drawable.sponsor_google;
-		parcel.apiId = GoogleServiceClass.API_ID;
+		parcel.apiId = GoogleServices.API_ID;
 		
 		return parcel;
 
@@ -24,7 +24,7 @@ public class SponsorFactory {
 		parcel.name = "Wine.com";
 		parcel.url = "http://www.wine.com";
 		parcel.logo = R.drawable.sponsor_winecom;
-		parcel.apiId = WineComServiceClass.API_ID;
+		parcel.apiId = WineComServices.API_ID;
 		
 		return parcel;
 
@@ -35,7 +35,7 @@ public class SponsorFactory {
 		parcel.name = "Snooth";
 		parcel.url = "http://www.snooth.com";
 		parcel.logo = R.drawable.sponsor_snooth;
-		parcel.apiId = SnoothServiceClass.API_ID;
+		parcel.apiId = SnoothServices.API_ID;
 		
 		return parcel;
 
@@ -46,7 +46,7 @@ public class SponsorFactory {
 		parcel.name = "VinTank";
 		parcel.url = "http://www.vintank.com";
 		parcel.logo = R.drawable.sponsor_vintank;
-		parcel.apiId = VinTankServiceClass.API_ID;
+		parcel.apiId = VinTankServices.API_ID;
 		
 		return parcel;
 

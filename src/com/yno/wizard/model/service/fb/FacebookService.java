@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
@@ -70,7 +71,7 @@ public class FacebookService {
 	}
 	
 	public void authorize( int $ssoCode ){
-		//Log.d(TAG, "authorize in process");
+		//Log.d(TAG, "authorize in process = " + String.valueOf($ssoCode) );
 		_app.FB.authorize( getActivity(), PERMISSIONS, $ssoCode, 
 				new FbListenerFactory.FbDialogListener(){
 					@Override
@@ -102,6 +103,7 @@ public class FacebookService {
 	}
 	
 	public void authorizeCallback(int $request, int $result, Intent $intent){
+		//Log.d(TAG, "onAuthorizeCallback");
 		_app.FB.authorizeCallback($request, $result, $intent);
 	}
 	
@@ -126,6 +128,7 @@ public class FacebookService {
 	public void getUserData(){
 		Bundle params = new Bundle();
 		params.putString(_RUNNER_FIELDS, USER_PARAMS);
+		//.d(TAG, "getUserData");
 		_app.FB_RUNNER.request(_USER, params, 
 				new FbListenerFactory.FbRequestListener(){
 					@Override

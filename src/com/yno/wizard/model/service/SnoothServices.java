@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -13,16 +15,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.net.http.AndroidHttpClient;
+
 import com.yno.wizard.model.SearchWinesParcel;
 import com.yno.wizard.model.WineFactory;
 import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.view.TextSearchServiceHelper;
 
-import android.os.AsyncTask;
-
-public class SnoothAsyncService extends AsyncTask<AsyncServiceParcel, Void, AsyncServiceParcel>{
+public class SnoothServices implements IWineSearchService {
 	
-	public static final String TAG = "SnoothAsyncService";
+	public static final String TAG = SnoothServices.class.getSimpleName();
 	public static final String API_ID = "snooth";
 	
 	private static final String _API_URL = "http://api.snooth.com/";
@@ -32,22 +33,10 @@ public class SnoothAsyncService extends AsyncTask<AsyncServiceParcel, Void, Asyn
 	private static final String _FIELD_RETURNED = "returned";
 	private static final String _FIELD_WINES = "wines";
 	
-	private TextSearchServiceHelper _context;
-	private SearchWinesParcel _parcel;
-	public ArrayList<WineParcel> lastUnqualified = new ArrayList<WineParcel>();
-	public ArrayList<WineParcel> lastQualified = new ArrayList<WineParcel>();
-	
-	
-	public SnoothAsyncService( TextSearchServiceHelper $context	 ){
-		_context = $context;
-	}
 
-
-	//@Override
-	public void getWinesByQuery(SearchWinesParcel $parcel) {
-		
-		lastUnqualified.clear();
-		lastQualified.clear();
+	@Override
+	public WinesServiceParcel getWinesByQuery( SearchWinesParcel $parcel ) {
+		WineParcel wine;
 		
 		String svcUrl = _API_URL 
 				+ _SERVICE_WINES + "?akey=" + _API_KEY  
@@ -63,49 +52,22 @@ public class SnoothAsyncService extends AsyncTask<AsyncServiceParcel, Void, Asyn
 			svcUrl += "&xp=" + $parcel.value;
 		if( !$parcel.getQuery().equals("") )
 			svcUrl += "&q=" + URLEncoder.encode( $parcel.getQuery() );
-		//Log.d(TAG, svcUrl);
-		execute( new AsyncServiceParcel[]{ getSearchInstance(svcUrl, $parcel.getQuery(), _SERVICE_WINES) } );
-	}
-
-	@Override
-	protected AsyncServiceParcel doInBackground(AsyncServiceParcel... $parcels) {
-		AsyncServiceParcel resultPrcl = new AsyncServiceParcel();
 		
-		for (AsyncServiceParcel parcel : $parcels){
-			resultPrcl.query = parcel.query;
-			resultPrcl.svc = parcel.svc;
-			resultPrcl.url = parcel.url;
-			HttpClient httpClient = SearchData.getHttpClient();
-			HttpRequestBase httpReq = new HttpGet( parcel.url );
-			HttpResponse resp;
-			try{
-				resp = httpClient.execute( httpReq );
-				resultPrcl.result  = EntityUtils.toString( resp.getEntity() );
-				
-			}catch( IOException $e ){
-				$e.printStackTrace();
-				resultPrcl.result = "failed";
-			}
-		}
-
-		return resultPrcl;
-	}
-	
-	@Override
-	protected void onPostExecute(AsyncServiceParcel $parcel) {
-		WineParcel wine;
-
+		//Log.d(TAG, svcUrl);
+		WinesServiceParcel parcel = (WinesServiceParcel) getSearchInstance(SearchData.ID_SERVICE_WINES, _SERVICE_WINES, svcUrl, $parcel.getQuery(), 1, SearchData.API_WINE_RESULTS);
+		parcel.result = doService(parcel);
+		
 		try{
-			JSONObject resultObj = new JSONObject( $parcel.result );
+			JSONObject resultObj = new JSONObject( parcel.result );
 			JSONObject statusObj = resultObj.getJSONObject(_FIELD_META);
 			if( statusObj.getInt(_FIELD_RETURNED)>0 ){
 				JSONArray listAry = resultObj.getJSONArray(_FIELD_WINES);
 				for( int a=0, l= listAry.length(); a<l; a++ ){
 					wine = WineFactory.createSnoothWine( listAry.getJSONObject(a) );
-					if( WineFactory.isQualified( wine, $parcel.query ) )
-						lastQualified.add( wine );
+					if( WineFactory.isQualified( wine, $parcel.getQuery() ) )
+						parcel.qualified.add( wine );
 					else
-						lastUnqualified.add( wine );
+						parcel.unqualified.add( wine );
 				}
 			}else{
 				//Log.d(TAG, "getWinesByQuery No Results found" );
@@ -115,16 +77,47 @@ public class SnoothAsyncService extends AsyncTask<AsyncServiceParcel, Void, Asyn
 			//Log.d(TAG, "getWinesByQuery Unable to parse JSON result " + $parcel.getQuery() );
 		}
 		
-		_context.resume( $parcel );
-	}
-	
-	private AsyncServiceParcel getSearchInstance( String $url, String $query, String $svc ){
-		AsyncServiceParcel parcel = new AsyncServiceParcel();
-		parcel.query = $query;
-		parcel.url = $url;
-		parcel.svc = $svc;
-		parcel.app_id = API_ID;
 		return parcel;
 	}
+	
+	private String doService( AsyncServiceParcel $parcel ){
+		String result = "failed";
+		final AndroidHttpClient httpClient = AndroidHttpClient.newInstance("Android");
+		final HttpRequestBase httpReq = new HttpGet( $parcel.url );
+		
+		try{
+			HttpResponse resp = httpClient.execute( httpReq );
+			final int status = resp.getStatusLine().getStatusCode();
+			if( status!=HttpStatus.SC_OK )
+				return result;
+			final HttpEntity entity = resp.getEntity();
+			if( entity!=null)
+				result = EntityUtils.toString( resp.getEntity() );
+		}catch( IOException $e ){
+			httpReq.abort();
+			$e.printStackTrace();
+		}finally{
+			if( httpClient!=null )
+				httpClient.close();
+		}
+		return result;
+	}
+	
+	private AsyncServiceParcel getSearchInstance( int $svcId, String $svc, String $url, String $query, int $page, int $results ){
+		AsyncServiceParcel parcel;
+		if( $svcId==SearchData.ID_SERVICE_WINES ){
+			parcel = new WinesServiceParcel();
+		}else{
+			parcel = new AsyncServiceParcel();
+		}
+		parcel.app_id = API_ID;
+		parcel.svc_id = $svcId;
+		parcel.svc = $svc;
+		parcel.url = $url;
+		parcel.query = $query;
+		parcel.page = $page;
+		return parcel;
+	}
+	
 
 }

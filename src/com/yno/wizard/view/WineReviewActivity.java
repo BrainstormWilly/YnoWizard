@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
@@ -17,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,7 +46,6 @@ import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.model.fb.FbUserParcel;
 import com.yno.wizard.model.fb.FbWineReviewParcel;
 import com.yno.wizard.model.service.fb.FacebookService;
-import com.yno.wizard.utils.ActionBarHelper;
 import com.yno.wizard.utils.AsyncDownloadImage;
 
 public class WineReviewActivity extends SherlockFragmentActivity implements IFacebookContext, IActionBarActivity {
@@ -94,6 +95,7 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 	private FbUserParcel _user;
 	private ActionBarHelper _abHelper;
 	private AlertDialog _diag;
+	private AlertDialog _prog;
 	private LocationModel _location;
 	private boolean _sendToFeed = false;
 	
@@ -165,7 +167,7 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 								
 								@Override
 								public void onClick(View v) {
-									WineReviewActivity.this.dismissDiag();
+									_diag.dismiss();
 								}
 							}
 					);
@@ -181,7 +183,7 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 									cmd.execute();
 									
 									_fbSvc.publishReviewToList(_review);
-									WineReviewActivity.this.dismissDiag();
+									_diag.dismiss();
 									//_prog = ProgressDialog.show(WineReviewActivity.this, "Posting review", "", true);
 								}
 							}
@@ -299,7 +301,9 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 	
 	@Override
 	protected void onActivityResult(int $request, int $result, Intent $intent) {
+		
 		if( !_abHelper.checkActivityResult($request, $result, $intent) ){
+			//Log.d(TAG, "onActivityResult = " + $intent);
 			_fbSvc.authorizeCallback($request, $result, $intent);
 		}
 			
@@ -318,6 +322,7 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 	
 	@Override
 	public void onDialogError(DialogError $e, String $service) {
+		//Log.d(TAG, "dialog error");
 		$e.printStackTrace();
 	}
 	
@@ -394,6 +399,7 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 	
 	@Override
 	public void onFacebookError(FacebookError $e, String $service) {
+		//Log.d(TAG, "onFacebookError");
 		$e.printStackTrace();
 	}
 	
@@ -408,47 +414,82 @@ public class WineReviewActivity extends SherlockFragmentActivity implements IFac
 	
 	@Override
 	public void onServiceException(Exception $e, String $service) {
+		//Log.d(TAG, "onServiceException");
 		$e.printStackTrace();
 	}
 	
 	public void enlargeLabel(){
-		if( _diag==null){
-			AlertDialog.Builder bldr = new AlertDialog.Builder(this);
-			
-			LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-			View layout = inflater.inflate(R.layout.wine_image_enlarger, (ViewGroup) findViewById(R.id.wineImageEnlargeRL));
-			
-			ImageView iv = (ImageView) layout.findViewById(R.id.wineImageEnlargeIV);
-			Button btn = (Button) layout.findViewById(R.id.wineImageEnlargeBtn);
-			
-			btn.setOnClickListener(
-					new OnClickListener() {
-						
-						@Override
-						public void onClick(View v) {
-							WineReviewActivity.this.dismissDiag();
-						}
+		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
+		
+		LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.wine_image_enlarger, (ViewGroup) findViewById(R.id.wineImageEnlargeRL));
+		
+		ImageView iv = (ImageView) layout.findViewById(R.id.wineImageEnlargeIV);
+		Button btn = (Button) layout.findViewById(R.id.wineImageEnlargeBtn);
+		
+		btn.setOnClickListener(
+				new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						_diag.dismiss();
 					}
-			);
-			new AsyncDownloadImage( iv ).execute( _review.wine.imageLarge );
-			
-			bldr.setView( layout );
-			_diag = bldr.create();
-		}
+				}
+		);
+		new AsyncDownloadImage( iv ).execute( _review.wine.imageLarge );
+		
+		bldr.setView( layout );
+		_diag = bldr.create();
 		
 		_diag.show();
 	}
 	
-	public void dismissDiag(){
-		_diag.dismiss();
+	public void showAlert( int $title, int $body ){
+		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
+		
+		
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
+		
+		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
+		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
+		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
+		
+		title.setText($title);
+		subtitle.setText($body);
+		
+		okBtn.setOnClickListener(
+				new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						_diag.dismiss();
+					}
+				}
+		);
+		
+		bldr.setView(layout);
+		_diag = bldr.create();
+		_diag.show();
 	}
 	
-	public void dismissProgress( boolean $hasResults ){
-		//_prog.dismiss();
+	public void dismissProgress(){
+		_prog.dismiss();
 	}
 	
 	public void showProgress( String $msg ){
-		// not used
+		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
+		
+		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
+		
+		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
+		
+		title.setText($msg);
+		
+		bldr.setView( layout );
+		_prog = bldr.create();
+		_prog.show();
 	}
 	
 	private void beginFbLogin(){

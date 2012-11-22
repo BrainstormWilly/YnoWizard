@@ -3,6 +3,7 @@ package com.yno.wizard.view;
 import java.util.UUID;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.LayerDrawable;
@@ -30,7 +31,6 @@ import com.yno.wizard.R;
 import com.yno.wizard.controller.StartFacebookRatingCommand;
 import com.yno.wizard.model.VintagesModel;
 import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.utils.ActionBarHelper;
 import com.yno.wizard.utils.AsyncUploadImage;
 import com.yno.wizard.utils.ManualWineValidator;
 import com.yno.wizard.utils.SpinnerAdapter;
@@ -64,10 +64,10 @@ public class ManualEntryActivity extends SherlockActivity implements IActionBarA
 	private WineParcel _wine;
 	private ActionBarHelper _abHelper;
 	private AlertDialog _alert;
+	private AlertDialog _prog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.manual_entry_main);
 		
@@ -133,12 +133,52 @@ public class ManualEntryActivity extends SherlockActivity implements IActionBarA
 		EasyTracker.getInstance().activityStop(this);
 	}
 	
-	public void dismissProgress( boolean $foundWine ){
-		// not used
+	public void showAlert( int $title, int $body ){
+		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
+		
+		
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
+		
+		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
+		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
+		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
+		
+		title.setText($title);
+		subtitle.setText($body);
+		
+		okBtn.setOnClickListener(
+				new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						_alert.dismiss();
+					}
+				}
+		);
+		
+		bldr.setView(layout);
+		_alert = bldr.create();
+		_alert.show();
+	}
+	
+	public void dismissProgress(){
+		_prog.dismiss();
 	}
 	
 	public void showProgress( String $msg ){
-		// not used
+		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
+		
+		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
+		
+		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
+		
+		title.setText($msg);
+		
+		bldr.setView( layout );
+		_prog = bldr.create();
+		_prog.show();
 	}
 	
 	@Override

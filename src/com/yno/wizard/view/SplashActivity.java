@@ -1,13 +1,10 @@
 package com.yno.wizard.view;
 
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Messenger;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +14,9 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.yno.wizard.R;
 import com.yno.wizard.controller.DoWineTypesSearchCommand;
 import com.yno.wizard.controller.OpenChooseSearchCommand;
-import com.yno.wizard.model.SearchTypeParcel;
 import com.yno.wizard.model.db.YnoDbOpenHelper;
 import com.yno.wizard.model.service.AsyncServiceParcel;
 import com.yno.wizard.model.service.IServiceContext;
-import com.yno.wizard.model.service.WineComAsyncService;
 import com.yno.wizard.model.service.WineTypesServiceParcel;
 
 public class SplashActivity extends SherlockActivity implements IServiceContext {
@@ -35,8 +30,8 @@ public class SplashActivity extends SherlockActivity implements IServiceContext 
 	
 	private Handler _wineTypesSearchHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			ArrayList<SearchTypeParcel> types = (ArrayList<SearchTypeParcel>) msg.obj;
-			_dbHelper.insertSearchTypes( types );
+			WineTypesServiceParcel parcel = (WineTypesServiceParcel) msg.obj;
+			_dbHelper.insertSearchTypes( parcel.types );
 			_dbProg.dismiss();
 			SplashActivity.this.endSplash();
 		}
@@ -67,6 +62,13 @@ public class SplashActivity extends SherlockActivity implements IServiceContext 
        
     }
     
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	if( _dbHelper!=null )
+    		_dbHelper.close();
+    }
+    
     public void resume( AsyncServiceParcel $parcel ){
     	WineTypesServiceParcel parcel = (WineTypesServiceParcel) $parcel;
     	_dbHelper.insertSearchTypes( parcel.types );
@@ -74,7 +76,7 @@ public class SplashActivity extends SherlockActivity implements IServiceContext 
 		endSplash();
     }
     
-    public void loadData(){
+    private void loadData(){
     	//_dbProg = ProgressDialog.show(this, "Hang on...", "The Wizard is getting its magic on!", true);
     	AlertDialog.Builder bldr = new AlertDialog.Builder(this);
 		
@@ -90,14 +92,12 @@ public class SplashActivity extends SherlockActivity implements IServiceContext 
 		_dbProg = bldr.create();
 		_dbProg.show();
 		
-		new WineComAsyncService( this ).getWineTypes();
-		
-//    	DoWineTypesSearchCommand cmd = new DoWineTypesSearchCommand( this );
-//		cmd.messenger = new Messenger(_wineTypesSearchHandler);
-//		cmd.execute();
+    	DoWineTypesSearchCommand cmd = new DoWineTypesSearchCommand( this );
+		cmd.messenger = new Messenger(_wineTypesSearchHandler);
+		cmd.execute();
     }
     
-    public void endSplash(){
+    private void endSplash(){
     	OpenChooseSearchCommand cmd = new OpenChooseSearchCommand(this);
 	    cmd.execute();
     }
