@@ -17,8 +17,9 @@
     <application
         android:icon="@drawable/yw_launcher"
         android:label="@string/app_name"
-        android:name=".YnoFinderApplication"
-        android:theme="@style/ywAppTheme" >
+        android:name=".YnoWizard"
+        android:theme="@style/ywAppTheme"
+        android:debuggable="true" >
         <activity
             android:name=".view.SplashActivity"
             android:label="@string/app_name" >
@@ -58,7 +59,7 @@
 			</intent-filter>
 		</activity>
         <activity 
-            android:name=".view.TextSearchActivity"
+            android:name=".view.PhraseSearchActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.yno.wizard.intent.OPEN_PHRASE_SEARCH"/>

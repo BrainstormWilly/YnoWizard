@@ -15,12 +15,12 @@ import android.widget.TextView;
 
 import com.yno.wizard.R;
 import com.yno.wizard.model.fb.FbWineReviewParcel;
-import com.yno.wizard.utils.WineSubnavHelper;
+import com.yno.wizard.view.assist.WineSubnavAssist;
 
 public class WineReviewRatingFragment extends Fragment {
 
 	public static final String TAG = WineReviewRatingFragment.class.getSimpleName();
-	private WineSubnavHelper _helper;
+	private WineSubnavAssist _helper;
 	
 	public static WineReviewRatingFragment newInstance( FbWineReviewParcel $review, ArrayList<String> $subnav ){
 		Bundle arg = new Bundle();
@@ -40,7 +40,7 @@ public class WineReviewRatingFragment extends Fragment {
 		RadioGroup ratingRG = (RadioGroup) view.findViewById(R.id.wineReviewRateRG);
 		
 		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
-		_helper = new WineSubnavHelper(view);
+		_helper = new WineSubnavAssist(view);
 		_helper.setNav(subnav, WineReviewActivity.NAV_RATING);
 		
 		final FbWineReviewParcel review = getArguments().getParcelable( FbWineReviewParcel.NAME );

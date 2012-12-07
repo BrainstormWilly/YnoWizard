@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.facebook.android.DialogError;
 import com.facebook.android.FacebookError;
 
-public interface IFacebookContext {
+public interface IFacebookActivity {
 
 	void onDialogComplete( Bundle $data, String $service );
 	void onDialogError( DialogError $e, String $service );

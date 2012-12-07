@@ -29,8 +29,11 @@ import com.yno.wizard.R;
 import com.yno.wizard.controller.StartFacebookRatingCommand;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.utils.AsyncDownloadImage;
+import com.yno.wizard.view.adapter.WineSelectPagerAdapter;
+import com.yno.wizard.view.assist.ActionBarAssist;
+import com.yno.wizard.view.assist.ActivityAlertAssist;
 
-public class WineSelectActivity extends SherlockFragmentActivity implements IActionBarActivity {
+public class WineSelectActivity extends AbstractAnalyticsFragmentActivity implements IAlertActivity {
 
 	public static String TAG = WineSelectActivity.class.getSimpleName();
 	public static final String NAV_DESCRIPTION = "Description";
@@ -39,38 +42,38 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 	public static final String NAV_RATINGS = "Ratings";
 	public static final String NAV_PRICES = "Prices";
 	
-	private static class WineSelectAdaptor extends FragmentStatePagerAdapter{
-		
-		private WineParcel _wine;
-		private ArrayList<String> _subnav;
-		
-		
-		public WineSelectAdaptor( FragmentManager $fm, WineParcel $wine, ArrayList<String> $subnav ){
-			super( $fm );
-			_wine = $wine;
-			_subnav = $subnav;
-			
-		}
-		
-		@Override
-		public Fragment getItem( int $index ){
-			if( _subnav.get($index).equals(NAV_DESCRIPTION) )
-				return WineSelectDescripFragment.newInstance(_wine, _subnav);
-			else if( _subnav.get($index).equals(NAV_PRICES) )
-				return WineSelectPricesFragment.newInstance(_wine, _subnav);
-			else if( _subnav.get($index).equals(NAV_RATINGS) )
-				return WineSelectRatingsFragment.newInstance(_wine, _subnav);
-			else if( _subnav.get($index).equals(NAV_NOTES) )
-				return WineSelectNotesFragment.newInstance(_wine, _subnav);
-			
-			return WineSelectDetailsFragment.newInstance(_wine, _subnav);
-		}
-		
-		@Override
-		public int getCount(){
-			return _subnav.size();
-		}
-	}
+//	private static class WineSelectAdaptor extends FragmentStatePagerAdapter{
+//		
+//		private WineParcel _wine;
+//		private ArrayList<String> _subnav;
+//		
+//		
+//		public WineSelectAdaptor( FragmentManager $fm, WineParcel $wine, ArrayList<String> $subnav ){
+//			super( $fm );
+//			_wine = $wine;
+//			_subnav = $subnav;
+//			
+//		}
+//		
+//		@Override
+//		public Fragment getItem( int $index ){
+//			if( _subnav.get($index).equals(NAV_DESCRIPTION) )
+//				return WineSelectDescripFragment.newInstance(_wine, _subnav);
+//			else if( _subnav.get($index).equals(NAV_PRICES) )
+//				return WineSelectPricesFragment.newInstance(_wine, _subnav);
+//			else if( _subnav.get($index).equals(NAV_RATINGS) )
+//				return WineSelectRatingsFragment.newInstance(_wine, _subnav);
+//			else if( _subnav.get($index).equals(NAV_NOTES) )
+//				return WineSelectNotesFragment.newInstance(_wine, _subnav);
+//			
+//			return WineSelectDetailsFragment.newInstance(_wine, _subnav);
+//		}
+//		
+//		@Override
+//		public int getCount(){
+//			return _subnav.size();
+//		}
+//	}
 
 	
 	private TextView _nameTV;
@@ -79,10 +82,11 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 	private ImageView _sponsorIV;
 	private ViewPager _pagerVP;
 	private Button _rateBtn;
-	private ActionBarHelper _abHelper;
+	private ActionBarAssist _abAssist;
+	private ActivityAlertAssist _alertAssist;
 	private WineParcel _wine;
-	private AlertDialog _diag;
-	private AlertDialog _prog;
+//	private AlertDialog _diag;
+//	private AlertDialog _prog;
 	
 	public void setWine( WineParcel $wine ){
 		_wine = $wine;
@@ -115,7 +119,7 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 		
 		new AsyncDownloadImage( _labelIV ).execute( _wine.imageLarge );
 		
-		WineSelectAdaptor adaptor = new WineSelectAdaptor(getSupportFragmentManager(), _wine, subnav);
+		WineSelectPagerAdapter adaptor = new WineSelectPagerAdapter(getSupportFragmentManager(), _wine, subnav);
 		_pagerVP.setAdapter(adaptor);
 	}
 	
@@ -124,7 +128,9 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 		super.onCreate(savedInstanceState);
 		setContentView( R.layout.wine_select_main );
 		
-		_abHelper = new ActionBarHelper(this);
+		_abAssist = new ActionBarAssist(this);
+		_alertAssist = new ActivityAlertAssist(this);
+		
 		_nameTV = (TextView) findViewById( R.id.wineHeaderNameTV );
 		//_detailsTV = (TextView) findViewById( R.id.wineSelectDetailsTV );
 		_labelIV = (ImageView) findViewById( R.id.wineHeaderLabelIV );
@@ -142,7 +148,7 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 					
 					@Override
 					public void onClick(View v) {
-						WineSelectActivity.this.enlargeLabel();
+						getAlertAssist().alertEnlargeLabel(_wine);
 					}
 				}
 		);
@@ -154,18 +160,6 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 	}
 	
 	@Override
-	protected void onStart() {
-		super.onStart();
-		EasyTracker.getInstance().activityStart(this);
-	}
-	
-	@Override
-	protected void onStop() {
-		super.onStop();
-		EasyTracker.getInstance().activityStop(this);
-	}
-	
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.actionbar_menu, menu);
@@ -174,86 +168,90 @@ public class WineSelectActivity extends SherlockFragmentActivity implements IAct
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		return _abHelper.onOptionsItemSelected(item);
+		return _abAssist.onOptionsItemSelected(item);
 	}
 	
-	public void enlargeLabel(){
-		
-		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
-		
-		LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.wine_image_enlarger, (ViewGroup) findViewById(R.id.wineImageEnlargeRL));
-		
-		ImageView iv = (ImageView) layout.findViewById(R.id.wineImageEnlargeIV);
-		Button btn = (Button) layout.findViewById(R.id.wineImageEnlargeBtn);
-		
-		btn.setOnClickListener(
-				new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						_diag.dismiss();
-					}
-				}
-		);
-		new AsyncDownloadImage( iv ).execute( _wine.imageLarge );
-		
-		bldr.setView( layout );
-		_diag = bldr.create();
-		_diag.show();
+	public ActivityAlertAssist getAlertAssist(){
+		return _alertAssist;
 	}
 	
-	public void showAlert( int $title, int $body ){
-		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
-		
-		
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
-		
-		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
-		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
-		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
-		
-		title.setText($title);
-		subtitle.setText($body);
-		
-		okBtn.setOnClickListener(
-				new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						_diag.dismiss();
-					}
-				}
-		);
-		
-		bldr.setView(layout);
-		_diag = bldr.create();
-		_diag.show();
-	}
-	
-	public void dismissProgress(){
-		_prog.dismiss();
-	}
-	
-	public void showProgress( String $msg ){
-		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
-		
-		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
-		
-		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
-		
-		title.setText($msg);
-		
-		bldr.setView( layout );
-		_prog = bldr.create();
-		_prog.show();
-	}
+//	public void enlargeLabel(){
+//		
+//		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
+//		
+//		LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+//		View layout = inflater.inflate(R.layout.wine_image_enlarger, (ViewGroup) findViewById(R.id.wineImageEnlargeRL));
+//		
+//		ImageView iv = (ImageView) layout.findViewById(R.id.wineImageEnlargeIV);
+//		Button btn = (Button) layout.findViewById(R.id.wineImageEnlargeBtn);
+//		
+//		btn.setOnClickListener(
+//				new OnClickListener() {
+//					
+//					@Override
+//					public void onClick(View v) {
+//						_diag.dismiss();
+//					}
+//				}
+//		);
+//		new AsyncDownloadImage( iv ).execute( _wine.imageLarge );
+//		
+//		bldr.setView( layout );
+//		_diag = bldr.create();
+//		_diag.show();
+//	}
+//	
+//	public void showAlert( int $title, int $body ){
+//		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
+//		
+//		
+//		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
+//		
+//		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
+//		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
+//		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
+//		
+//		title.setText($title);
+//		subtitle.setText($body);
+//		
+//		okBtn.setOnClickListener(
+//				new OnClickListener() {
+//					
+//					@Override
+//					public void onClick(View v) {
+//						_diag.dismiss();
+//					}
+//				}
+//		);
+//		
+//		bldr.setView(layout);
+//		_diag = bldr.create();
+//		_diag.show();
+//	}
+//	
+//	public void dismissProgress(){
+//		_prog.dismiss();
+//	}
+//	
+//	public void showProgress( String $msg ){
+//		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
+//		
+//		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
+//		
+//		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
+//		
+//		title.setText($msg);
+//		
+//		bldr.setView( layout );
+//		_prog = bldr.create();
+//		_prog.show();
+//	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		_abHelper.checkActivityResult(requestCode, resultCode, data);
+		_abAssist.checkActivityResult(requestCode, resultCode, data);
 	}
 	
 	

@@ -1,4 +1,4 @@
-package com.yno.wizard.utils;
+package com.yno.wizard.view.adapter;
 
 import java.util.List;
 

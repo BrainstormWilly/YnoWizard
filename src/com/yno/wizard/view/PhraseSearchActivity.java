@@ -45,36 +45,40 @@ import com.yno.wizard.model.SearchWinesParcel;
 import com.yno.wizard.model.db.SearchTypesTable;
 import com.yno.wizard.model.db.YnoDbOpenHelper;
 import com.yno.wizard.utils.CursorSpinnerAdapter;
+import com.yno.wizard.view.adapter.PhraseSearchArrayAdapter;
+import com.yno.wizard.view.assist.ActionBarAssist;
+import com.yno.wizard.view.assist.ActivityAlertAssist;
+import com.yno.wizard.view.handler.PhraseSearchHandler;
 
 
-public class TextSearchActivity extends SherlockActivity implements IActionBarActivity {
+public class PhraseSearchActivity extends AbstractAnalyticsActivity implements IAlertActivity {
 	
-	private static String TAG = TextSearchActivity.class.getSimpleName();
+	private static String TAG = PhraseSearchActivity.class.getSimpleName();
 	public static final String NAME = "com.yno.wizard.intent.OPEN_PHRASE_SEARCH";
 	
-	private static class PhraseSearchHandler extends Handler{
-		
-		private WeakReference<TextSearchActivity> _activity;
-		
-		PhraseSearchHandler( TextSearchActivity $activity ){
-			_activity = new WeakReference<TextSearchActivity>( $activity );
-		}
-		
-		@Override
-		public void handleMessage(Message $msg) {
-			TextSearchActivity thisActivity = _activity.get();
-			SearchWinesParcel parcel = (SearchWinesParcel) $msg.obj;
-			thisActivity.dismissProgress();
-			
-			if( parcel.results.size()>0 ){
-				OpenSearchResultsCommand cmd = new OpenSearchResultsCommand(thisActivity);
-				cmd.payload.putParcelable(SearchWinesParcel.NAME, parcel);
-				cmd.execute();
-			}else{
-				thisActivity.showAlert(R.string.no_wines_found, R.string.try_reducing_your_search_criteria);
-			}
-		}
-	}
+//	private static class PhraseSearchHandler extends Handler{
+//		
+//		private WeakReference<TextSearchActivity> _activity;
+//		
+//		PhraseSearchHandler( TextSearchActivity $activity ){
+//			_activity = new WeakReference<TextSearchActivity>( $activity );
+//		}
+//		
+//		@Override
+//		public void handleMessage(Message $msg) {
+//			TextSearchActivity thisActivity = _activity.get();
+//			SearchWinesParcel parcel = (SearchWinesParcel) $msg.obj;
+//			thisActivity.dismissProgress();
+//			
+//			if( parcel.results.size()>0 ){
+//				OpenSearchResultsCommand cmd = new OpenSearchResultsCommand(thisActivity);
+//				cmd.payload.putParcelable(SearchWinesParcel.NAME, parcel);
+//				cmd.execute();
+//			}else{
+//				thisActivity.showAlert(R.string.no_wines_found, R.string.try_reducing_your_search_criteria);
+//			}
+//		}
+//	}
 
 	private AutoCompleteTextView _searchFld;
 	private Button _findBtn;
@@ -89,9 +93,10 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 	//private ProgressDialog _spinnerProg;
 	private boolean _spinnerIsSet = false;
 	private LocationModel _location;
-	private ActionBarHelper _abHelper;
-	private AlertDialog _prog;
-	private AlertDialog _alert;
+	private ActionBarAssist _abAssist;
+	private ActivityAlertAssist _alertAssist;
+//	private AlertDialog _prog;
+//	private AlertDialog _alert;
 	
 	
 	@Override
@@ -99,7 +104,8 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 		super.onCreate(savedInstanceState);
 		setContentView( R.layout.text_search_main );
 		
-		_abHelper = new ActionBarHelper(this);
+		_abAssist = new ActionBarAssist(this);
+		_alertAssist = new ActivityAlertAssist(this);
 		
 		LayerDrawable bkg = (LayerDrawable) getResources().getDrawable(R.drawable.yw_actionbar_bkg);
 		ActionBar bar = getSupportActionBar();
@@ -110,14 +116,14 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 		
 		_searchFld = (AutoCompleteTextView) findViewById( R.id.textSearchATV );
 		_searchFld.setThreshold(3);
-		_searchFld.setAdapter( new TextSearchACAdapter(this, android.R.layout.simple_dropdown_item_1line) );
+		_searchFld.setAdapter( new PhraseSearchArrayAdapter(this, android.R.layout.simple_dropdown_item_1line) );
 		_searchFld.setOnEditorActionListener(
 				new OnEditorActionListener() {
 					
 					@Override
 					public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 						if( actionId==EditorInfo.IME_ACTION_SEARCH ){
-							TextSearchActivity.this.initSearch();
+							PhraseSearchActivity.this.initSearch();
 							return true;
 						}
 						return false;
@@ -146,7 +152,7 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					_typeSpn.setVisibility( isChecked ? View.VISIBLE : View.GONE );
 					if( isChecked && !_spinnerIsSet )
-						TextSearchActivity.this.populateTypeSpinner();
+						PhraseSearchActivity.this.populateTypeSpinner();
 						
 				}
 			}
@@ -194,7 +200,7 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 					
 					@Override
 					public void onClick(View v) {
-						TextSearchActivity.this.initSearch();
+						PhraseSearchActivity.this.initSearch();
 					}
 				}
 		);
@@ -212,57 +218,61 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		//Log.d(TAG, String.valueOf(item.getItemId()) );
-		return _abHelper.onOptionsItemSelected(item);
+		return _abAssist.onOptionsItemSelected(item);
 	}
 	
-	public void showAlert( int $title, int $body ){
-		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
-		
-		
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
-		
-		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
-		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
-		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
-		
-		title.setText($title);
-		subtitle.setText($body);
-		
-		okBtn.setOnClickListener(
-				new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						_alert.dismiss();
-					}
-				}
-		);
-		
-		bldr.setView(layout);
-		_alert = bldr.create();
-		_alert.show();
-	}
+//	public void showAlert( int $title, int $body ){
+//		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
+//		
+//		
+//		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
+//		
+//		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
+//		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
+//		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
+//		
+//		title.setText($title);
+//		subtitle.setText($body);
+//		
+//		okBtn.setOnClickListener(
+//				new OnClickListener() {
+//					
+//					@Override
+//					public void onClick(View v) {
+//						_alert.dismiss();
+//					}
+//				}
+//		);
+//		
+//		bldr.setView(layout);
+//		_alert = bldr.create();
+//		_alert.show();
+//	}
+//	
+//	public void dismissProgress(){
+//		_prog.dismiss();
+//	}
+//	
+//	public void showProgress( String $msg ){
+//		
+//		AlertDialog.Builder bldr = new AlertDialog.Builder(TextSearchActivity.this);
+//		
+//		LayoutInflater inflater = (LayoutInflater) TextSearchActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+//		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
+//		
+//		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
+//		
+//		title.setText($msg);
+//		
+//		
+//		bldr.setView( layout );
+//		_prog = bldr.create();
+//		_prog.show();
+//	}
 	
-	public void dismissProgress(){
-		_prog.dismiss();
-	}
-	
-	public void showProgress( String $msg ){
-		
-		AlertDialog.Builder bldr = new AlertDialog.Builder(TextSearchActivity.this);
-		
-		LayoutInflater inflater = (LayoutInflater) TextSearchActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
-		
-		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
-		
-		title.setText($msg);
-		
-		
-		bldr.setView( layout );
-		_prog = bldr.create();
-		_prog.show();
+	public ActivityAlertAssist getAlertAssist(){
+		return _alertAssist;
 	}
 	
 	@Override
@@ -292,7 +302,7 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		_abHelper.checkActivityResult(requestCode, resultCode, data);
+		_abAssist.checkActivityResult(requestCode, resultCode, data);
 	}
 	
 	private void populateTypeSpinner(){
@@ -323,7 +333,8 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 		if( _underCB.isChecked() )
 			parcel.value = _underSB.getProgress()+10;
 		if( parcel.hasQuery() ){
-			showProgress( getString(R.string.search_wines_matching) + parcel.getFullQuery() + "'" );
+			//showProgress( getString(R.string.search_wines_matching) + parcel.getFullQuery() + "'" );
+			getAlertAssist().alertShowAlert(getString(R.string.search_wines_matching), parcel.getFullQuery() + "'");
 			parcel.ip = _location.getLocalIpAddress();
 			Address primAddr = _location.getPrimaryAddress();
 			if( primAddr!=null ){
@@ -334,37 +345,38 @@ public class TextSearchActivity extends SherlockActivity implements IActionBarAc
 			
 			DoWinesPhraseSearchCommand cmd = new DoWinesPhraseSearchCommand(this);
 			cmd.messenger = new Messenger(
-					new PhraseSearchHandler(TextSearchActivity.this)
+					new PhraseSearchHandler(PhraseSearchActivity.this)
 			);
 			cmd.payload.putParcelable(SearchWinesParcel.NAME, parcel);
 			cmd.execute();
 			
 		}else{
-			AlertDialog.Builder bldr = new AlertDialog.Builder(TextSearchActivity.this);
-			
-			LayoutInflater inflater = (LayoutInflater) TextSearchActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-			View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
-			
-			TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
-			TextView body = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
-			Button btn = (Button) layout.findViewById(R.id.dialogAlertBtn);
-			
-			title.setText(R.string.insufficient_information);
-			body.setText(R.string.requires_search_criteria);
-			btn.setOnClickListener(
-					new OnClickListener() {
-						
-						@Override
-						public void onClick(View v) {
-							_alert.dismiss();
-						}
-					}
-			);
-			
-			
-			bldr.setView( layout );
-			_alert = bldr.create();
-			_alert.show();
+//			AlertDialog.Builder bldr = new AlertDialog.Builder(TextSearchActivity.this);
+//			
+//			LayoutInflater inflater = (LayoutInflater) TextSearchActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+//			View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
+//			
+//			TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
+//			TextView body = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
+//			Button btn = (Button) layout.findViewById(R.id.dialogAlertBtn);
+//			
+//			title.setText(R.string.insufficient_information);
+//			body.setText(R.string.requires_search_criteria);
+//			btn.setOnClickListener(
+//					new OnClickListener() {
+//						
+//						@Override
+//						public void onClick(View v) {
+//							_alert.dismiss();
+//						}
+//					}
+//			);
+//			
+//			
+//			bldr.setView( layout );
+//			_alert = bldr.create();
+//			_alert.show();
+			getAlertAssist().alertShowAlert(R.string.insufficient_information, R.string.requires_search_criteria);
 		}
 	}
 	

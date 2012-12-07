@@ -1,4 +1,4 @@
- package com.yno.wizard.view;
+ package com.yno.wizard.view.adapter;
 
 import java.util.ArrayList;
 
@@ -12,10 +12,11 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.yno.wizard.model.service.SearchData;
+import com.yno.wizard.model.service.PhraseSearchFieldService;
 
-public class TextSearchACAdapter extends ArrayAdapter<String> implements Filterable {
+public class PhraseSearchArrayAdapter extends ArrayAdapter<String> implements Filterable {
 	
-	public static String TAG = TextSearchACAdapter.class.getSimpleName();
+	public static String TAG = PhraseSearchArrayAdapter.class.getSimpleName();
 	
 	private Filter _filter;
 	private Context _context;
@@ -23,7 +24,7 @@ public class TextSearchACAdapter extends ArrayAdapter<String> implements Filtera
 	//private TextSearchFieldServiceHelper _svcHelper;
 
 	
-	public TextSearchACAdapter( Context $context, int $textViewId ){
+	public PhraseSearchArrayAdapter( Context $context, int $textViewId ){
 		super( $context, $textViewId );
 		setNotifyOnChange(false);
 		
@@ -32,7 +33,7 @@ public class TextSearchACAdapter extends ArrayAdapter<String> implements Filtera
 		
 		_filter = new Filter(){
 			
-			TextSearchFieldServiceHelper _helper = new TextSearchFieldServiceHelper();
+			PhraseSearchFieldService _helper = new PhraseSearchFieldService();
 			
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {

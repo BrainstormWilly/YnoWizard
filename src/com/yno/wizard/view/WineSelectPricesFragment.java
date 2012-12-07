@@ -19,14 +19,14 @@ import com.yno.wizard.controller.TrackBuyLinkCommand;
 import com.yno.wizard.model.PriceModel;
 import com.yno.wizard.model.PriceParcel;
 import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.utils.WineSelectPriceListAdapter;
-import com.yno.wizard.utils.WineSubnavHelper;
+import com.yno.wizard.view.adapter.WineSelectPriceListAdapter;
+import com.yno.wizard.view.assist.WineSubnavAssist;
 
 public class WineSelectPricesFragment extends Fragment implements OnItemClickListener {
 	
 	public static final String TAG = WineSelectPricesFragment.class.getSimpleName();
 	
-	private WineSubnavHelper _helper;
+	private WineSubnavAssist _helper;
 	
 	private List<PriceParcel> _prices;
 	private WineParcel _wine;
@@ -54,7 +54,7 @@ public class WineSelectPricesFragment extends Fragment implements OnItemClickLis
 		WineSelectPriceListAdapter adapter = new WineSelectPriceListAdapter( getActivity().getApplicationContext(), model );
 		
 		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
-		_helper = new WineSubnavHelper(view);
+		_helper = new WineSubnavAssist(view);
 		_helper.setNav( subnav, WineSelectActivity.NAV_PRICES);
 		
 		rngTV.setText( getString(R.string.price_range) + String.valueOf(model.getLowest().value) + getString(R.string.price_range_to) + String.valueOf(model.getHighest().value));

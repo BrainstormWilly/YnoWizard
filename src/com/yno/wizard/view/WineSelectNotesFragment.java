@@ -3,7 +3,7 @@ package com.yno.wizard.view;
 import java.util.ArrayList;
 
 import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.utils.WineSubnavHelper;
+import com.yno.wizard.view.assist.WineSubnavAssist;
 import com.yno.wizard.R;
 
 import android.os.Bundle;
@@ -17,7 +17,7 @@ public class WineSelectNotesFragment extends Fragment {
 
 	public static String TAG = WineSelectNotesFragment.class.getSimpleName();
 	
-	private WineSubnavHelper _helper;
+	private WineSubnavAssist _helper;
 	
 	public static WineSelectNotesFragment newInstance( WineParcel $wine, ArrayList<String> $subnav ){
 		Bundle arg = new Bundle();
@@ -41,7 +41,7 @@ public class WineSelectNotesFragment extends Fragment {
 		
 		WineParcel wine = getArguments().getParcelable( WineParcel.NAME );
 		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
-		_helper = new WineSubnavHelper(view);
+		_helper = new WineSubnavAssist(view);
 		_helper.setNav( subnav, WineSelectActivity.NAV_NOTES);
 		
 		descTV.setText( wine.notes );

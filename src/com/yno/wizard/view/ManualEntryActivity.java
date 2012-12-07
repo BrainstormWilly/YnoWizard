@@ -33,10 +33,12 @@ import com.yno.wizard.model.VintagesModel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.utils.AsyncUploadImage;
 import com.yno.wizard.utils.ManualWineValidator;
-import com.yno.wizard.utils.SpinnerAdapter;
+import com.yno.wizard.view.adapter.SpinnerAdapter;
+import com.yno.wizard.view.assist.ActionBarAssist;
+import com.yno.wizard.view.assist.ActivityAlertAssist;
 
 
-public class ManualEntryActivity extends SherlockActivity implements IActionBarActivity {
+public class ManualEntryActivity extends AbstractAnalyticsActivity implements IAlertActivity {
 
 	public static final String TAG = ManualEntryActivity.class.getSimpleName();
 	public static final String NAME = "com.yno.wizard.intent.OPEN_MANUAL_ENTRY";
@@ -62,16 +64,22 @@ public class ManualEntryActivity extends SherlockActivity implements IActionBarA
 	private Button _submitBtn;
 	private ImageButton _imageIB;
 	private WineParcel _wine;
-	private ActionBarHelper _abHelper;
-	private AlertDialog _alert;
-	private AlertDialog _prog;
+	private ActionBarAssist _abHelper;
+	private ActivityAlertAssist _alertAssist;
+//	private AlertDialog _alert;
+//	private AlertDialog _prog;
+	
+	public ActivityAlertAssist getAlertAssist(){
+		return _alertAssist;
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.manual_entry_main);
 		
-		_abHelper = new ActionBarHelper(this);
+		_abHelper = new ActionBarAssist(this);
+		_alertAssist = new ActivityAlertAssist(this);
 		
 		LayerDrawable bkg = (LayerDrawable) getResources().getDrawable(R.drawable.yw_actionbar_bkg);
 		ActionBar bar = getSupportActionBar();
@@ -102,7 +110,7 @@ public class ManualEntryActivity extends SherlockActivity implements IActionBarA
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-					startActivityForResult(intent, ActionBarHelper.CAMERA_REQUEST);
+					startActivityForResult(intent, ActionBarAssist.CAMERA_REQUEST);
 				}
 			}	
 		);
@@ -121,65 +129,53 @@ public class ManualEntryActivity extends SherlockActivity implements IActionBarA
 		
 	}
 	
-	@Override
-	protected void onStart() {
-		super.onStart();
-		EasyTracker.getInstance().activityStart(this);
-	}
-	
-	@Override
-	protected void onStop() {
-		super.onStop();
-		EasyTracker.getInstance().activityStop(this);
-	}
-	
-	public void showAlert( int $title, int $body ){
-		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
-		
-		
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
-		
-		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
-		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
-		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
-		
-		title.setText($title);
-		subtitle.setText($body);
-		
-		okBtn.setOnClickListener(
-				new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						_alert.dismiss();
-					}
-				}
-		);
-		
-		bldr.setView(layout);
-		_alert = bldr.create();
-		_alert.show();
-	}
-	
-	public void dismissProgress(){
-		_prog.dismiss();
-	}
-	
-	public void showProgress( String $msg ){
-		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
-		
-		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
-		
-		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
-		
-		title.setText($msg);
-		
-		bldr.setView( layout );
-		_prog = bldr.create();
-		_prog.show();
-	}
+//	public void showAlert( int $title, int $body ){
+//		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
+//		
+//		
+//		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
+//		
+//		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
+//		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
+//		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
+//		
+//		title.setText($title);
+//		subtitle.setText($body);
+//		
+//		okBtn.setOnClickListener(
+//				new OnClickListener() {
+//					
+//					@Override
+//					public void onClick(View v) {
+//						_alert.dismiss();
+//					}
+//				}
+//		);
+//		
+//		bldr.setView(layout);
+//		_alert = bldr.create();
+//		_alert.show();
+//	}
+//	
+//	public void dismissProgress(){
+//		_prog.dismiss();
+//	}
+//	
+//	public void showProgress( String $msg ){
+//		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
+//		
+//		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
+//		
+//		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
+//		
+//		title.setText($msg);
+//		
+//		bldr.setView( layout );
+//		_prog = bldr.create();
+//		_prog.show();
+//	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -197,7 +193,7 @@ public class ManualEntryActivity extends SherlockActivity implements IActionBarA
 	@Override
 	protected void onActivityResult(int $reqCode, int $resCode, Intent $intent) {
 		_abHelper.checkActivityResult($reqCode, $resCode, $intent);
-		if($reqCode==ActionBarHelper.CAMERA_REQUEST){
+		if($reqCode==ActionBarAssist.CAMERA_REQUEST){
 			if( $resCode==RESULT_OK){
 				BMP = (Bitmap) $intent.getExtras().get("data");
 				_imageIB.setImageBitmap(BMP);
@@ -235,31 +231,32 @@ public class ManualEntryActivity extends SherlockActivity implements IActionBarA
 			cmd.execute();
 		}else{
 			
-			AlertDialog.Builder bldr = new AlertDialog.Builder(this);
-			
-			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-			View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
-			
-			TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
-			TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
-			Button btn = (Button) layout.findViewById(R.id.dialogAlertBtn);
-			
-			title.setText( getString(R.string.insufficient_information) );
-			subtitle.setText(vldtr.toErrString());
-			
-			btn.setOnClickListener(
-					new OnClickListener() {
-						
-						@Override
-						public void onClick(View v) {
-							_alert.dismiss();
-						}
-					}
-			);
-			
-			bldr.setView(layout);
-			_alert = bldr.create();
-			_alert.show();
+//			AlertDialog.Builder bldr = new AlertDialog.Builder(this);
+//			
+//			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//			View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
+//			
+//			TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
+//			TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
+//			Button btn = (Button) layout.findViewById(R.id.dialogAlertBtn);
+//			
+//			title.setText( getString(R.string.insufficient_information) );
+//			subtitle.setText(vldtr.toErrString());
+//			
+//			btn.setOnClickListener(
+//					new OnClickListener() {
+//						
+//						@Override
+//						public void onClick(View v) {
+//							_alert.dismiss();
+//						}
+//					}
+//			);
+//			
+//			bldr.setView(layout);
+//			_alert = bldr.create();
+//			_alert.show();
+			getAlertAssist().alertShowAlert( getString(R.string.insufficient_information), vldtr.toErrString() );
 		}
 	}
 }

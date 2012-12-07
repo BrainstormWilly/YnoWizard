@@ -1,4 +1,4 @@
-package com.yno.wizard.utils;
+package com.yno.wizard.view.adapter;
 
 import java.util.List;
 
@@ -13,14 +13,15 @@ import android.widget.TextView;
 
 import com.yno.wizard.R;
 import com.yno.wizard.model.WineParcel;
+import com.yno.wizard.utils.DownLoadImageQueue;
 
-public class SearchResultsListAdaptor extends BaseAdapter implements ListAdapter {
+public class SearchResultsListAdapter extends BaseAdapter implements ListAdapter {
 	
 	private final Context _context;
 	private final List<WineParcel> _values;
 	private DownLoadImageQueue _queue;
 	
-	public SearchResultsListAdaptor( Context $context, List<WineParcel> $values ){
+	public SearchResultsListAdapter( Context $context, List<WineParcel> $values ){
 		_values = $values;
 		_context = $context;
 		_queue = new DownLoadImageQueue();

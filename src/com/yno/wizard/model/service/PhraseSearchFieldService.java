@@ -1,4 +1,4 @@
-package com.yno.wizard.view;
+package com.yno.wizard.model.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,12 +7,8 @@ import java.util.List;
 import android.util.Log;
 
 import com.yno.wizard.model.VintagesModel;
-import com.yno.wizard.model.service.AsyncServiceParcel;
-import com.yno.wizard.model.service.PhraseServiceParcel;
-import com.yno.wizard.model.service.SearchData;
-import com.yno.wizard.model.service.VinTankServices;
 
-public class TextSearchFieldServiceHelper {
+public class PhraseSearchFieldService {
 	
 	public static final String TAG = "TextSearchFieldServiceHelper";
 
@@ -20,7 +16,7 @@ public class TextSearchFieldServiceHelper {
 	private ArrayList<String> _values = new ArrayList<String>(SearchData.AUTOCOMPLETE_TOTAL);
 	private String _phrase = "";
 	
-	public TextSearchFieldServiceHelper(){
+	public PhraseSearchFieldService(){
 		_svc = new VinTankServices();
 	}
 	

@@ -22,7 +22,7 @@ import com.yno.wizard.YnoFinderApplication;
 import com.yno.wizard.model.fb.FbModelFactory;
 import com.yno.wizard.model.fb.FbUserParcel;
 import com.yno.wizard.model.fb.FbWineReviewParcel;
-import com.yno.wizard.view.IFacebookContext;
+import com.yno.wizard.view.IFacebookActivity;
 
 public class FacebookService {
 
@@ -43,12 +43,12 @@ public class FacebookService {
 	private static final String _RUNNER_FIELDS = "fields";
 	
 	
-	private IFacebookContext _context;
+	private IFacebookActivity _context;
 	private YnoFinderApplication _app;
 	private SharedPreferences _prefs;
 	
 	
-	public FacebookService( IFacebookContext $context ){
+	public FacebookService( IFacebookActivity $context ){
 		
 		_context = $context;
 		_app = YnoFinderApplication.getInstance();

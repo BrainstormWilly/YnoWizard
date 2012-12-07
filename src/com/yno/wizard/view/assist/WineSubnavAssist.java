@@ -1,4 +1,4 @@
-package com.yno.wizard.utils;
+package com.yno.wizard.view.assist;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.yno.wizard.R;
 
-public class WineSubnavHelper {
+public class WineSubnavAssist {
 	
 	private View _view;
 	private View _leftArwVw;
@@ -18,7 +18,7 @@ public class WineSubnavHelper {
 	private Boolean _rightOn = false;
 	private Animation _anim;
 	
-	public WineSubnavHelper(View $view){
+	public WineSubnavAssist(View $view){
 		_view = $view;
 		_leftArwVw = (View) $view.findViewById(R.id.wineFragmentArrowLeftVw);
 		_rightArwVw = (View) $view.findViewById(R.id.wineFragmentArrowRightVw);

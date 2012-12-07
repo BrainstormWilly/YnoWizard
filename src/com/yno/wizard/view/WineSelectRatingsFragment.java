@@ -17,14 +17,14 @@ import com.yno.wizard.R;
 import com.yno.wizard.model.RatingParcel;
 import com.yno.wizard.model.RatingsModel;
 import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.utils.WineSelectRatingListAdapter;
-import com.yno.wizard.utils.WineSubnavHelper;
+import com.yno.wizard.view.adapter.WineSelectRatingListAdapter;
+import com.yno.wizard.view.assist.WineSubnavAssist;
 
 public class WineSelectRatingsFragment extends Fragment {
 	
 	public static final String TAG = WineSelectRatingsFragment.class.getSimpleName();
 	
-	private WineSubnavHelper _helper;
+	private WineSubnavAssist _helper;
 	private Button _rateBtn;
 	private List<RatingParcel> _ratings;
 
@@ -52,7 +52,7 @@ public class WineSelectRatingsFragment extends Fragment {
 		WineSelectRatingListAdapter adapter = new WineSelectRatingListAdapter( getActivity().getApplicationContext(), _ratings );
 		
 		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
-		_helper = new WineSubnavHelper(view);
+		_helper = new WineSubnavAssist(view);
 		_helper.setNav( subnav, WineSelectActivity.NAV_RATINGS);
 		rngTV.setText( getString(R.string.rating_range) + String.valueOf( model.getLowest().value ) + "-" + String.valueOf( model.getHighest().value ) );
 		

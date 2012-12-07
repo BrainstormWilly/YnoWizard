@@ -37,7 +37,8 @@ import com.yno.wizard.controller.TrackSelectCommand;
 import com.yno.wizard.model.SearchWineParcel;
 import com.yno.wizard.model.SearchWinesParcel;
 import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.utils.SearchResultsListAdaptor;
+import com.yno.wizard.view.adapter.SearchResultsListAdapter;
+import com.yno.wizard.view.assist.ActionBarAssist;
 
 public class SearchResultsActivity extends SherlockActivity implements OnItemClickListener, IActionBarActivity {
 	
@@ -70,7 +71,7 @@ public class SearchResultsActivity extends SherlockActivity implements OnItemCli
 	//private List<WineParcel> _results = new ArrayList<WineParcel>();
 	private AlertDialog _alert;
 	private AlertDialog _prog;
-	private ActionBarHelper _abHelper;
+	private ActionBarAssist _abHelper;
 	private SearchWinesParcel _swPrcl = new SearchWinesParcel();
 	private AdView _ad;
 
@@ -83,7 +84,7 @@ public class SearchResultsActivity extends SherlockActivity implements OnItemCli
 		//_ad = (AdView) this.findViewById(R.id.searchResultsAdView);
 		//_ad.loadAd( new AdRequest() );
 		
-		_abHelper = new ActionBarHelper(this);
+		_abHelper = new ActionBarAssist(this);
 		
 		LayerDrawable bkg = (LayerDrawable) getResources().getDrawable(R.drawable.yw_actionbar_bkg);
 		ActionBar bar = getSupportActionBar();
@@ -101,7 +102,7 @@ public class SearchResultsActivity extends SherlockActivity implements OnItemCli
 //
 //		titleTV.setText( "Results for '" + _query + "'" );
 		
-		SearchResultsListAdaptor adapter = new SearchResultsListAdaptor(getApplicationContext(), _swPrcl.results);
+		SearchResultsListAdapter adapter = new SearchResultsListAdapter(getApplicationContext(), _swPrcl.results);
 		resultsLV.setAdapter(adapter);
 		resultsLV.setOnItemClickListener( SearchResultsActivity.this );
 		

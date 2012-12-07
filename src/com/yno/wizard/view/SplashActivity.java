@@ -1,10 +1,12 @@
 package com.yno.wizard.view;
 
 import android.app.AlertDialog;
+import android.content.pm.ApplicationInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Messenger;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +18,25 @@ import com.yno.wizard.controller.DoWineTypesSearchCommand;
 import com.yno.wizard.controller.OpenChooseSearchCommand;
 import com.yno.wizard.model.db.YnoDbOpenHelper;
 import com.yno.wizard.model.service.AsyncServiceParcel;
-import com.yno.wizard.model.service.IServiceContext;
 import com.yno.wizard.model.service.WineTypesServiceParcel;
+import com.yno.wizard.view.assist.ActivityAlertAssist;
 
-public class SplashActivity extends SherlockActivity implements IServiceContext {
+public class SplashActivity extends SherlockActivity implements IAlertActivity {
     /** Called when the activity is first created. */
-	public static String TAG = SplashActivity.class.getSimpleName();
-	private static int _DELAY = 3000;
-
+	public final static String TAG = SplashActivity.class.getSimpleName();
+	private final static int _DELAY = 3000;
+	
+	private ActivityAlertAssist _alertAssist;
 	private YnoDbOpenHelper _dbHelper;
-	private AlertDialog _dbProg;
-	private Handler _delayHdl = new Handler();
+	private Handler _delayHdl;
+	
 	
 	private Handler _wineTypesSearchHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			WineTypesServiceParcel parcel = (WineTypesServiceParcel) msg.obj;
 			_dbHelper.insertSearchTypes( parcel.types );
-			_dbProg.dismiss();
-			SplashActivity.this.endSplash();
+			getAlertAssist().alertDismiss();
+			new OpenChooseSearchCommand( SplashActivity.this ).execute();
 		}
 	};
 	
@@ -42,12 +45,19 @@ public class SplashActivity extends SherlockActivity implements IServiceContext 
 		@Override
 		public void run() {
 			Cursor cursor = _dbHelper.getAllFromSearchTypes();
-			if( cursor.moveToFirst() )
-				SplashActivity.this.endSplash();
-			else
-				SplashActivity.this.loadData();
+			if( cursor.moveToFirst() ){
+				new OpenChooseSearchCommand( SplashActivity.this ).execute();
+			}else{
+				getAlertAssist().alertShowProgress(R.string.please_wait_while_the_wizard_gets_its_magic_on);
+				
+		    	DoWineTypesSearchCommand cmd = new DoWineTypesSearchCommand( SplashActivity.this );
+				cmd.messenger = new Messenger(_wineTypesSearchHandler);
+				cmd.execute();
+			}
 		}
 	};
+	
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,9 +66,10 @@ public class SplashActivity extends SherlockActivity implements IServiceContext 
         
         getSupportActionBar().hide();
         
+        _alertAssist = new ActivityAlertAssist(this);
         _dbHelper = new YnoDbOpenHelper( this );
-       
-        _delayHdl.postDelayed( _delayRnb, _DELAY);
+    	_delayHdl = new Handler();
+    	_delayHdl.postDelayed( _delayRnb, _DELAY);
        
     }
     
@@ -67,40 +78,27 @@ public class SplashActivity extends SherlockActivity implements IServiceContext 
     	super.onDestroy();
     	if( _dbHelper!=null )
     		_dbHelper.close();
+    	
     }
     
-    public void resume( AsyncServiceParcel $parcel ){
-    	WineTypesServiceParcel parcel = (WineTypesServiceParcel) $parcel;
-    	_dbHelper.insertSearchTypes( parcel.types );
-		_dbProg.dismiss();
-		endSplash();
+    /*
+     * IAlertActivity methods
+     */
+    public ActivityAlertAssist getAlertAssist(){
+    	return _alertAssist;
     }
     
-    private void loadData(){
-    	//_dbProg = ProgressDialog.show(this, "Hang on...", "The Wizard is getting its magic on!", true);
-    	AlertDialog.Builder bldr = new AlertDialog.Builder(this);
-		
-		LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
-		
-		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
-		
-		title.setText(R.string.please_wait_while_the_wizard_gets_its_magic_on);
-		
-		
-		bldr.setView( layout );
-		_dbProg = bldr.create();
-		_dbProg.show();
-		
-    	DoWineTypesSearchCommand cmd = new DoWineTypesSearchCommand( this );
-		cmd.messenger = new Messenger(_wineTypesSearchHandler);
-		cmd.execute();
-    }
     
-    private void endSplash(){
-    	OpenChooseSearchCommand cmd = new OpenChooseSearchCommand(this);
-	    cmd.execute();
-    }
+    /*
+     * IServiceActivity methods
+     */
+//    public void resume( AsyncServiceParcel $parcel ){
+//    	WineTypesServiceParcel parcel = (WineTypesServiceParcel) $parcel;
+//    	_dbHelper.insertSearchTypes( parcel.types );
+//    	getAlertAssist().alertDismissProgress();
+//		new OpenChooseSearchCommand(this).execute();
+//    }
+
     
     
     

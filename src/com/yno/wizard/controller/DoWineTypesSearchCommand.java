@@ -1,5 +1,7 @@
 package com.yno.wizard.controller;
 
+import java.lang.ref.WeakReference;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,17 +15,18 @@ public final static String TAG = DoWineTypesSearchCommand.class.getSimpleName();
 	
 	public Bundle payload = new Bundle();
 	public Messenger messenger;
-	private Context _context;
+	private WeakReference<Context> _context;
 	
 	public DoWineTypesSearchCommand( Context $context ){
-		_context = $context;
+		_context = new WeakReference<Context>($context);
 	}
 	
 	public void execute(){
 		try{
-			Intent intent = new Intent( _context, WineTypesSearchService.class );
+			Context ctx = _context.get();
+			Intent intent = new Intent( ctx, WineTypesSearchService.class );
 			intent.putExtra("android.os.Messenger", messenger);
-			_context.startService(intent);
+			ctx.startService(intent);
 		}catch(Exception $e){
 			$e.printStackTrace();
 		}

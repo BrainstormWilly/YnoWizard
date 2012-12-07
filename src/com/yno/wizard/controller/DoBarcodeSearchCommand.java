@@ -1,5 +1,8 @@
 package com.yno.wizard.controller;
 
+import java.lang.ref.WeakReference;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,18 +19,19 @@ public class DoBarcodeSearchCommand {
 	public Bundle payload = new Bundle();
 	public Messenger messenger;
 	
-	private Context _context;
+	private WeakReference<Activity> _context;
 	
-	public DoBarcodeSearchCommand( Context $context ){
-		_context = $context;
+	public DoBarcodeSearchCommand( Activity $context ){
+		_context = new WeakReference<Activity>($context);
 	}
 	
 	public void execute(){
 		try{
-			Intent intent = new Intent( _context, WineBarcodeSearchService.class );
+			Activity ctx = _context.get();
+			Intent intent = new Intent( ctx, WineBarcodeSearchService.class );
 			intent.putExtra( "android.os.Messenger", messenger );
 			intent.putExtra( SearchWineParcel.NAME, payload.getParcelable( SearchWineParcel.NAME ) );
-			_context.startService(intent);
+			ctx.startService(intent);
 		}catch( Exception $e ){
 			$e.printStackTrace();
 		}

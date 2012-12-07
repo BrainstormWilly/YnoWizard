@@ -13,12 +13,12 @@ import android.widget.EditText;
 
 import com.yno.wizard.R;
 import com.yno.wizard.model.fb.FbWineReviewParcel;
-import com.yno.wizard.utils.WineSubnavHelper;
+import com.yno.wizard.view.assist.WineSubnavAssist;
 
 public class WineReviewCommentFragment extends Fragment {
 
 	public static final String TAG = WineReviewCommentFragment.class.getSimpleName();
-	private WineSubnavHelper _helper;
+	private WineSubnavAssist _helper;
 	
 	public static WineReviewCommentFragment newInstance( FbWineReviewParcel $review, ArrayList<String> $subnav ){
 		Bundle arg = new Bundle();
@@ -36,7 +36,7 @@ public class WineReviewCommentFragment extends Fragment {
 		EditText commentsET = (EditText) view.findViewById(R.id.wineReviewCommentsET);
 		
 		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
-		_helper = new WineSubnavHelper(view);
+		_helper = new WineSubnavAssist(view);
 		_helper.setNav(subnav, WineReviewActivity.NAV_COMMENTS);
 		
 		final FbWineReviewParcel review = getArguments().getParcelable( FbWineReviewParcel.NAME );

@@ -1,9 +1,5 @@
 package com.yno.wizard.model.service;
 
-import java.util.ArrayList;
-
-import com.yno.wizard.model.SearchTypeParcel;
-
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;

@@ -11,12 +11,12 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.yno.wizard.R;
 import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.utils.WineSubnavHelper;
+import com.yno.wizard.view.assist.WineSubnavAssist;
 
 public class WineSelectDescripFragment extends SherlockFragment {
 	
 	public static String TAG = WineSelectDescripFragment.class.getSimpleName();
-	private WineSubnavHelper _helper;
+	private WineSubnavAssist _helper;
 	
 	public static WineSelectDescripFragment newInstance( WineParcel $wine, ArrayList<String> $subnav ){
 		Bundle arg = new Bundle();
@@ -40,7 +40,7 @@ public class WineSelectDescripFragment extends SherlockFragment {
 		
 		WineParcel wine = getArguments().getParcelable( WineParcel.NAME );
 		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
-		_helper = new WineSubnavHelper(view);
+		_helper = new WineSubnavAssist(view);
 		_helper.setNav(subnav, WineSelectActivity.NAV_DESCRIPTION);
 		
 		descTV.setText( wine.description );
