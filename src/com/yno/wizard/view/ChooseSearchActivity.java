@@ -20,6 +20,7 @@ import com.google.ads.AdView;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.zxing.client.android.Intents.Scan;
 import com.yno.wizard.R;
+import com.yno.wizard.controller.DoBarcodeScanCommand;
 import com.yno.wizard.controller.OpenManualEntryCommand;
 import com.yno.wizard.controller.OpenPhraseSearchCommand;
 import com.yno.wizard.view.assist.ActionBarAssist;
@@ -66,9 +67,10 @@ public class ChooseSearchActivity extends AbstractAnalyticsActivity implements I
         		new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent zxingInt = new Intent("com.google.zxing.client.android.SCAN");
-						zxingInt.putExtra(Scan.MODE, Scan.PRODUCT_MODE);
-						startActivityForResult(zxingInt, ActionBarAssist.BARCODE_RESULT);
+//						Intent zxingInt = new Intent("com.google.zxing.client.android.SCAN");
+//						zxingInt.putExtra(Scan.MODE, Scan.PRODUCT_MODE);
+//						startActivityForResult(zxingInt, ActionBarAssist.BARCODE_RESULT);
+						new DoBarcodeScanCommand(ChooseSearchActivity.this).execute();
 					}
 				}
         );

@@ -9,6 +9,7 @@ import android.os.Messenger;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.zxing.client.android.Intents.Scan;
 import com.yno.wizard.R;
+import com.yno.wizard.controller.DoBarcodeScanCommand;
 import com.yno.wizard.controller.DoBarcodeSearchCommand;
 import com.yno.wizard.controller.OpenManualEntryCommand;
 import com.yno.wizard.controller.OpenPhraseSearchCommand;
@@ -70,17 +71,16 @@ public class ActionBarAssist {
 		
 		switch(item.getItemId()){
 			case R.id.actionbarBarcode : 
-				Intent zxingInt = new Intent("com.google.zxing.client.android.SCAN");
-				zxingInt.putExtra(Scan.MODE, Scan.PRODUCT_MODE);
-				ctx.startActivityForResult(zxingInt, BARCODE_RESULT);
+//				Intent zxingInt = new Intent("com.google.zxing.client.android.SCAN");
+//				zxingInt.putExtra(Scan.MODE, Scan.PRODUCT_MODE);
+//				ctx.startActivityForResult(zxingInt, BARCODE_RESULT);
+				new DoBarcodeScanCommand(ctx).execute();
 				return true;
 			case R.id.actionbarManual :
-				OpenManualEntryCommand manualCmd = new OpenManualEntryCommand( ctx );
-				manualCmd.execute();
+				new OpenManualEntryCommand( ctx ).execute();
 				return true;
 			case R.id.actionbarSearch :
-				OpenPhraseSearchCommand searchCmd = new OpenPhraseSearchCommand( ctx );
-				searchCmd.execute();
+				new OpenPhraseSearchCommand( ctx ).execute();
 				return true;
 		}
 		
