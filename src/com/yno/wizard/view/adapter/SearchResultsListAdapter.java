@@ -1,5 +1,6 @@
 package com.yno.wizard.view.adapter;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import android.content.Context;
@@ -17,13 +18,14 @@ import com.yno.wizard.utils.DownLoadImageQueue;
 
 public class SearchResultsListAdapter extends BaseAdapter implements ListAdapter {
 	
-	private final Context _context;
+	private WeakReference<Context> _context;
 	private final List<WineParcel> _values;
 	private DownLoadImageQueue _queue;
 	
 	public SearchResultsListAdapter( Context $context, List<WineParcel> $values ){
+		
 		_values = $values;
-		_context = $context;
+		_context = new WeakReference<Context>($context);
 		_queue = new DownLoadImageQueue();
 	}
 
@@ -46,7 +48,12 @@ public class SearchResultsListAdapter extends BaseAdapter implements ListAdapter
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		Context ctx = _context.get();
+		if( ctx==null )
+			return null;
+		
+		LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		View row = inflater.inflate(R.layout.search_results_row, parent, false);
 		ImageView image = (ImageView) row.findViewById(R.id.searchResultsRowIV);

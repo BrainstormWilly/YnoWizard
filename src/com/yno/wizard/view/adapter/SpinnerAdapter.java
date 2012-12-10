@@ -14,12 +14,12 @@ import android.widget.TextView;
 
 public class SpinnerAdapter extends ArrayAdapter<String> {
 
-	private Context _context;
+	//private Context _context;
 	private List<String> _items;
 	
 	public SpinnerAdapter(Context $context, int $textView, List<String> $items){
 		super($context, $textView, $items);
-		_context = $context;
+		//_context = $context;
 		_items = $items;
 	}
 	
@@ -34,8 +34,8 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
 	public View getView(int $position, View $convertView, ViewGroup $parent) {
 
 		View view = getCustomView($position, $convertView, $parent);
-		view.setBackgroundColor(_context.getResources().getColor(android.R.color.transparent));
-		((TextView) view).setTextColor( _context.getResources().getColorStateList(R.color.yw_edittext_textcolor) );
+		view.setBackgroundColor(getContext().getResources().getColor(android.R.color.transparent));
+		((TextView) view).setTextColor( getContext().getResources().getColorStateList(R.color.yw_edittext_textcolor) );
 		((TextView) view).setTextSize(16);
 		view.setPadding(0, 0, 0, 0);
 		
@@ -45,7 +45,7 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
 	}
 	
 	public View getCustomView(int $position, View $convertView, ViewGroup $parent){
-		LayoutInflater inflater = LayoutInflater.from(_context);
+		LayoutInflater inflater = LayoutInflater.from(getContext());
 		if( $convertView==null )
 			$convertView = inflater.inflate(com.yno.wizard.R.layout.spinner_item, null);
 		

@@ -19,10 +19,10 @@ public class WineSelectNotesFragment extends Fragment {
 	
 	private WineSubnavAssist _helper;
 	
-	public static WineSelectNotesFragment newInstance( WineParcel $wine, ArrayList<String> $subnav ){
+	public static WineSelectNotesFragment newInstance( WineParcel $wine, ArrayList<Integer> $subnav ){
 		Bundle arg = new Bundle();
 		arg.putParcelable(WineParcel.NAME, $wine);
-		arg.putStringArrayList("subnav", $subnav);
+		arg.putIntegerArrayList("subnav", $subnav);
 		
 		WineSelectNotesFragment frag = new WineSelectNotesFragment();
 		frag.setArguments( arg );
@@ -40,9 +40,9 @@ public class WineSelectNotesFragment extends Fragment {
 		TextView descTV = (TextView) view.findViewById(R.id.wineSelectNotesTV);
 		
 		WineParcel wine = getArguments().getParcelable( WineParcel.NAME );
-		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
+		ArrayList<Integer> subnav = getArguments().getIntegerArrayList("subnav");
 		_helper = new WineSubnavAssist(view);
-		_helper.setNav( subnav, WineSelectActivity.NAV_NOTES);
+		_helper.setNav( subnav, R.string.select_pager_subtitle_tasting_notes);
 		
 		descTV.setText( wine.notes );
 		

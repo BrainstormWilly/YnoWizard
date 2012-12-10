@@ -2,6 +2,7 @@ package com.yno.wizard.view.adapter;
 
 import java.util.ArrayList;
 
+import com.yno.wizard.R;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.view.WineSelectActivity;
 import com.yno.wizard.view.WineSelectDescripFragment;
@@ -17,10 +18,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class WineSelectPagerAdapter extends FragmentStatePagerAdapter {
 
 	private WineParcel _wine;
-	private ArrayList<String> _subnav;
+	private ArrayList<Integer> _subnav;
 	
 	
-	public WineSelectPagerAdapter( FragmentManager $fm, WineParcel $wine, ArrayList<String> $subnav ){
+	public WineSelectPagerAdapter( FragmentManager $fm, WineParcel $wine, ArrayList<Integer> $subnav ){
 		super( $fm );
 		_wine = $wine;
 		_subnav = $subnav;
@@ -29,13 +30,13 @@ public class WineSelectPagerAdapter extends FragmentStatePagerAdapter {
 	
 	@Override
 	public Fragment getItem( int $index ){
-		if( _subnav.get($index).equals(WineSelectActivity.NAV_DESCRIPTION) )
+		if( _subnav.get($index).equals(R.string.select_pager_subnav_description) )
 			return WineSelectDescripFragment.newInstance(_wine, _subnav);
-		else if( _subnav.get($index).equals(WineSelectActivity.NAV_PRICES) )
+		else if( _subnav.get($index).equals(R.string.select_pager_subtitle_prices) )
 			return WineSelectPricesFragment.newInstance(_wine, _subnav);
-		else if( _subnav.get($index).equals(WineSelectActivity.NAV_RATINGS) )
+		else if( _subnav.get($index).equals(R.string.select_pager_subtitle_ratings) )
 			return WineSelectRatingsFragment.newInstance(_wine, _subnav);
-		else if( _subnav.get($index).equals(WineSelectActivity.NAV_NOTES) )
+		else if( _subnav.get($index).equals(R.string.select_pager_subtitle_tasting_notes) )
 			return WineSelectNotesFragment.newInstance(_wine, _subnav);
 		
 		return WineSelectDetailsFragment.newInstance(_wine, _subnav);

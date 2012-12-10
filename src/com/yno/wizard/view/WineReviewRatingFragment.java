@@ -22,10 +22,10 @@ public class WineReviewRatingFragment extends Fragment {
 	public static final String TAG = WineReviewRatingFragment.class.getSimpleName();
 	private WineSubnavAssist _helper;
 	
-	public static WineReviewRatingFragment newInstance( FbWineReviewParcel $review, ArrayList<String> $subnav ){
+	public static WineReviewRatingFragment newInstance( FbWineReviewParcel $review, ArrayList<Integer> $subnav ){
 		Bundle arg = new Bundle();
 		arg.putParcelable(FbWineReviewParcel.NAME, $review);
-		arg.putStringArrayList("subnav", $subnav);
+		arg.putIntegerArrayList("subnav", $subnav);
 		
 		WineReviewRatingFragment frag = new WineReviewRatingFragment();
 		frag.setArguments( arg );
@@ -39,9 +39,9 @@ public class WineReviewRatingFragment extends Fragment {
 		final TextView ratingTV = (TextView) view.findViewById(R.id.wineReviewRateTV);
 		RadioGroup ratingRG = (RadioGroup) view.findViewById(R.id.wineReviewRateRG);
 		
-		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
+		ArrayList<Integer> subnav = getArguments().getIntegerArrayList("subnav");
 		_helper = new WineSubnavAssist(view);
-		_helper.setNav(subnav, WineReviewActivity.NAV_RATING);
+		_helper.setNav(subnav, R.string.review_pager_subtitle_ratings);
 		
 		final FbWineReviewParcel review = getArguments().getParcelable( FbWineReviewParcel.NAME );
 		

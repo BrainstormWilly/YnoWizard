@@ -1,8 +1,10 @@
 package com.yno.wizard.controller;
 
+import com.yno.wizard.model.SearchWineParcel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.model.fb.FbUserParcel;
 import com.yno.wizard.model.fb.FbWineReviewParcel;
+import com.yno.wizard.model.service.SearchData;
 import com.yno.wizard.model.service.TrackingService;
 import com.yno.wizard.model.service.fb.FbListenerFactory.FbRequestListener;
 
@@ -16,10 +18,9 @@ public class TrackSelectCommand {
 
 	
 	public void execute(){
-		WineParcel wine = payload.getParcelable(WineParcel.NAME);
-		String phrase = payload.getString("phrase");
+		SearchWineParcel parcel = payload.getParcelable(SearchWineParcel.NAME);
 		TrackingService svc = new TrackingService();
 		
-		svc.sendSelect(wine, phrase);
+		svc.sendSelect(parcel);
 	}
 }

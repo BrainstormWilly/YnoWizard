@@ -17,10 +17,10 @@ public class WineSelectDetailsFragment extends SherlockFragment {
 	
 	private WineSubnavAssist _helper;
 	
-	public static WineSelectDetailsFragment newInstance( WineParcel $wine, ArrayList<String> $subnav ){
+	public static WineSelectDetailsFragment newInstance( WineParcel $wine, ArrayList<Integer> $subnav ){
 		Bundle arg = new Bundle();
 		arg.putParcelable(WineParcel.NAME, $wine);
-		arg.putStringArrayList("subnav", $subnav);
+		arg.putIntegerArrayList("subnav", $subnav);
 		
 		WineSelectDetailsFragment frag = new WineSelectDetailsFragment();
 		frag.setArguments( arg );
@@ -40,9 +40,9 @@ public class WineSelectDetailsFragment extends SherlockFragment {
 		TextView proTV = (TextView) view.findViewById(R.id.wineSelectDetailsProducerTV);
 		
 		WineParcel wine = getArguments().getParcelable( WineParcel.NAME );
-		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
+		ArrayList<Integer> subnav = getArguments().getIntegerArrayList("subnav");
 		_helper = new WineSubnavAssist(view);
-		_helper.setNav( subnav, WineSelectActivity.NAV_DETAILS);
+		_helper.setNav( subnav, R.string.select_pager_subtitle_details);
 		
 		varTV.setText( wine.varietal );
 		regTV.setText( wine.region );

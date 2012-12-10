@@ -31,10 +31,10 @@ public class WineSelectPricesFragment extends Fragment implements OnItemClickLis
 	private List<PriceParcel> _prices;
 	private WineParcel _wine;
 	
-	public static WineSelectPricesFragment newInstance( WineParcel $wine, ArrayList<String> $subnav ){
+	public static WineSelectPricesFragment newInstance( WineParcel $wine, ArrayList<Integer> $subnav ){
 		Bundle arg = new Bundle();
 		arg.putParcelable(WineParcel.NAME, $wine);
-		arg.putStringArrayList("subnav", $subnav);
+		arg.putIntegerArrayList("subnav", $subnav);
 		
 		WineSelectPricesFragment frag = new WineSelectPricesFragment();
 		frag.setArguments( arg );
@@ -53,9 +53,9 @@ public class WineSelectPricesFragment extends Fragment implements OnItemClickLis
 		_prices = model.getSortedList();
 		WineSelectPriceListAdapter adapter = new WineSelectPriceListAdapter( getActivity().getApplicationContext(), model );
 		
-		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
+		ArrayList<Integer> subnav = getArguments().getIntegerArrayList("subnav");
 		_helper = new WineSubnavAssist(view);
-		_helper.setNav( subnav, WineSelectActivity.NAV_PRICES);
+		_helper.setNav( subnav, R.string.select_pager_subtitle_prices);
 		
 		rngTV.setText( getString(R.string.price_range) + String.valueOf(model.getLowest().value) + getString(R.string.price_range_to) + String.valueOf(model.getHighest().value));
 		
@@ -67,10 +67,13 @@ public class WineSelectPricesFragment extends Fragment implements OnItemClickLis
 	
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		TrackBuyLinkCommand tmd = new TrackBuyLinkCommand();
-		tmd.payload.putParcelable(PriceParcel.NAME, _prices.get(arg2));
-		tmd.payload.putParcelable(WineParcel.NAME, _wine);
-		tmd.execute();
+		
+		if( !((AbstractAnalyticsFragmentActivity) getActivity()).isDebuggable() ){
+			TrackBuyLinkCommand tmd = new TrackBuyLinkCommand();
+			tmd.payload.putParcelable(PriceParcel.NAME, _prices.get(arg2));
+			tmd.payload.putParcelable(WineParcel.NAME, _wine);
+			tmd.execute();
+		}
 		
 		ShowPriceVendorCommand cmd = new ShowPriceVendorCommand(getActivity());
 		cmd.payload.putParcelable(PriceParcel.NAME, _prices.get(arg2));

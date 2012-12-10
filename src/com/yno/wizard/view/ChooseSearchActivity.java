@@ -26,7 +26,7 @@ import com.yno.wizard.controller.OpenPhraseSearchCommand;
 import com.yno.wizard.view.assist.ActionBarAssist;
 import com.yno.wizard.view.assist.ActivityAlertAssist;
 
-public class ChooseSearchActivity extends AbstractAnalyticsActivity implements IAlertActivity {
+public class ChooseSearchActivity extends AbstractAnalyticsActivity implements IAlertActivity, IDebugActivity {
 	
 	public static final String TAG = ChooseSearchActivity.class.getSimpleName();
 	public static final String NAME = "com.yno.wizard.intent.OPEN_CHOOSE_SEARCH_METHOD";
@@ -105,54 +105,5 @@ public class ChooseSearchActivity extends AbstractAnalyticsActivity implements I
 		return _alertAssist;
 	}
 
-	
-//	public void showAlert( int $title, int $body ){
-//		AlertDialog.Builder bldr = new AlertDialog.Builder( this );
-//		
-//		
-//		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//		View layout = inflater.inflate(R.layout.dialog_alert, (ViewGroup) findViewById(R.id.dialogAlertRL));
-//		
-//		TextView title = (TextView) layout.findViewById(R.id.dialogAlertTitleTV);
-//		TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertSubtitleTV);
-//		Button okBtn = (Button) layout.findViewById(R.id.dialogAlertBtn);
-//		
-//		title.setText($title);
-//		subtitle.setText($body);
-//		
-//		okBtn.setOnClickListener(
-//				new OnClickListener() {
-//					
-//					@Override
-//					public void onClick(View v) {
-//						_alert.dismiss();
-//					}
-//				}
-//		);
-//		
-//		bldr.setView(layout);
-//		_alert = bldr.create();
-//		_alert.show();
-//	}
-//	
-//	public void showProgress( String $msg ){
-//		AlertDialog.Builder bldr = new AlertDialog.Builder(this);
-//		
-//		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-//		View layout = inflater.inflate(R.layout.dialog_progress, (ViewGroup) findViewById(R.id.dialogProgressRL));
-//		
-//		TextView title = (TextView) layout.findViewById(R.id.dialogProgressTitleTV);
-//		
-//		title.setText($msg);
-//		
-//		
-//		bldr.setView( layout );
-//		_prog = bldr.create();
-//		_prog.show();
-//	}
-//	
-//	public void dismissProgress(){
-//		_prog.dismiss();
-//	}
 	
 }

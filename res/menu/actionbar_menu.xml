@@ -5,18 +5,18 @@
         android:id="@+id/actionbarSearch"
         android:title="@string/actionbar_title_search"
         android:icon="@drawable/yw_actionbar_search"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom|collapseActionView" />
     
     <item
         android:id="@+id/actionbarBarcode"
         android:title="@string/actionbar_title_barcode"
         android:icon="@drawable/yw_actionbar_barcode"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom|collapseActionView" />
     
     <item
         android:id="@+id/actionbarManual"
         android:title="@string/actionbar_title_manual"
         android:icon="@drawable/yw_actionbar_manual"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom|collapseActionView" />
     
 </menu>

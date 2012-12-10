@@ -27,35 +27,6 @@ public class ActionBarAssist {
 	public static final int CAMERA_REQUEST = 400;
 	
 	
-//	private static class WineSelectHandler extends Handler{
-//		
-//		private WeakReference<IActionBarActivity> _activity;
-//		
-//		WineSelectHandler( IActionBarActivity $activity ){
-//			_activity = new WeakReference<IActionBarActivity>( $activity );
-//		}
-//		
-//		@Override
-//		public void handleMessage(Message $msg) {
-//			IActionBarActivity thisActivity = _activity.get();
-//			WineParcel parcel = (WineParcel) $msg.obj;
-//			thisActivity.dismissProgress();
-//			
-//			if( !parcel.name.equals("") ){
-//				TrackSelectCommand tmd = new TrackSelectCommand();
-//				tmd.payload.putParcelable(WineParcel.NAME, parcel);
-//				tmd.payload.putString("phrase", TrackingService.BARCODE);
-//				tmd.execute();
-//				
-//				DoWineSelectCommand cmd = new DoWineSelectCommand(thisActivity);
-//				cmd.payload.putParcelable( WineParcel.NAME, parcel);
-//				cmd.execute();
-//			}else{
-//				thisActivity.showAlert(R.string.no_wine_found, R.string.try_searching_by_name_or_manually_entering_wine_info);
-//			}
-//		}
-//	}
-	
 	//private Intent _zxingInt = new Intent("com.google.zxing.client.android.SCAN");
 	private WeakReference<Activity> _context;
 	
@@ -102,8 +73,8 @@ public class ActionBarAssist {
 					SearchWineParcel parcel = new SearchWineParcel();
 					parcel.type = SearchData.SEARCH_TYPE_BARCODE;
 					parcel.query = $intent.getStringExtra(Scan.RESULT);
-					DoBarcodeSearchCommand cmd = new DoBarcodeSearchCommand( ctx );
 					
+					DoBarcodeSearchCommand cmd = new DoBarcodeSearchCommand( ctx );	
 					cmd.messenger = new Messenger( new WineSelectHandler( alertCtx ) );
 					cmd.payload.putParcelable(SearchWineParcel.NAME, parcel);
 					cmd.execute();

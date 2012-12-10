@@ -33,47 +33,9 @@ import com.yno.wizard.view.adapter.WineSelectPagerAdapter;
 import com.yno.wizard.view.assist.ActionBarAssist;
 import com.yno.wizard.view.assist.ActivityAlertAssist;
 
-public class WineSelectActivity extends AbstractAnalyticsFragmentActivity implements IAlertActivity {
+public class WineSelectActivity extends AbstractAnalyticsFragmentActivity implements IAlertActivity, IDebugActivity {
 
 	public static String TAG = WineSelectActivity.class.getSimpleName();
-	public static final String NAV_DESCRIPTION = "Description";
-	public static final String NAV_DETAILS = "Details";
-	public static final String NAV_NOTES = "Tasting Notes";
-	public static final String NAV_RATINGS = "Ratings";
-	public static final String NAV_PRICES = "Prices";
-	
-//	private static class WineSelectAdaptor extends FragmentStatePagerAdapter{
-//		
-//		private WineParcel _wine;
-//		private ArrayList<String> _subnav;
-//		
-//		
-//		public WineSelectAdaptor( FragmentManager $fm, WineParcel $wine, ArrayList<String> $subnav ){
-//			super( $fm );
-//			_wine = $wine;
-//			_subnav = $subnav;
-//			
-//		}
-//		
-//		@Override
-//		public Fragment getItem( int $index ){
-//			if( _subnav.get($index).equals(NAV_DESCRIPTION) )
-//				return WineSelectDescripFragment.newInstance(_wine, _subnav);
-//			else if( _subnav.get($index).equals(NAV_PRICES) )
-//				return WineSelectPricesFragment.newInstance(_wine, _subnav);
-//			else if( _subnav.get($index).equals(NAV_RATINGS) )
-//				return WineSelectRatingsFragment.newInstance(_wine, _subnav);
-//			else if( _subnav.get($index).equals(NAV_NOTES) )
-//				return WineSelectNotesFragment.newInstance(_wine, _subnav);
-//			
-//			return WineSelectDetailsFragment.newInstance(_wine, _subnav);
-//		}
-//		
-//		@Override
-//		public int getCount(){
-//			return _subnav.size();
-//		}
-//	}
 
 	
 	private TextView _nameTV;
@@ -91,16 +53,16 @@ public class WineSelectActivity extends AbstractAnalyticsFragmentActivity implem
 	public void setWine( WineParcel $wine ){
 		_wine = $wine;
 		
-		ArrayList<String> subnav = new ArrayList<String>();
+		ArrayList<Integer> subnav = new ArrayList<Integer>();
 		if( _wine.prices.size()>0 )
-			subnav.add(NAV_PRICES);
-		subnav.add(NAV_DETAILS);
+			subnav.add(R.string.select_pager_subtitle_prices);
+		subnav.add(R.string.select_pager_subtitle_details);
 		if( _wine.description!=null && !_wine.description.equals("") )
-			subnav.add(NAV_DESCRIPTION);
+			subnav.add(R.string.select_pager_subnav_description);
 		if( !_wine.notes.equals("") )
-			subnav.add(NAV_NOTES);
+			subnav.add(R.string.select_pager_subtitle_tasting_notes);
 		if( _wine.ratings.size()>0 )
-			subnav.add(NAV_RATINGS);		
+			subnav.add(R.string.select_pager_subtitle_ratings);		
 		
 		_rateBtn.setOnClickListener(
 				new OnClickListener() {

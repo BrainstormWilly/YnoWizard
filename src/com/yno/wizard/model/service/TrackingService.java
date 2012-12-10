@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.yno.wizard.model.PriceParcel;
+import com.yno.wizard.model.SearchWineParcel;
 import com.yno.wizard.model.WineParcel;
 import com.yno.wizard.model.fb.FbUserParcel;
 import com.yno.wizard.model.fb.FbWineReviewParcel;
@@ -31,13 +32,13 @@ public class TrackingService extends AsyncTask<String, Void, String> {
 	
 	private List<NameValuePair> _values;
 	
-	public void sendSelect( WineParcel $wine, String $phrase ){
+	public void sendSelect( SearchWineParcel $parcel ){
 		_values = new ArrayList<NameValuePair>(11);
 		_values.add( new BasicNameValuePair("access", "ynowizard") );
 		_values.add( new BasicNameValuePair("data_type", "select") );
-		setWine( _values, $wine );
-		_values.add( new BasicNameValuePair("sel_barcode", $phrase.equals(BARCODE) ? "true" : "false") );
-		_values.add( new BasicNameValuePair("sel_phrase", $phrase.equals(BARCODE) ? "" : $phrase) );
+		setWine( _values, $parcel.wine );
+		_values.add( new BasicNameValuePair("sel_barcode", $parcel.type.equals(SearchData.SEARCH_TYPE_BARCODE) ? "true" : "false") );
+		_values.add( new BasicNameValuePair("sel_phrase", $parcel.query) );
 		execute( new String[]{URL} );
 	}
 	

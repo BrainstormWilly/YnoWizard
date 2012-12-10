@@ -28,7 +28,8 @@ public class WineBarcodeSearchService extends IntentService {
 		WineDetailsServiceParcel wdPrcl = svc.getWineByBarcode(parcel.query);
 		
 		Message msg = new Message();
-		msg.obj = wdPrcl.wine;
+		parcel.wine = wdPrcl.wine;
+		msg.obj = parcel;
 		
 		try{
 			msgr.send( msg );

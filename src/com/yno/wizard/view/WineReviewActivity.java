@@ -49,55 +49,59 @@ import com.yno.wizard.model.fb.FbUserParcel;
 import com.yno.wizard.model.fb.FbWineReviewParcel;
 import com.yno.wizard.model.service.fb.FacebookService;
 import com.yno.wizard.utils.AsyncDownloadImage;
+import com.yno.wizard.view.adapter.WineReviewPagerAdapter;
 import com.yno.wizard.view.assist.ActionBarAssist;
 import com.yno.wizard.view.assist.ActivityAlertAssist;
 
-public class WineReviewActivity extends AbstractAnalyticsFragmentActivity implements IFacebookActivity, IAlertActivity {
+public class WineReviewActivity extends AbstractAnalyticsFragmentActivity implements IFacebookActivity, IAlertActivity, IDebugActivity {
 
 	public static final String TAG = WineReviewActivity.class.getSimpleName();
-	public static String NAV_COMMENTS = "Comments";
-	public static String NAV_RATING = "Rating";
+//	public static String NAV_COMMENTS = "Comments";
+//	public static String NAV_RATING = "Rating";
 	
 	private static final int AUTHORIZE_ACTIVITY_RESULT_CODE = 0;
 	
-	private static class WineReviewAdaptor extends FragmentStatePagerAdapter{
-		
-		private FbWineReviewParcel _review;
-		private ArrayList<String> _subnav = new ArrayList<String>();
-		
-		public WineReviewAdaptor( FragmentManager $fm, FbWineReviewParcel $review ){
-			super( $fm );
-			_review = $review;
-			_subnav.add(NAV_COMMENTS);
-			_subnav.add(NAV_RATING);
-		}
-		
-		@Override
-		public Fragment getItem( int $index ){
-			if( $index==0 )
-				return WineReviewCommentFragment.newInstance(_review, _subnav);
-			return WineReviewRatingFragment.newInstance(_review, _subnav);
-		}
-		
-		@Override
-		public int getCount(){
-			return _subnav.size();
-		}
-		
-		
-	}
+//	private static class WineReviewAdaptor extends FragmentStatePagerAdapter{
+//		
+//		private FbWineReviewParcel _review;
+//		private ArrayList<Integer> _subnav = new ArrayList<Integer>();
+//		
+//		public WineReviewAdaptor( FragmentManager $fm, FbWineReviewParcel $review ){
+//			super( $fm );
+//			_review = $review;
+//			_subnav.add(R.string.review_pager_subtitle_comments);
+//			_subnav.add(R.string.review_pager_subtitle_ratings);
+//		}
+//		
+//		@Override
+//		public Fragment getItem( int $index ){
+//			if( $index==0 )
+//				return WineReviewCommentFragment.newInstance(_review, _subnav);
+//			return WineReviewRatingFragment.newInstance(_review, _subnav);
+//		}
+//		
+//		@Override
+//		public int getCount(){
+//			return _subnav.size();
+//		}
+//		
+//		
+//	}
 	
 	private Handler _alertHandler = new Handler(){
+		
 		public void handleMessage(android.os.Message msg) {
 			AlertParcel parcel = (AlertParcel) msg.obj;
 			if( parcel.alert_id==ActivityAlertAssist.ALERT_ID_REVIEW_PERMISSION ){
 				if( parcel.alert_action==ActivityAlertAssist.ALERT_ACTION_OK ){
 					_sendToFeed = parcel.getReviewSendToFeed();
 					
-					TrackReviewCommand cmd = new TrackReviewCommand();
-					cmd.payload.putParcelable(FbWineReviewParcel.NAME, _review);
-					cmd.payload.putParcelable(FbUserParcel.NAME, _user);
-					cmd.execute();
+					if( !WineReviewActivity.this.isDebuggable() ){
+						TrackReviewCommand cmd = new TrackReviewCommand();
+						cmd.payload.putParcelable(FbWineReviewParcel.NAME, _review);
+						cmd.payload.putParcelable(FbUserParcel.NAME, _user);
+						cmd.execute();
+					}
 					
 					_fbSvc.publishReviewToList(_review);
 				}
@@ -110,6 +114,8 @@ public class WineReviewActivity extends AbstractAnalyticsFragmentActivity implem
 			}
 		}
 	};
+
+	
 	
 	
 	private Handler _fbHdl = new Handler(); 
@@ -151,7 +157,7 @@ public class WineReviewActivity extends AbstractAnalyticsFragmentActivity implem
 		WineParcel wine = getIntent().getParcelableExtra(WineParcel.NAME);
 		_review = new FbWineReviewParcel();
 		_review.wine = wine;
-		WineReviewAdaptor adaptor = new WineReviewAdaptor(getSupportFragmentManager(), _review);
+		WineReviewPagerAdapter adaptor = new WineReviewPagerAdapter(getSupportFragmentManager(), _review);
 		_pagerVP.setAdapter(adaptor);
 		
 		_nameTV.setText(wine.name);	
@@ -170,59 +176,12 @@ public class WineReviewActivity extends AbstractAnalyticsFragmentActivity implem
 				@Override
 				public void onClick(View v) {
 					
-					_alertAssist.alertShowAlert(0, 0, ActivityAlertAssist.ALERT_ID_REVIEW_PERMISSION, ActivityAlertAssist.ALERT_TYPE_REVIEW_PERMISSION);
+					_alertAssist.alertShowAlert(
+							0, 
+							0, 
+							ActivityAlertAssist.ALERT_ID_REVIEW_PERMISSION, 
+							ActivityAlertAssist.ALERT_TYPE_REVIEW_PERMISSION);
 					
-//					AlertDialog.Builder bldr = new AlertDialog.Builder(WineReviewActivity.this);
-//					
-//					LayoutInflater inflater = (LayoutInflater) WineReviewActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-//					View layout = inflater.inflate(R.layout.wine_review_post_dialog, (ViewGroup) findViewById(R.id.wineReviewPostRL));
-//					
-//					Button noBtn = (Button) layout.findViewById(R.id.wineReviewPostCancelBtn);
-//					Button yesBtn = (Button) layout.findViewById(R.id.wineReviewPostOkBtn);
-//					CheckBox cb = (CheckBox) layout.findViewById(R.id.wineReviewPostCB);
-//					
-//					_sendToFeed = false;
-//					
-//					cb.setOnCheckedChangeListener(
-//							new OnCheckedChangeListener() {
-//								
-//								@Override
-//								public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//									_sendToFeed = isChecked;
-//								}
-//							}
-//					);
-//					
-//					noBtn.setOnClickListener(
-//							new OnClickListener() {
-//								
-//								@Override
-//								public void onClick(View v) {
-//									_diag.dismiss();
-//								}
-//							}
-//					);
-//					
-//					yesBtn.setOnClickListener(
-//							new OnClickListener() {
-//								
-//								@Override
-//								public void onClick(View v) {
-//									TrackReviewCommand cmd = new TrackReviewCommand();
-//									cmd.payload.putParcelable(FbWineReviewParcel.NAME, _review);
-//									cmd.payload.putParcelable(FbUserParcel.NAME, _user);
-//									cmd.execute();
-//									
-//									_fbSvc.publishReviewToList(_review);
-//									_diag.dismiss();
-//									//_prog = ProgressDialog.show(WineReviewActivity.this, "Posting review", "", true);
-//								}
-//							}
-//					);
-//					
-//					bldr.setView( layout );
-//					_diag = bldr.create();
-//					_diag.show();
 				}
 			}
 				
@@ -256,42 +215,6 @@ public class WineReviewActivity extends AbstractAnalyticsFragmentActivity implem
 					R.string.wine_reviews_can_only_be_stored_to_facebook, 
 					ActivityAlertAssist.ALERT_ID_REVIEW_FACEBOOK, 
 					ActivityAlertAssist.ALERT_TYPE_OK_CANCEL);
-//			AlertDialog.Builder bldr = new AlertDialog.Builder(WineReviewActivity.this);
-//			
-//			LayoutInflater inflater = (LayoutInflater) WineReviewActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-//			View layout = inflater.inflate(R.layout.dialog_alert_cancel, (ViewGroup) findViewById(R.id.dialogAlertCancelRL));
-//			
-//			TextView title = (TextView) layout.findViewById(R.id.dialogAlertCancelTitleTV);
-//			TextView subtitle = (TextView) layout.findViewById(R.id.dialogAlertCancelSubtitleTV);
-//			Button noBtn = (Button) layout.findViewById(R.id.dialogAlertCancelCancelBtn);
-//			Button yesBtn = (Button) layout.findViewById(R.id.dialogAlertCancelOkBtn);
-//			
-//			title.setText(R.string.log_into_facebook);
-//			subtitle.setText(R.string.wine_reviews_can_only_be_stored_to_facebook);
-//			
-//			noBtn.setOnClickListener(
-//					new OnClickListener() {
-//						
-//						@Override
-//						public void onClick(View v) {
-//							WineReviewActivity.this.finish();
-//						}
-//					}
-//			);
-//			
-//			yesBtn.setOnClickListener(
-//					new OnClickListener() {
-//						
-//						@Override
-//						public void onClick(View v) {
-//							WineReviewActivity.this.beginFbLogin();
-//						}
-//					}
-//			);
-//			
-//			bldr.setView( layout );
-//			_diag = bldr.create();
-//			_diag.show();
 		}
 		
 		

@@ -25,13 +25,13 @@ public class WineSelectRatingsFragment extends Fragment {
 	public static final String TAG = WineSelectRatingsFragment.class.getSimpleName();
 	
 	private WineSubnavAssist _helper;
-	private Button _rateBtn;
+	//private Button _rateBtn;
 	private List<RatingParcel> _ratings;
 
-	public static WineSelectRatingsFragment newInstance( WineParcel $wine, ArrayList<String> $subnav ){
+	public static WineSelectRatingsFragment newInstance( WineParcel $wine, ArrayList<Integer> $subnav ){
 		Bundle arg = new Bundle();
 		arg.putParcelable(WineParcel.NAME, $wine);
-		arg.putStringArrayList("subnav", $subnav);
+		arg.putIntegerArrayList("subnav", $subnav);
 		
 		WineSelectRatingsFragment frag = new WineSelectRatingsFragment();
 		frag.setArguments( arg );
@@ -51,9 +51,9 @@ public class WineSelectRatingsFragment extends Fragment {
 		_ratings = model.getSortedList();
 		WineSelectRatingListAdapter adapter = new WineSelectRatingListAdapter( getActivity().getApplicationContext(), _ratings );
 		
-		ArrayList<String> subnav = getArguments().getStringArrayList("subnav");
+		ArrayList<Integer> subnav = getArguments().getIntegerArrayList("subnav");
 		_helper = new WineSubnavAssist(view);
-		_helper.setNav( subnav, WineSelectActivity.NAV_RATINGS);
+		_helper.setNav( subnav, R.string.select_pager_subtitle_ratings );
 		rngTV.setText( getString(R.string.rating_range) + String.valueOf( model.getLowest().value ) + "-" + String.valueOf( model.getHighest().value ) );
 		
 		retailersLV.setAdapter( adapter );

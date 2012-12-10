@@ -51,7 +51,7 @@ import com.yno.wizard.view.assist.ActivityAlertAssist;
 import com.yno.wizard.view.handler.PhraseSearchHandler;
 
 
-public class PhraseSearchActivity extends AbstractAnalyticsActivity implements IAlertActivity {
+public class PhraseSearchActivity extends AbstractAnalyticsActivity implements IAlertActivity, IDebugActivity {
 	
 	private static String TAG = PhraseSearchActivity.class.getSimpleName();
 	public static final String NAME = "com.yno.wizard.intent.OPEN_PHRASE_SEARCH";
@@ -334,7 +334,7 @@ public class PhraseSearchActivity extends AbstractAnalyticsActivity implements I
 			parcel.value = _underSB.getProgress()+10;
 		if( parcel.hasQuery() ){
 			//showProgress( getString(R.string.search_wines_matching) + parcel.getFullQuery() + "'" );
-			getAlertAssist().alertShowAlert(getString(R.string.search_wines_matching), parcel.getFullQuery() + "'");
+			getAlertAssist().alertShowProgress(getString(R.string.search_wines_matching) + parcel.getFullQuery() + "'");
 			parcel.ip = _location.getLocalIpAddress();
 			Address primAddr = _location.getPrimaryAddress();
 			if( primAddr!=null ){

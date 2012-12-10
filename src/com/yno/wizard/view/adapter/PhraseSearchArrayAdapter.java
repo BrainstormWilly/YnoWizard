@@ -19,16 +19,16 @@ public class PhraseSearchArrayAdapter extends ArrayAdapter<String> implements Fi
 	public static String TAG = PhraseSearchArrayAdapter.class.getSimpleName();
 	
 	private Filter _filter;
-	private Context _context;
+	//private Context _context;
 	private ArrayList<String> _newData = new ArrayList<String>(SearchData.AUTOCOMPLETE_TOTAL);
 	//private TextSearchFieldServiceHelper _svcHelper;
 
 	
 	public PhraseSearchArrayAdapter( Context $context, int $textViewId ){
-		super( $context, $textViewId );
+		super($context, $textViewId );
 		setNotifyOnChange(false);
 		
-		_context = $context;
+		//_context = getContext();
 		//_svcHelper = new TextSearchFieldServiceHelper();
 		
 		_filter = new Filter(){
@@ -100,7 +100,8 @@ public class PhraseSearchArrayAdapter extends ArrayAdapter<String> implements Fi
 	}
 		
 	public View getCustomView(int $position, View $convertView, ViewGroup $parent){
-		LayoutInflater inflater = LayoutInflater.from(_context);
+		
+		LayoutInflater inflater = LayoutInflater.from( getContext() );
 		if( $convertView==null )
 			$convertView = inflater.inflate(com.yno.wizard.R.layout.spinner_item, null);
 		

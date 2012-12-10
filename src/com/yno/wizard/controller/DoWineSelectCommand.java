@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Messenger;
 
 import com.yno.wizard.model.WineParcel;
-import com.yno.wizard.view.IActionBarActivity;
 
 public class DoWineSelectCommand {
 	

@@ -24,15 +24,15 @@ public class WineSelectSearchService extends IntentService {
 		Bundle extras = $intent.getExtras();
 		Messenger msgr = (Messenger) extras.get("android.os.Messenger");
 		SearchWineParcel parcel = $intent.getParcelableExtra(SearchWineParcel.NAME);
-		WineParcel wine = parcel.wine;
 		
 		GoogleServices svc = new GoogleServices();
-		WineDetailsServiceParcel wdPrcl = svc.getWineDetails(wine);
+		WineDetailsServiceParcel wdPrcl = svc.getWineDetails(parcel.wine);
 		
 		// do more apis
 		
 		Message msg = new Message();
-		msg.obj = wdPrcl.wine;
+		parcel.wine = wdPrcl.wine;
+		msg.obj = parcel;
 		try{
 			msgr.send( msg );
 		}catch( RemoteException $e ){

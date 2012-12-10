@@ -7,7 +7,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 public class AbstractAnalyticsFragmentActivity extends SherlockFragmentActivity {
 
-	private boolean isDebuggable(){
+	public boolean isDebuggable(){
 		return ( 0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) );
 	}
 	

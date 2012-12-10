@@ -38,7 +38,7 @@ import com.yno.wizard.view.assist.ActionBarAssist;
 import com.yno.wizard.view.assist.ActivityAlertAssist;
 
 
-public class ManualEntryActivity extends AbstractAnalyticsActivity implements IAlertActivity {
+public class ManualEntryActivity extends AbstractAnalyticsActivity implements IAlertActivity, IDebugActivity {
 
 	public static final String TAG = ManualEntryActivity.class.getSimpleName();
 	public static final String NAME = "com.yno.wizard.intent.OPEN_MANUAL_ENTRY";
