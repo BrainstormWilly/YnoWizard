@@ -13,6 +13,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 import com.yno.wizard.R;
 import com.yno.wizard.controller.StartWineSelectCommand;
@@ -57,7 +58,7 @@ public class SearchResultsActivity extends AbstractAnalyticsActivity implements 
 	private ActionBarAssist _abAssist;
 	private ActivityAlertAssist _alertAssist;
 	private SearchWinesParcel _swPrcl = new SearchWinesParcel();
-	private AdView _ad;
+//	private AdView _ad;
 
 	@Override
 	public void onCreate( Bundle savedInstanceState ){
@@ -65,8 +66,8 @@ public class SearchResultsActivity extends AbstractAnalyticsActivity implements 
 		super.onCreate(savedInstanceState);
 		setContentView( R.layout.search_results_main );
 		
-		//_ad = (AdView) this.findViewById(R.id.searchResultsAdView);
-		//_ad.loadAd( new AdRequest() );
+//		_ad = (AdView) this.findViewById(R.id.searchResultsAdView);
+//		_ad.loadAd( new AdRequest() );
 		
 		_abAssist = new ActionBarAssist(this);
 		_alertAssist = new ActivityAlertAssist(this);
