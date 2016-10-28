@@ -23,7 +23,7 @@ public class PhraseSearchHandler extends Handler {
 	public void handleMessage(Message $msg) {
 		IAlertActivity thisActivity = _activity.get();
 		SearchWinesParcel parcel = (SearchWinesParcel) $msg.obj;
-		thisActivity.getAlertAssist().alertDismiss();
+		//thisActivity.getAlertAssist().alertDismiss();
 		
 		if( parcel.results.size()>0 ){
 			OpenSearchResultsCommand cmd = new OpenSearchResultsCommand( (Activity) thisActivity );

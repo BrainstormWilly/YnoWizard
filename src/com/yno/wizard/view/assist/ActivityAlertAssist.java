@@ -175,6 +175,7 @@ public class ActivityAlertAssist {
 	}
 	
 	public void alertShowAlert( String $title, String $body, int $id, int $type ){
+		alertDismiss();
  		final AlertParcel parcel = new AlertParcel();
 		parcel.alert_id = $id;
 		parcel.alert_type = $type;

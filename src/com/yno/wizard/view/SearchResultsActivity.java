@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.util.Log;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -95,9 +96,18 @@ public class SearchResultsActivity extends AbstractAnalyticsActivity implements 
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		getAlertAssist().alertDismiss();
+	}
+	
+	@Override
 	public ActivityAlertAssist getAlertAssist() {
+		if( _alertAssist==null )
+			_alertAssist = new ActivityAlertAssist(this);
 		return _alertAssist;
 	}
+	
 	
 //	public void showAlert( int $title, int $body ){
 //		AlertDialog.Builder bldr = new AlertDialog.Builder( this );

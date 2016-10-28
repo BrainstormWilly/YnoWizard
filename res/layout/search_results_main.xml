@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
-    <com.google.ads.AdView
-        android:id="@+id/searchResultsAdView"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+	<com.google.ads.AdView
+        android:id="@+id/searchResultsAdV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -14,22 +15,16 @@
         ads:adSize="SMART_BANNER"
         ads:testDevices="TEST_EMULATOR, 4E319B8194869663D358C8980351F753"
         ads:loadAdOnCreate="true"/>
-
-        
-        <ListView 
-	        android:id="@+id/searchResultsLV"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_above="@+id/searchResultsAdView"
-	        
-	        android:cacheColorHint="@android:color/transparent"
-	        android:divider="@color/yw_gray_medium"
-	        android:dividerHeight="1dp"
-	        android:drawSelectorOnTop="false"
-	        android:listSelector="@drawable/yw_list_item_bkg" />
-        
     
-	    
-    
+    <ListView 
+	    android:id="@+id/searchResultsLV"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_above="@+id/searchResultsAdV"
+	    android:cacheColorHint="@android:color/transparent"
+	    android:divider="@color/yw_gray_medium"
+	    android:dividerHeight="1dp"
+	    android:drawSelectorOnTop="false"
+	    android:listSelector="@drawable/yw_list_item_bkg" />   
 
-</RelativeLayout>
+</RelativeLayout >

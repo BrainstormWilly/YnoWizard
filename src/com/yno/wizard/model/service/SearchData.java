@@ -30,6 +30,7 @@ public class SearchData {
 	public static final int ID_SERVICE_WINE_TYPES = 3;
 	public static final int ID_SERVICE_WINE_DETAILS_BARCODE = 4;
 	public static final int ID_SERVICE_WINE_DETAILS_PHRASE = 5;
+	public static final int ID_SERVICE_WINE_VINTAGES = 6;
 	
 	public static final String QUERY = "query";
 	public static final String QUERY_VARIETALS = "queryVarietals";

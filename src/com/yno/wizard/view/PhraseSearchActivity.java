@@ -272,24 +272,16 @@ public class PhraseSearchActivity extends AbstractAnalyticsActivity implements I
 //	}
 	
 	public ActivityAlertAssist getAlertAssist(){
+		if( _alertAssist==null )
+			_alertAssist = new ActivityAlertAssist(this);
 		return _alertAssist;
-	}
-	
-	@Override
-	protected void onStart() {
-		super.onStart();
-		EasyTracker.getInstance().activityStart(this);
-	}
-	
-	@Override
-	protected void onStop() {
-		super.onStop();
-		EasyTracker.getInstance().activityStop(this);
 	}
 	
 	@Override
 	protected void onResume(){
 		super.onResume();
+		Log.d(TAG, "onResume");
+		getAlertAssist().alertDismiss();
 		_location.enable();
 	}
 	
